@@ -459,3 +459,634 @@ Important:
 - Do not make the section look like a generic SaaS template.
 - Keep the design focused on Indian college students and the ABTalks 60-day challenge.
 - Reuse the visual language established by the existing Hero and Benefits sections.
+
+Prompt 7:
+
+You are an expert UI/UX designer and senior React developer.
+
+Create a premium, mobile-first FAQ section for the ABTalks landing page using React and Tailwind CSS.
+
+Context:
+ABTalks is a 60-day coding challenge for Indian college students. Students build something every day, make a GitHub commit, publish a LinkedIn post, and maintain a public learning streak.
+
+The landing page already contains:
+- Navbar
+- Hero
+- How It Works
+- Why Choose ABTalks / Benefits
+- Student Success / Social Proof
+
+Create a reusable component named FAQ.jsx.
+
+Goal:
+Answer the most important questions a student might have before joining the 60-day challenge and remove hesitation before the final CTA.
+
+Requirements:
+- Mobile-first design for a 390px viewport
+- Fully responsive on tablet and desktop
+- Use React and Tailwind CSS only
+- Do not modify existing sections
+- Match the existing ABTalks visual language, typography, spacing, and color palette
+- Use Lucide React icons if useful
+
+Layout:
+
+Section heading:
+"Questions? We've Got You."
+
+Supporting text:
+"Everything you need to know before starting your 60-day journey."
+
+Create an accordion-style FAQ.
+
+Use these questions and realistic answers:
+
+1. What is the ABTalks 60-day challenge?
+Explain that students build or practice something every day for 60 days and submit proof of their work through GitHub and LinkedIn.
+
+2. Do I need to be an expert coder?
+Explain that the challenge is designed for students at different skill levels and the goal is consistency, learning, and building—not being perfect.
+
+3. What do I need to submit every day?
+Explain the two main proofs of work:
+- GitHub repository/commit
+- LinkedIn post
+
+4. What happens if I miss a day?
+Explain that missing a day doesn't mean they should quit. Encourage them to get back on track and continue the challenge.
+
+5. Do I need a GitHub or LinkedIn account?
+Explain that these are used to submit proof of work and build a public learning presence.
+
+6. Can I choose my own coding track?
+Explain that students can choose a suitable track and build according to their learning goals.
+
+7. Is there a fee to participate?
+Use neutral wording and make the answer easy to change later because this is currently a mocked hackathon experience.
+
+8. What do I get after completing 60 days?
+Focus on tangible outcomes such as projects, consistency, public proof of work, and a stronger portfolio.
+
+Interaction:
+- Only one FAQ item should be open at a time.
+- Clicking a question should smoothly expand/collapse the answer.
+- Use a plus icon when closed.
+- Rotate/change it to a minus icon when open.
+- Add a subtle transition.
+- Make the entire question row clickable.
+- Make the active item visually distinct but subtle.
+- Do not use a huge animation.
+
+Design:
+- Use clean white cards or a very subtle background.
+- Rounded corners.
+- Thin borders.
+- Soft shadows.
+- Generous spacing.
+- Strong question typography.
+- Readable answer text.
+- Add subtle hover states.
+- Avoid excessive gradients or decorative elements.
+- Keep the section visually consistent with the Hero, Benefits, and Student Success sections.
+
+Mobile requirements:
+- Must look excellent at exactly 390px width.
+- No horizontal overflow.
+- Questions should wrap naturally.
+- Make the tap targets large enough for mobile.
+- Answers should have comfortable line height.
+
+Accessibility:
+- Use buttons for clickable FAQ questions.
+- Add aria-expanded.
+- Add appropriate aria-controls relationships.
+- Ensure keyboard users can navigate the accordion.
+
+Do not use lorem ipsum.
+Do not create unnecessary dependencies.
+Keep the component clean and easy to understand.
+Don't do over fancy it must provide a visual break and it should be extremely easy to scan 
+
+Prompt 8:
+You are an expert UI/UX designer and senior React developer.
+
+Create the final CTA and footer for the ABTalks landing page using React and Tailwind CSS.
+
+Context:
+ABTalks is a 60-day coding challenge for Indian college students. Students build something every day, make a GitHub commit, publish a LinkedIn post, and build a public learning streak.
+
+The landing page already contains:
+- Navbar
+- Hero
+- How It Works
+- Why Choose ABTalks / Benefits
+- Student Success
+- FAQ
+
+Do not modify any existing sections.
+
+Create two reusable components:
+1. FinalCTA.jsx
+2. Footer.jsx
+
+━━━━━━━━━━━━━━━━━━
+FINAL CTA
+━━━━━━━━━━━━━━━━━━
+
+Goal:
+This is the final conversion point. A student has already read the landing page, so the CTA should motivate them to actually start the challenge.
+
+Heading:
+"Your Next 60 Days Can Change Everything."
+
+Supporting text:
+"Stop waiting to feel ready. Start building, stay consistent, and make your progress visible."
+
+Primary button:
+"Start the Challenge"
+
+Secondary small text:
+"60 days. One commit at a time."
+
+Design:
+- Mobile-first at 390px
+- Premium and visually striking
+- Use the existing ABTalks purple/indigo visual language
+- Large rounded container or full-width gradient section
+- Subtle background glow/gradient
+- Strong typography hierarchy
+- Generous spacing
+- Button should have hover and active states
+- Add a subtle upward hover animation to the CTA
+- Avoid excessive animations
+- Make the CTA feel like a natural conclusion to the page
+
+The section should visually connect back to the Hero's "Code. Commit. Post. Build Consistency." concept.
+
+━━━━━━━━━━━━━━━━━━
+FOOTER
+━━━━━━━━━━━━━━━━━━
+
+Create a clean professional footer below the CTA.
+
+Include:
+
+Brand:
+"ABTalks."
+
+Short description:
+"Build consistently. Ship publicly. Grow together."
+
+Navigation:
+- Home
+- Dashboard
+- Challenge Day
+
+Resources:
+- How It Works
+- FAQ
+
+Social:
+- GitHub
+- LinkedIn
+
+Use Lucide React icons where appropriate.
+
+Bottom footer:
+- "© 2026 ABTalks. Built for students who keep showing up."
+- Add a small "Made with ❤️ for builders" message.
+
+Requirements:
+- Mobile-first design
+- Excellent at 390px
+- Responsive desktop layout
+- Stack sections naturally on mobile
+- Use a clean grid on desktop
+- No horizontal overflow
+- Subtle hover transitions on links
+- Consistent typography and spacing with the rest of the landing page
+- Use React and Tailwind CSS only
+- Keep components clean and reusable
+- Do not use lorem ipsum
+- Do not introduce unnecessary dependencies
+
+Important:
+The footer links should use React Router's Link component for internal routes.
+
+Use:
+"/"
+"/dashboard"
+"/day/12"
+
+Do not create authentication or backend functionality.
+
+Prompt 9:
+
+You are an expert product designer and senior React developer.
+
+Now build the ABTalks Student Dashboard at:
+
+/dashboard
+
+Context:
+ABTalks is a 60-day coding challenge for Indian college students.
+
+Students:
+- Choose a coding track
+- Build something every day
+- Submit a GitHub repository/commit
+- Publish a LinkedIn post
+- Maintain a public learning streak
+- Build projects and proof of work throughout the challenge
+
+The landing page is already complete. Do not modify the existing landing page sections.
+
+The dashboard is the most important screen after the student joins ABTalks.
+
+Create a premium, mobile-first dashboard using React and Tailwind CSS.
+
+Create a reusable component/page named Dashboard.jsx.
+
+IMPORTANT:
+This is a frontend-only hackathon project.
+Do NOT build authentication.
+Do NOT build a backend.
+Do NOT use a database.
+Use realistic mocked data directly in the frontend.
+
+━━━━━━━━━━━━━━━━━━━━━━
+DESIGN GOAL
+━━━━━━━━━━━━━━━━━━━━━━
+
+At 390px width, the student should understand within a few seconds:
+
+1. What day am I on?
+2. What is my current streak?
+3. What do I need to build today?
+4. How much of the challenge have I completed?
+5. What have I achieved so far?
+6. What should I do next?
+
+The dashboard should feel like a real product, not an admin panel.
+
+━━━━━━━━━━━━━━━━━━━━━━
+MOBILE-FIRST LAYOUT
+━━━━━━━━━━━━━━━━━━━━━━
+
+Design the dashboard specifically for 390px first.
+
+Suggested structure:
+
+1. Dashboard header
+2. Current streak / progress summary
+3. Today's challenge card
+4. GitHub + LinkedIn proof-of-work status
+5. Overall challenge progress
+6. Achievements / milestones
+7. Recent activity
+8. Desktop-only secondary navigation/sidebar if appropriate
+
+━━━━━━━━━━━━━━━━━━━━━━
+1. DASHBOARD HEADER
+━━━━━━━━━━━━━━━━━━━━━━
+
+Create a compact header.
+
+Include:
+
+- ABTalks logo
+- Student avatar
+- Student name: "Aarav Sharma"
+- Small greeting such as:
+  "Good evening, Aarav 👋"
+
+Do not make the header unnecessarily tall.
+
+On mobile:
+- Keep it compact
+- Avatar should be easy to tap
+- Avoid a large desktop-style navigation bar
+
+━━━━━━━━━━━━━━━━━━━━━━
+2. STREAK + PROGRESS SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━
+
+Create a visually strong summary card.
+
+Mock data:
+
+Current day:
+12 / 60
+
+Current streak:
+12 days
+
+Longest streak:
+12 days
+
+Challenge completion:
+20%
+
+Use:
+- Flame icon for streak
+- Circular or linear progress indicator for challenge completion
+- Strong visual hierarchy
+
+Make "12 day streak" the most visually prominent element.
+
+Add a small motivational message:
+
+"You're building momentum. Keep showing up."
+
+The card should feel encouraging, not childish.
+
+━━━━━━━━━━━━━━━━━━━━━━
+3. TODAY'S CHALLENGE
+━━━━━━━━━━━━━━━━━━━━━━
+
+This should be the main card on the dashboard.
+
+Heading:
+
+"Day 12 — Build a Habit Tracker"
+
+Include:
+
+Track:
+"MERN Stack"
+
+Difficulty:
+"Intermediate"
+
+Estimated time:
+"2–3 hours"
+
+Description:
+"Build a habit tracker where users can create habits, mark them complete, and view their weekly progress."
+
+Show a clear primary CTA:
+
+"Continue Challenge"
+
+The button should navigate to:
+
+/day/12
+
+Also show:
+
+"Due today"
+
+Use a subtle status indicator.
+
+━━━━━━━━━━━━━━━━━━━━━━
+4. PROOF OF WORK
+━━━━━━━━━━━━━━━━━━━━━━
+
+Create a compact section titled:
+
+"Today's Proof of Work"
+
+Show two submission items:
+
+GitHub
+- Status: "Pending"
+- Icon
+- "Add repository / commit"
+
+LinkedIn
+- Status: "Pending"
+- Icon
+- "Share your progress"
+
+Use visually distinct status badges.
+
+Make it obvious that completing the coding task alone isn't the entire daily workflow.
+
+The desired flow is:
+
+Build → Commit → Post → Complete
+
+━━━━━━━━━━━━━━━━━━━━━━
+5. OVERALL CHALLENGE PROGRESS
+━━━━━━━━━━━━━━━━━━━━━━
+
+Create a section:
+
+"Your 60-Day Journey"
+
+Show:
+
+12 completed
+48 remaining
+
+Add a progress bar:
+
+20%
+
+Also show a small calendar/activity visualization representing the student's previous days.
+
+Example:
+
+Days 1–12 completed
+Days 13–60 upcoming
+
+Use different visual states for:
+- Completed
+- Current day
+- Upcoming
+
+Keep it compact on mobile.
+
+━━━━━━━━━━━━━━━━━━━━━━
+6. ACHIEVEMENTS
+━━━━━━━━━━━━━━━━━━━━━━
+
+Create a section:
+
+"Achievements"
+
+Show 3–4 achievement cards.
+
+Examples:
+
+🔥 First 7 Days
+"Completed your first week"
+
+🚀 10 Day Streak
+"Stayed consistent for 10 days"
+
+💻 First Project
+"Submitted your first project"
+
+🏆 Halfway Hero
+"Unlocks at Day 30"
+
+Unlocked achievements should look active.
+
+Locked achievements should look muted but still understandable.
+
+Do NOT make the cards huge.
+
+━━━━━━━━━━━━━━━━━━━━━━
+7. RECENT ACTIVITY
+━━━━━━━━━━━━━━━━━━━━━━
+
+Add a small activity section.
+
+Example:
+
+Day 11
+"Built a weather dashboard"
+✓ GitHub submitted
+✓ LinkedIn shared
+
+Day 10
+"Built a search & filter app"
+✓ GitHub submitted
+✓ LinkedIn shared
+
+Day 9
+"Built a currency converter"
+✓ GitHub submitted
+✓ LinkedIn shared
+
+Use a vertical timeline or compact activity list.
+
+━━━━━━━━━━━━━━━━━━━━━━
+8. EDGE CASE DESIGN
+━━━━━━━━━━━━━━━━━━━━━━
+
+The challenge specifically requires realistic edge cases.
+
+Design the dashboard architecture so the mocked data can easily represent:
+
+FIRST DAY:
+- 0 day streak
+- Day 1
+- No previous activity
+- Message:
+  "Your journey starts today."
+
+MISSED DAY:
+- Show a missed-day indicator
+- Do not make the interface feel punishing
+- Message:
+  "You missed yesterday. That's okay — get back on track today."
+
+EMPTY PROFILE:
+- Avatar fallback
+- No achievements
+- No activity
+- Helpful empty states
+
+For the default screenshot, use the Day 12 active student state.
+
+━━━━━━━━━━━━━━━━━━━━━━
+VISUAL STYLE
+━━━━━━━━━━━━━━━━━━━━━━
+
+Use the same visual language established by the landing page:
+
+- Indigo / purple primary accent
+- Clean white cards
+- Soft gray backgrounds
+- Subtle borders
+- Rounded corners
+- Soft shadows
+- Premium typography
+- Strong hierarchy
+- Plenty of whitespace
+
+Do NOT make every card colorful.
+
+Use color primarily for:
+- Progress
+- Streak
+- Status
+- Important actions
+
+Avoid:
+- Excessive gradients
+- Excessive glassmorphism
+- Huge cards
+- Dashboard-template appearance
+- Unnecessary charts
+
+━━━━━━━━━━━━━━━━━━━━━━
+RESPONSIVENESS
+━━━━━━━━━━━━━━━━━━━━━━
+
+The automated evaluator will open:
+
+/dashboard
+
+at exactly:
+
+390px width
+
+Therefore:
+
+- No horizontal scrolling
+- No clipped content
+- No desktop layout squeezed into mobile
+- Cards should fit naturally
+- Buttons should be easy to tap
+- Text should never overflow
+- Use responsive breakpoints for tablet/desktop
+
+Desktop can use a sidebar or wider grid if it improves the experience, but mobile is the priority.
+
+━━━━━━━━━━━━━━━━━━━━━━
+INTERACTIONS
+━━━━━━━━━━━━━━━━━━━━━━
+
+Add subtle interactions:
+
+- Cards slightly lift on hover
+- Progress animation
+- Button hover/active states
+- Achievement hover states
+- Smooth transitions
+
+Do not over-animate the dashboard.
+
+━━━━━━━━━━━━━━━━━━━━━━
+ROUTING
+━━━━━━━━━━━━━━━━━━━━━━
+
+The "Continue Challenge" button must navigate to:
+
+/day/12
+
+Use the existing React Router setup.
+
+Do not create fake authentication.
+
+━━━━━━━━━━━━━━━━━━━━━━
+CODE QUALITY
+━━━━━━━━━━━━━━━━━━━━━━
+
+Keep Dashboard.jsx clean and componentized.
+
+If useful, create small reusable components such as:
+
+- StreakCard
+- TodayChallenge
+- ProofOfWork
+- ProgressCard
+- AchievementCard
+- ActivityTimeline
+
+Do not over-engineer.
+
+Use mocked data in a clear structure so it can easily be replaced with API data later.
+
+Do not modify package configuration unnecessarily.
+
+Do not introduce new dependencies unless absolutely necessary.
+
+Before finishing:
+- Test /dashboard at 390px
+- Test navigation to /day/12
+- Check for console errors
+- Check that no content overflows horizontally

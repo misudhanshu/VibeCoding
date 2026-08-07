@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Star, TrendingUp, Activity } from "lucide-react";
-import { FaGithub } from "react-icons/fa"
+import { Star, TrendingUp } from "lucide-react";
 
 const useIntersectionObserver = (options = {}) => {
   const [isIntersecting, setIsIntersecting] = useState(false);
