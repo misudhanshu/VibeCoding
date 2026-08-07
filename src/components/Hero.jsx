@@ -120,7 +120,7 @@ const Hero = () => {
               <div className="hidden sm:block h-10 w-px bg-gray-200" />
 
               <div className="flex flex-col">
-                <span className="text-xl font-bold text-gray-900">Daily</span>
+                <span className="text-xl font-bold text-gray-900">200+</span>
                 <span className="mt-1 text-sm font-medium text-gray-500">
                   GitHub Commits
                 </span>

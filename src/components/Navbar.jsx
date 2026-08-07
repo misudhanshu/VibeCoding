@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router';
+import React, { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -16,8 +16,8 @@ const Navbar = () => {
       }
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   // Close mobile menu on route change
@@ -28,21 +28,21 @@ const Navbar = () => {
   // Lock body scroll when mobile menu is open
   useEffect(() => {
     if (mobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     }
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     };
   }, [mobileMenuOpen]);
 
   const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'How It Works', path: '#how-it-works' },
-    { name: 'Features', path: '#features' },
-    { name: 'Testimonials', path: '#testimonials' },
-    { name: 'FAQ', path: '#faq' },
+    { name: "Home", path: "/" },
+    { name: "How It Works", path: "#how-it-works" },
+    { name: "Features", path: "#features" },
+    { name: "Testimonials", path: "#testimonials" },
+    { name: "FAQ", path: "#faq" },
   ];
 
   return (
@@ -50,13 +50,12 @@ const Navbar = () => {
       <header
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ease-in-out ${
           isScrolled
-            ? 'bg-white/80 backdrop-blur-lg shadow-[0_4px_30px_rgba(0,0,0,0.05)] py-3'
-            : 'bg-transparent py-5'
+            ? "bg-white/80 backdrop-blur-lg shadow-[0_4px_30px_rgba(0,0,0,0.05)] py-3"
+            : "bg-transparent py-5"
         }`}
       >
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="flex items-center justify-between">
-            
             {/* Logo */}
             <div className="flex-shrink-0">
               <Link
@@ -109,11 +108,14 @@ const Navbar = () => {
                   stroke="currentColor"
                   aria-hidden="true"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                  />
                 </svg>
               </button>
             </div>
-            
           </div>
         </div>
       </header>
@@ -121,7 +123,7 @@ const Navbar = () => {
       {/* Mobile Menu Overlay */}
       <div
         className={`fixed inset-0 z-[60] bg-gray-900/40 backdrop-blur-sm transition-opacity duration-300 md:hidden ${
-          mobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+          mobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
         }`}
         aria-hidden="true"
         onClick={() => setMobileMenuOpen(false)}
@@ -130,7 +132,7 @@ const Navbar = () => {
       {/* Mobile Menu Slide-over */}
       <div
         className={`fixed inset-y-0 right-0 z-[70] w-full max-w-sm bg-white shadow-2xl transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] md:hidden ${
-          mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+          mobileMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
         role="dialog"
         aria-modal="true"
@@ -160,7 +162,11 @@ const Navbar = () => {
                 stroke="currentColor"
                 aria-hidden="true"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
               </svg>
             </button>
           </div>
