@@ -8,10 +8,6 @@ const ChallengeDay = () => {
       <h1 className="text-3xl font-bold text-slate-900">
         Challenge Day {dayId}
       </h1>
-
-      <p className="mt-2 text-slate-600">
-        Complete today's task and submit your proof of work.
-      </p>
     </main>
   );
 };
