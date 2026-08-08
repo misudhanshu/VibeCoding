@@ -3,12 +3,12 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 const ProgressContext = createContext();
 
 export const DEFAULT_STATE = {
-  currentDay: 19,
-  currentStreak: 18,
-  completedDays: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18],
-  githubSubmitted: false,
-  linkedinSubmitted: false,
-  day12Completed: false,
+  currentDay: 8,
+  currentStreak: 7,
+  completedDays: [1, 2, 3, 4, 5, 6, 7],
+  githubSubmitted: true,
+  linkedinSubmitted: true,
+  day12Completed: true,
 };
 
 export const FIRST_DAY_STATE = {
