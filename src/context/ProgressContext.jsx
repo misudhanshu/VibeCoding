@@ -17,9 +17,9 @@ export const calculateCurrentStreak = (days) => {
 const ProgressContext = createContext();
 
 export const DEFAULT_STATE = {
-  currentDay: 8,
-  currentStreak: 7,
-  completedDays: [1, 2, 3, 4, 5, 6, 7],
+  currentDay: 13,
+  currentStreak: 12,
+  completedDays: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
   githubSubmitted: true,
   linkedinSubmitted: true,
   day12Completed: true,
@@ -64,7 +64,7 @@ export const ProgressProvider = ({ children }) => {
       const field = type === "github" ? "githubSubmitted" : "linkedinSubmitted";
       const currentProof = prev.proofOfWork || {};
       const dayProof = currentProof[dayNumber] || { githubSubmitted: false, linkedinSubmitted: false };
-      
+
       return {
         ...prev,
         proofOfWork: {
