@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Users, Flame } from "lucide-react";
-import { Link, useNavigate } from "react-router";
+import { useEffect, useState } from "react";
+import { Link } from "react-router";
 
 const Hero = () => {
   const [activeCell, setActiveCell] = useState(0);
@@ -13,7 +12,14 @@ const Hero = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const navigate = useNavigate();
+  const handleScrollToHowItWorks = (e) => {
+    e.preventDefault();
+    const target = document.getElementById("how-it-works");
+    if (target) {
+      const y = target.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+  };
 
   return (
     <section
@@ -63,7 +69,7 @@ const Hero = () => {
               </Link>
               <Link
                 to="#how-it-works"
-                onClick={(e) => handleNavClick(e, "#how-it-works")}
+                onClick={handleScrollToHowItWorks}
                 className="w-full sm:w-auto inline-flex items-center justify-center rounded-full bg-white dark:bg-[#172033] px-8 py-3.5 text-base font-semibold text-gray-900 dark:text-yellow-400 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-[#273449] transition-all hover:bg-gray-50 dark:hover:bg-[#1f2b45] focus:outline-none focus:ring-2 focus:ring-indigo-600 dark:focus:ring-yellow-400 focus:ring-offset-2 active:scale-95 group"
               >
                 See How It Works
@@ -236,13 +242,7 @@ const Hero = () => {
                           "bg-green-500",
                           "bg-green-400",
                         ];
-                        // Towards the end (right side), make it thicker green to show progress
-                        let index = 0;
-                        if (i > 15) {
-                          index = Math.floor(Math.random() * 4) + 1; // 1 to 4
-                        } else {
-                          index = Math.floor(Math.random() * 3); // 0 to 2
-                        }
+                        const index = i > 15 ? ((i * 7 + 3) % 4) + 1 : (i * 5 + 1) % 3;
                         return (
                           <div
                             key={i}

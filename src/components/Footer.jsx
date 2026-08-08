@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router";
 import { Heart } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";

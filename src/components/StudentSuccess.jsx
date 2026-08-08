@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Star, TrendingUp } from "lucide-react";
 
 const useIntersectionObserver = (options = {}) => {

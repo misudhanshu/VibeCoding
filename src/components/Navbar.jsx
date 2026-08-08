@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router";
 import { Sun, Moon } from "lucide-react";
 import { useTheme } from "../context/ThemeContext";
@@ -65,6 +65,7 @@ const Navbar = () => {
 
   const navLinks = [
     { name: "Home", path: "/" },
+    { name: "Roadmap", path: "/roadmap" },
     { name: "Features", path: "#features" },
     { name: "How It Works", path: "#how-it-works" },
     { name: "Testimonials", path: "#testimonials" },

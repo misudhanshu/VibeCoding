@@ -1,9 +1,10 @@
 import React from "react";
 import { Link } from "react-router"; // Fixed routing using standard v6/v7 'react-router'
-import { Flame, Clock, Signal, CheckCircle2, Sun, Moon, Sprout, Zap, ArrowRight, CalendarDays, Trophy, GitCommit, Check } from "lucide-react";
+import { Flame, Clock, Signal, Sun, Moon, Sprout, Zap, ArrowRight, CalendarDays, Trophy, GitCommit, Check, Compass } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { useTheme } from "../context/ThemeContext";
 import { useProgress, calculateCurrentStreak } from "../context/ProgressContext";
+import { getRoadmapById } from "../data/roadmapData";
 
 // ━━━━━━━━━━━━━━━━━━━━━━
 // MOCKED DATA
@@ -20,7 +21,7 @@ const MOCK_USER = {
   progress: 20,
 };
 
-export const getChallengeData = (day) => {
+const getChallengeData = (day) => {
   if (day === 13) return { title: "Responsive Weather Dashboard", diff: "Intermediate", time: "2-3 hours", desc: "Fetch data from a real weather API and display it beautifully." };
   if (day === 12) return { title: "Build a Habit Tracker", diff: "Intermediate", time: "2-3 hours", desc: "Build a habit tracker where users can create habits, mark them complete, and view their weekly progress." };
   if (day === 11) return { title: "Build a Search & Filter App", diff: "Intermediate", time: "2-3 hours", desc: "Create a list of items and build a search and filter system." };
@@ -448,6 +449,86 @@ const Achievements = ({ achievements }) => (
   </div>
 );
 
+const PersonalizedRoadmapWidget = ({ pData }) => {
+  const selectedId = pData.selectedRoadmapId;
+  const roadmap = getRoadmapById(selectedId);
+
+  if (!roadmap) {
+    return (
+      <div className="bg-white dark:bg-[#111827] rounded-2xl shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] ring-1 ring-gray-100 dark:ring-gray-800 p-5 sm:p-6 transition-transform hover:-translate-y-1 duration-300 border-l-4 border-l-indigo-500">
+        <div className="flex items-center gap-3 mb-3">
+          <div className="h-10 w-10 rounded-xl bg-indigo-50 dark:bg-gray-800 flex items-center justify-center text-indigo-600 dark:text-yellow-400 shrink-0">
+            <Compass className="h-5 w-5" />
+          </div>
+          <div>
+            <h3 className="text-xs font-extrabold uppercase tracking-wider text-indigo-600 dark:text-yellow-400">
+              Career Roadmap
+            </h3>
+            <p className="text-sm font-bold text-gray-900 dark:text-white">Choose Your Path</p>
+          </div>
+        </div>
+        <p className="text-xs text-gray-600 dark:text-slate-400 mb-4">
+          Select a career track (Frontend, Backend, Full-Stack, AI/ML, Data Science, DSA) to unlock structured learning milestones.
+        </p>
+        <Link
+          to="/roadmap"
+          className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 dark:bg-yellow-400 dark:hover:bg-yellow-300 px-4 py-2.5 text-xs font-bold text-white dark:text-gray-900 transition-all active:scale-95 shadow-sm"
+        >
+          Explore Roadmaps <ArrowRight className="h-3.5 w-3.5" />
+        </Link>
+      </div>
+    );
+  }
+
+  const completedMilestones = pData.roadmapProgress?.[roadmap.id]?.completedMilestones || [];
+  const allMilestones = roadmap.stages.flatMap((s) => s.milestones);
+  const totalCount = allMilestones.length;
+  const doneCount = completedMilestones.length;
+  const percent = totalCount > 0 ? Math.round((doneCount / totalCount) * 100) : 0;
+  const currentWorking = allMilestones.find((m) => !completedMilestones.includes(m.id)) || allMilestones[allMilestones.length - 1];
+
+  return (
+    <div className="bg-white dark:bg-[#111827] rounded-2xl shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] ring-1 ring-gray-100 dark:ring-gray-800 p-5 sm:p-6 transition-transform hover:-translate-y-1 duration-300 border-l-4 border-l-indigo-500">
+      <div className="flex items-center justify-between gap-2 mb-3">
+        <div className="flex items-center gap-3">
+          <div className="h-10 w-10 rounded-xl bg-indigo-50 dark:bg-gray-800 flex items-center justify-center text-indigo-600 dark:text-yellow-400 shrink-0">
+            <Compass className="h-5 w-5" />
+          </div>
+          <div>
+            <span className="text-[10px] font-extrabold uppercase tracking-widest text-indigo-600 dark:text-yellow-400">
+              Active Track
+            </span>
+            <h3 className="text-sm font-bold text-gray-900 dark:text-white leading-tight">
+              {roadmap.title}
+            </h3>
+          </div>
+        </div>
+        <span className="text-sm font-black text-indigo-600 dark:text-yellow-400">
+          {percent}%
+        </span>
+      </div>
+
+      <div className="h-2 w-full bg-gray-100 dark:bg-gray-800 rounded-full overflow-hidden mb-3">
+        <div
+          className="h-full bg-indigo-600 dark:bg-yellow-400 rounded-full transition-all duration-300"
+          style={{ width: `${percent}%` }}
+        />
+      </div>
+
+      <p className="text-xs text-gray-600 dark:text-slate-400 mb-4">
+        Working on: <span className="font-semibold text-gray-900 dark:text-slate-200">{currentWorking?.title || "Foundations"}</span>
+      </p>
+
+      <Link
+        to={`/roadmap/${roadmap.id}`}
+        className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-gray-900 hover:bg-indigo-600 dark:bg-white dark:hover:bg-yellow-400 px-4 py-2.5 text-xs font-bold text-white dark:text-gray-900 dark:hover:text-gray-900 transition-all active:scale-95 shadow-sm"
+      >
+        View Full Roadmap <ArrowRight className="h-3.5 w-3.5" />
+      </Link>
+    </div>
+  );
+};
+
 const ProofOfWorkTimeline = ({ completedDays, currentDay, githubSubmitted, linkedinSubmitted, pData }) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
   
@@ -681,6 +762,12 @@ const Dashboard = () => {
           </Link>
         </div>
         <div className="flex items-center gap-3">
+          <Link
+            to="/roadmap"
+            className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-indigo-50 dark:bg-yellow-400/10 px-3.5 py-1.5 text-xs font-bold text-indigo-600 dark:text-yellow-400 ring-1 ring-inset ring-indigo-600/20 dark:ring-yellow-400/30 hover:bg-indigo-100 dark:hover:bg-yellow-400/20 transition-colors mr-1"
+          >
+            <Compass className="h-3.5 w-3.5" /> Roadmap
+          </Link>
           <div className="hidden sm:block text-right mr-1">
             <p className="text-sm font-bold text-gray-900 dark:text-white">
               Good evening, {activeUser.name.split(" ")[0]} 👋
@@ -746,6 +833,7 @@ const Dashboard = () => {
 
           {/* Right / Sidebar Column */}
           <div className="space-y-6 lg:col-span-5 xl:col-span-4 lg:sticky lg:top-24">
+            <PersonalizedRoadmapWidget pData={pData} />
             <OverallProgress user={activeUser} completedDays={pData.completedDays} />
             <Achievements achievements={currentAchievements} />
           </div>

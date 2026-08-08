@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router";
 import {
   ArrowLeft,
@@ -6,7 +6,6 @@ import {
   Clock,
   Signal,
   CheckCircle2,
-  Trophy,
   ArrowDown,
   CheckSquare,
   Square,
@@ -99,8 +98,10 @@ const ChallengeDay = () => {
   const [reflection, setReflection] = useState("");
   const [justCompleted, setJustCompleted] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setTasks(challenge.tasks);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dayNumber]);
 
   const toggleTask = (id) => {

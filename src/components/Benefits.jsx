@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { TrendingUp, Briefcase, Users } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
 
@@ -65,7 +65,7 @@ const Benefits = () => {
   const [headerRef, isHeaderVisible] = useIntersectionObserver({
     threshold: 0.1,
   });
-  const [gridRef, isGridVisible] = useIntersectionObserver({ threshold: 0.1 });
+  const [gridRef] = useIntersectionObserver({ threshold: 0.1 });
 
   return (
     <section

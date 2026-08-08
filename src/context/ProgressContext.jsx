@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+/* eslint-disable react-refresh/only-export-components */
+import { createContext, useContext, useState, useEffect } from "react";
 
 export const calculateCurrentStreak = (days) => {
   if (!days || days.length === 0) return 0;
@@ -25,7 +26,9 @@ export const DEFAULT_STATE = {
   day12Completed: true,
   proofOfWork: {
     12: { githubSubmitted: true, linkedinSubmitted: true }
-  }
+  },
+  selectedRoadmapId: null,
+  roadmapProgress: {}
 };
 
 export const FIRST_DAY_STATE = {
@@ -35,7 +38,9 @@ export const FIRST_DAY_STATE = {
   githubSubmitted: false,
   linkedinSubmitted: false,
   day12Completed: false,
-  proofOfWork: {}
+  proofOfWork: {},
+  selectedRoadmapId: null,
+  roadmapProgress: {}
 };
 
 export const ProgressProvider = ({ children }) => {
@@ -47,8 +52,14 @@ export const ProgressProvider = ({ children }) => {
         if (!parsed.proofOfWork) {
           parsed.proofOfWork = {};
         }
+        if (!parsed.roadmapProgress) {
+          parsed.roadmapProgress = {};
+        }
+        if (parsed.selectedRoadmapId === undefined) {
+          parsed.selectedRoadmapId = null;
+        }
         return parsed;
-      } catch (e) {
+      } catch {
         return DEFAULT_STATE;
       }
     }
@@ -93,6 +104,36 @@ export const ProgressProvider = ({ children }) => {
     });
   };
 
+  const setSelectedRoadmap = (roadmapId) => {
+    setProgress((prev) => ({
+      ...prev,
+      selectedRoadmapId: roadmapId
+    }));
+  };
+
+  const toggleRoadmapMilestone = (roadmapId, milestoneId) => {
+    if (!roadmapId || !milestoneId) return;
+    setProgress((prev) => {
+      const roadmapProg = prev.roadmapProgress || {};
+      const currentMilestones = roadmapProg[roadmapId]?.completedMilestones || [];
+      const exists = currentMilestones.includes(milestoneId);
+      const updatedMilestones = exists
+        ? currentMilestones.filter((id) => id !== milestoneId)
+        : [...currentMilestones, milestoneId];
+
+      return {
+        ...prev,
+        roadmapProgress: {
+          ...roadmapProg,
+          [roadmapId]: {
+            ...roadmapProg[roadmapId],
+            completedMilestones: updatedMilestones
+          }
+        }
+      };
+    });
+  };
+
   const resetToFirstDay = () => setProgress(FIRST_DAY_STATE);
   const resetToDefault = () => setProgress(DEFAULT_STATE);
 
@@ -102,6 +143,8 @@ export const ProgressProvider = ({ children }) => {
         progress,
         updateSubmission,
         completeDay12,
+        setSelectedRoadmap,
+        toggleRoadmapMilestone,
         resetToFirstDay,
         resetToDefault,
         setProgress,
@@ -113,3 +156,4 @@ export const ProgressProvider = ({ children }) => {
 };
 
 export const useProgress = () => useContext(ProgressContext);
+

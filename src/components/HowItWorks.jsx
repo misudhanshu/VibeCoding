@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { UserPlus, Code2, Trophy } from "lucide-react";
 
 // Optional: A small custom hook for scroll animations
