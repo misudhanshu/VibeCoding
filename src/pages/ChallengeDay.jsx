@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { useTheme } from "../context/ThemeContext";
-import { useProgress } from "../context/ProgressContext";
+import { useProgress, calculateCurrentStreak } from "../context/ProgressContext";
 
 const INITIAL_TASKS = [
   { id: 1, text: "User can create a habit", done: false },
@@ -51,9 +51,9 @@ const ChallengeDay = () => {
   const { isDark, toggleTheme } = useTheme();
   const { progress, updateSubmission, setProgress } = useProgress();
   
-  const isTestDay = dayNumber !== 12;
-  const githubSubmitted = isTestDay ? !!progress.testGithubSubmitted : !!progress.githubSubmitted;
-  const linkedinSubmitted = isTestDay ? !!progress.testLinkedinSubmitted : !!progress.linkedinSubmitted;
+  const dayProof = progress.proofOfWork?.[dayNumber] || {};
+  const githubSubmitted = !!dayProof.githubSubmitted;
+  const linkedinSubmitted = !!dayProof.linkedinSubmitted;
 
   const getChallengeData = (day) => {
     if (day === 0) {
@@ -90,11 +90,8 @@ const ChallengeDay = () => {
   };
 
   const challenge = getChallengeData(dayNumber);
-  const calculatedProgress = isTestDay ? 0 : Math.round((progress.completedDays.length / 60) * 100);
-  const currentStreak = isTestDay ? 0 : progress.currentStreak;
-  const isCompletedDay = isTestDay 
-    ? !!(progress.testCompletedDays && progress.testCompletedDays.includes(dayNumber))
-    : progress.completedDays.includes(dayNumber);
+  const currentStreak = calculateCurrentStreak(progress.completedDays);
+  const isCompletedDay = progress.completedDays.includes(dayNumber);
 
   // States
   const [tasks, setTasks] = useState(challenge.tasks);
@@ -113,10 +110,7 @@ const ChallengeDay = () => {
   const handleGithubSubmit = (e) => {
     e.preventDefault();
     if (githubUrl.includes("github.com")) {
-      setProgress(prev => ({
-        ...prev,
-        [isTestDay ? "testGithubSubmitted" : "githubSubmitted"]: true
-      }));
+      updateSubmission(dayNumber, "github", true);
     } else {
       alert("Please enter a valid GitHub URL");
     }
@@ -126,21 +120,13 @@ const ChallengeDay = () => {
     if (githubSubmitted && linkedinSubmitted) {
       setJustCompleted(true);
       setProgress(prev => {
-        if (isTestDay) {
-          if (prev.testCompletedDays && prev.testCompletedDays.includes(dayNumber)) return prev;
-          return {
-            ...prev,
-            testCompletedDays: [...(prev.testCompletedDays || []), dayNumber]
-          };
-        } else {
-          if (prev.completedDays.includes(dayNumber)) return prev;
-          return {
-            ...prev,
-            day12Completed: dayNumber === 12 ? true : prev.day12Completed,
-            completedDays: [...prev.completedDays, dayNumber],
-            currentStreak: prev.currentStreak + 1
-          };
-        }
+        if (prev.completedDays.includes(dayNumber)) return prev;
+        return {
+          ...prev,
+          day12Completed: dayNumber === 12 ? true : prev.day12Completed,
+          completedDays: [...prev.completedDays, dayNumber],
+          currentDay: prev.currentDay === dayNumber ? prev.currentDay + 1 : prev.currentDay
+        };
       });
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
@@ -433,7 +419,7 @@ const ChallengeDay = () => {
                       </a>
                     </div>
                     <button
-                      onClick={() => setProgress(prev => ({ ...prev, [isTestDay ? "testGithubSubmitted" : "githubSubmitted"]: false }))}
+                      onClick={() => updateSubmission(dayNumber, "github", false)}
                       className="ml-auto text-xs font-semibold text-green-700 dark:text-green-400 hover:text-green-900 dark:hover:text-green-300 focus:outline-none"
                     >
                       Undo
@@ -492,7 +478,7 @@ const ChallengeDay = () => {
                       </p>
                     </div>
                     <button
-                      onClick={() => setProgress(prev => ({ ...prev, [isTestDay ? "testLinkedinSubmitted" : "linkedinSubmitted"]: false }))}
+                      onClick={() => updateSubmission(dayNumber, "linkedin", false)}
                       className="ml-auto text-xs font-semibold text-green-700 dark:text-green-400 hover:text-green-900 dark:hover:text-green-300 focus:outline-none"
                     >
                       Undo
@@ -500,7 +486,7 @@ const ChallengeDay = () => {
                   </div>
                 ) : (
                   <button
-                    onClick={() => setProgress(prev => ({ ...prev, [isTestDay ? "testLinkedinSubmitted" : "linkedinSubmitted"]: true }))}
+                    onClick={() => updateSubmission(dayNumber, "linkedin", true)}
                     className="w-full flex items-center justify-center rounded-xl bg-blue-600 px-4 py-3 text-sm font-bold text-white transition-transform hover:-translate-y-0.5 active:scale-95 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 dark:focus:ring-offset-gray-900 shadow-sm shadow-blue-500/20"
                   >
                     Share Progress

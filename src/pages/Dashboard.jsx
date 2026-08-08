@@ -3,7 +3,7 @@ import { Link } from "react-router"; // Fixed routing using standard v6/v7 'reac
 import { Flame, Clock, Signal, CheckCircle2, Sun, Moon, Sprout, Zap, ArrowRight, CalendarDays, Trophy, GitCommit, Check } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { useTheme } from "../context/ThemeContext";
-import { useProgress } from "../context/ProgressContext";
+import { useProgress, calculateCurrentStreak } from "../context/ProgressContext";
 
 // ━━━━━━━━━━━━━━━━━━━━━━
 // MOCKED DATA
@@ -448,7 +448,7 @@ const Achievements = ({ achievements }) => (
   </div>
 );
 
-const ProofOfWorkTimeline = ({ completedDays, currentDay, githubSubmitted, linkedinSubmitted }) => {
+const ProofOfWorkTimeline = ({ completedDays, currentDay, githubSubmitted, linkedinSubmitted, pData }) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
   
   const sortedDays = [...completedDays].sort((a, b) => b - a);
@@ -476,13 +476,14 @@ const ProofOfWorkTimeline = ({ completedDays, currentDay, githubSubmitted, linke
   }
   
   sortedDays.forEach(day => {
+    const dayProof = pData?.proofOfWork?.[day] || { githubSubmitted: true, linkedinSubmitted: true };
     entries.push({
       id: `completed-${day}`,
       day: day,
       title: getChallengeData(day).title,
       isCompleted: true,
-      github: true,
-      linkedin: true,
+      github: !!dayProof.githubSubmitted,
+      linkedin: !!dayProof.linkedinSubmitted,
       date: generateMockDate(day),
     });
   });
@@ -613,7 +614,7 @@ const Dashboard = () => {
         current = 1;
       }
     }
-    return Math.max(longest, pData.currentStreak);
+    return Math.max(longest, calculateCurrentStreak(pData.completedDays));
   };
 
   const calculatedProgress = Math.round((pData.completedDays.length / 60) * 100);
@@ -621,7 +622,7 @@ const Dashboard = () => {
   const activeUser = {
     ...MOCK_USER,
     currentDay: pData.currentDay,
-    streak: pData.currentStreak,
+    streak: calculateCurrentStreak(pData.completedDays),
     longestStreak: calculateLongestStreak(pData.completedDays),
     progress: calculatedProgress,
   };
@@ -637,7 +638,7 @@ const Dashboard = () => {
       title: "10 Day Streak",
       desc: "Stayed consistent for 10 days",
       icon: "🚀",
-      unlocked: pData.currentStreak >= 10,
+      unlocked: activeUser.streak >= 10,
     },
     {
       title: "First Project",
@@ -661,6 +662,10 @@ const Dashboard = () => {
     time: challengeData.time,
     description: challengeData.desc,
   };
+
+  const currentDayProof = pData.proofOfWork?.[pData.currentDay] || {};
+  const isGithubSubmitted = !!currentDayProof.githubSubmitted;
+  const isLinkedinSubmitted = !!currentDayProof.linkedinSubmitted;
 
   return (
     <main className="min-h-screen bg-slate-50 dark:bg-[#0B1020] font-sans pb-20 overflow-x-hidden selection:bg-indigo-100 dark:selection:bg-indigo-900/50 selection:text-indigo-900 dark:selection:text-indigo-100 transition-colors duration-300">
@@ -727,14 +732,15 @@ const Dashboard = () => {
               totalDays={activeUser.totalDays}
             />
             <ProofOfWork 
-              githubSubmitted={pData.githubSubmitted} 
-              linkedinSubmitted={pData.linkedinSubmitted} 
+              githubSubmitted={isGithubSubmitted} 
+              linkedinSubmitted={isLinkedinSubmitted} 
             />
             <ProofOfWorkTimeline 
               completedDays={pData.completedDays}
               currentDay={pData.currentDay}
-              githubSubmitted={pData.githubSubmitted}
-              linkedinSubmitted={pData.linkedinSubmitted}
+              githubSubmitted={isGithubSubmitted}
+              linkedinSubmitted={isLinkedinSubmitted}
+              pData={pData}
             />
           </div>
 

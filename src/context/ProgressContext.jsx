@@ -1,5 +1,19 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 
+export const calculateCurrentStreak = (days) => {
+  if (!days || days.length === 0) return 0;
+  const sorted = [...new Set(days)].sort((a, b) => a - b);
+  let current = 1;
+  for (let i = sorted.length - 1; i > 0; i--) {
+    if (sorted[i] === sorted[i - 1] + 1) {
+      current++;
+    } else {
+      break;
+    }
+  }
+  return current;
+};
+
 const ProgressContext = createContext();
 
 export const DEFAULT_STATE = {
@@ -9,6 +23,9 @@ export const DEFAULT_STATE = {
   githubSubmitted: true,
   linkedinSubmitted: true,
   day12Completed: true,
+  proofOfWork: {
+    12: { githubSubmitted: true, linkedinSubmitted: true }
+  }
 };
 
 export const FIRST_DAY_STATE = {
@@ -18,6 +35,7 @@ export const FIRST_DAY_STATE = {
   githubSubmitted: false,
   linkedinSubmitted: false,
   day12Completed: false,
+  proofOfWork: {}
 };
 
 export const ProgressProvider = ({ children }) => {
@@ -25,7 +43,11 @@ export const ProgressProvider = ({ children }) => {
     const saved = localStorage.getItem("abtalks-progress");
     if (saved) {
       try {
-        return JSON.parse(saved);
+        const parsed = JSON.parse(saved);
+        if (!parsed.proofOfWork) {
+          parsed.proofOfWork = {};
+        }
+        return parsed;
       } catch (e) {
         return DEFAULT_STATE;
       }
@@ -37,11 +59,23 @@ export const ProgressProvider = ({ children }) => {
     localStorage.setItem("abtalks-progress", JSON.stringify(progress));
   }, [progress]);
 
-  const updateSubmission = (type, value) => {
-    setProgress((prev) => ({
-      ...prev,
-      [type === "github" ? "githubSubmitted" : "linkedinSubmitted"]: value,
-    }));
+  const updateSubmission = (dayNumber, type, value) => {
+    setProgress((prev) => {
+      const field = type === "github" ? "githubSubmitted" : "linkedinSubmitted";
+      const currentProof = prev.proofOfWork || {};
+      const dayProof = currentProof[dayNumber] || { githubSubmitted: false, linkedinSubmitted: false };
+      
+      return {
+        ...prev,
+        proofOfWork: {
+          ...currentProof,
+          [dayNumber]: {
+            ...dayProof,
+            [field]: value
+          }
+        }
+      };
+    });
   };
 
   const completeDay12 = () => {
@@ -51,8 +85,10 @@ export const ProgressProvider = ({ children }) => {
         ...prev,
         day12Completed: true,
         completedDays: [...prev.completedDays, 12],
-        githubSubmitted: true,
-        linkedinSubmitted: true,
+        proofOfWork: {
+          ...prev.proofOfWork,
+          12: { githubSubmitted: true, linkedinSubmitted: true }
+        }
       };
     });
   };
