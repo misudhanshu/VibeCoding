@@ -157,7 +157,7 @@ const Hero = () => {
                 </div>
 
                 {/* IDE Content */}
-                <div className="p-4 sm:p-6 font-mono text-sm">
+                <div className="p-4 sm:p-6 overflow-x-auto font-mono text-sm">
                   <div className="flex text-gray-400">
                     <span className="w-6 text-gray-600 select-none">1</span>
                     <span className="text-purple-400">function</span>
@@ -203,7 +203,7 @@ const Hero = () => {
                     <span className="text-gray-300">.</span>
                     <span className="text-blue-200">commit</span>
                     <span className="text-gray-300">(</span>
-                    <span className="text-green-300">
+                    <span className="text-green-300 whitespace-nowrap">
                       'feat: started ABTalks journey!'
                     </span>
                     <span className="text-gray-300">);</span>
@@ -251,10 +251,9 @@ const Hero = () => {
                               transition-all
                               duration-500
                               hover:bg-green-300
-                              ${
-                                activeCell === i
-                                  ? "scale-125 ring-2 ring-green-300 shadow-lg shadow-green-500/40"
-                                  : ""
+                              ${activeCell === i
+                                ? "scale-125 ring-2 ring-green-300 shadow-lg shadow-green-500/40"
+                                : ""
                               }
 `}
                           />

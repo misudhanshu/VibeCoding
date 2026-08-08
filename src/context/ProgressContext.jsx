@@ -4,7 +4,7 @@ const ProgressContext = createContext();
 
 export const DEFAULT_STATE = {
   currentDay: 12,
-  currentStreak: 12,
+  currentStreak: 11,
   completedDays: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
   githubSubmitted: false,
   linkedinSubmitted: false,
