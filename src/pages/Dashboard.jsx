@@ -20,47 +20,16 @@ const MOCK_USER = {
   progress: 20,
 };
 
-const MOCK_TODAY = {
-  day: 12,
-  title: "Build a Habit Tracker",
-  difficulty: "Intermediate",
-  time: "2–3 hours",
-  description:
-    "Build a habit tracker where users can create habits, mark them complete, and view their weekly progress.",
+export const getChallengeData = (day) => {
+  if (day === 13) return { title: "Responsive Weather Dashboard", diff: "Intermediate", time: "2-3 hours", desc: "Fetch data from a real weather API and display it beautifully." };
+  if (day === 12) return { title: "Build a Habit Tracker", diff: "Intermediate", time: "2-3 hours", desc: "Build a habit tracker where users can create habits, mark them complete, and view their weekly progress." };
+  if (day === 11) return { title: "Build a Search & Filter App", diff: "Intermediate", time: "2-3 hours", desc: "Create a list of items and build a search and filter system." };
+  if (day === 10) return { title: "Weather Dashboard", diff: "Beginner", time: "1-2 hours", desc: "Use a public API to show the weather for a given city." };
+  if (day === 9) return { title: "Currency Converter", diff: "Beginner", time: "1-2 hours", desc: "Convert between different currencies using a live exchange rate API." };
+  if (day === 2) return { title: "Build a Todo App", diff: "Beginner", time: "1-2 hours", desc: "Learn state management by building a functional todo list." };
+  if (day === 1) return { title: "Start Your Journey", diff: "Beginner", time: "1 hour", desc: "Set up your development environment and build your first component." };
+  return { title: `Challenge for Day ${day}`, diff: "Beginner", time: "1-2 hours", desc: `Complete the task for Day ${day} and share your progress.` };
 };
-
-const MOCK_ACTIVITY = [
-  { day: 11, title: "Built a weather dashboard" },
-  { day: 10, title: "Built a search & filter app" },
-  { day: 9, title: "Built a currency converter" },
-];
-
-const MOCK_ACHIEVEMENTS = [
-  {
-    title: "First 7 Days",
-    desc: "Completed your first week",
-    icon: "🔥",
-    unlocked: true,
-  },
-  {
-    title: "10 Day Streak",
-    desc: "Stayed consistent for 10 days",
-    icon: "🚀",
-    unlocked: true,
-  },
-  {
-    title: "First Project",
-    desc: "Submitted your first project",
-    icon: "💻",
-    unlocked: true,
-  },
-  {
-    title: "Halfway Hero",
-    desc: "Unlocks at Day 30",
-    icon: "🏆",
-    unlocked: false,
-  },
-];
 
 // ━━━━━━━━━━━━━━━━━━━━━━
 // REUSABLE COMPONENTS
@@ -191,19 +160,7 @@ const NextUpCard = ({ currentDay, completedDays, totalDays }) => {
   }
 
   const nextDay = currentDay + 1;
-
-  // Mock next challenge data for preview
-  const getNextChallengeTitle = (day) => {
-    if (day === 13) return "Build a responsive weather dashboard";
-    if (day === 2) return "Build a Todo App";
-    return `Challenge for Day ${day}`;
-  };
-
-  const getNextChallengeDesc = (day) => {
-    if (day === 13) return "Fetch data from a real weather API and display it beautifully.";
-    if (day === 2) return "Learn state management by building a functional todo list.";
-    return `Get ready for your next exciting build for day ${day}.`;
-  };
+  const nextChallenge = getChallengeData(nextDay);
 
   return (
     <div className="bg-white dark:bg-[#111827] rounded-2xl shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] ring-1 ring-gray-100 dark:ring-gray-800 p-6 sm:p-8 transition-transform hover:-translate-y-1 duration-300 border-t-4 border-t-green-500 relative overflow-hidden">
@@ -219,11 +176,11 @@ const NextUpCard = ({ currentDay, completedDays, totalDays }) => {
           <p className="text-gray-600 dark:text-slate-400 text-sm font-medium mb-5">Keep the momentum going. You finished today's work. Here's what's waiting for you next.</p>
           
           <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-4 ring-1 ring-gray-100 dark:ring-gray-700/50">
-            <p className="text-sm font-bold text-gray-900 dark:text-white mb-2">{getNextChallengeTitle(nextDay)}</p>
-            <p className="text-xs text-gray-500 dark:text-slate-400 mb-3">{getNextChallengeDesc(nextDay)}</p>
+            <p className="text-sm font-bold text-gray-900 dark:text-white mb-2">{nextChallenge.title}</p>
+            <p className="text-xs text-gray-500 dark:text-slate-400 mb-3">{nextChallenge.desc}</p>
             <div className="flex flex-wrap items-center gap-3 text-xs font-semibold text-gray-500 dark:text-slate-400">
-              <span className="flex items-center gap-1"><Signal className="h-3 w-3 text-amber-500 dark:text-amber-400" /> Intermediate</span>
-              <span className="flex items-center gap-1"><Clock className="h-3 w-3 text-blue-500 dark:text-blue-400" /> 1-2 hours</span>
+              <span className="flex items-center gap-1"><Signal className="h-3 w-3 text-amber-500 dark:text-amber-400" /> {nextChallenge.diff}</span>
+              <span className="flex items-center gap-1"><Clock className="h-3 w-3 text-blue-500 dark:text-blue-400" /> {nextChallenge.time}</span>
             </div>
           </div>
         </div>
@@ -497,18 +454,9 @@ const ProofOfWorkTimeline = ({ completedDays, currentDay, githubSubmitted, linke
   const sortedDays = [...completedDays].sort((a, b) => b - a);
   const isCurrentDayCompleted = completedDays.includes(currentDay);
   
-  const getMockTitle = (d) => {
-    if (d === 13) return "Responsive Weather Dashboard";
-    if (d === 12) return "Habit Tracker";
-    if (d === 11) return "Build a Search & Filter App";
-    if (d === 10) return "Weather Dashboard";
-    if (d === 9) return "Currency Converter";
-    return `Challenge for Day ${d}`;
-  };
-
   const generateMockDate = (d) => {
-    const baseDate = new Date(2026, 7, 8);
-    const diff = 12 - d;
+    const baseDate = new Date();
+    const diff = currentDay > 0 ? currentDay - d : 0;
     baseDate.setDate(baseDate.getDate() - diff);
     return baseDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
   };
@@ -519,7 +467,7 @@ const ProofOfWorkTimeline = ({ completedDays, currentDay, githubSubmitted, linke
     entries.push({
       id: `in-progress-${currentDay}`,
       day: currentDay,
-      title: getMockTitle(currentDay),
+      title: getChallengeData(currentDay).title,
       isCompleted: false,
       github: githubSubmitted,
       linkedin: linkedinSubmitted,
@@ -531,7 +479,7 @@ const ProofOfWorkTimeline = ({ completedDays, currentDay, githubSubmitted, linke
     entries.push({
       id: `completed-${day}`,
       day: day,
-      title: getMockTitle(day),
+      title: getChallengeData(day).title,
       isCompleted: true,
       github: true,
       linkedin: true,
@@ -652,23 +600,67 @@ const Dashboard = () => {
   const { isDark, toggleTheme } = useTheme();
   const { progress: pData } = useProgress();
 
+  const calculateLongestStreak = (days) => {
+    if (!days || days.length === 0) return 0;
+    let longest = 1;
+    let current = 1;
+    const sorted = [...days].sort((a,b) => a - b);
+    for (let i = 1; i < sorted.length; i++) {
+      if (sorted[i] === sorted[i-1] + 1) {
+        current++;
+        longest = Math.max(longest, current);
+      } else if (sorted[i] !== sorted[i-1]) {
+        current = 1;
+      }
+    }
+    return Math.max(longest, pData.currentStreak);
+  };
+
   const calculatedProgress = Math.round((pData.completedDays.length / 60) * 100);
 
   const activeUser = {
     ...MOCK_USER,
     currentDay: pData.currentDay,
     streak: pData.currentStreak,
-    longestStreak: Math.max(12, pData.currentStreak),
+    longestStreak: calculateLongestStreak(pData.completedDays),
     progress: calculatedProgress,
   };
 
-  const isFirstDay = activeUser.currentDay === 1 && activeUser.streak === 0;
+  const currentAchievements = [
+    {
+      title: "First 7 Days",
+      desc: "Completed your first week",
+      icon: "🔥",
+      unlocked: pData.completedDays.length >= 7,
+    },
+    {
+      title: "10 Day Streak",
+      desc: "Stayed consistent for 10 days",
+      icon: "🚀",
+      unlocked: pData.currentStreak >= 10,
+    },
+    {
+      title: "First Project",
+      desc: "Submitted your first project",
+      icon: "💻",
+      unlocked: pData.completedDays.length > 0,
+    },
+    {
+      title: "Halfway Hero",
+      desc: "Unlocks at Day 30",
+      icon: "🏆",
+      unlocked: pData.completedDays.length >= 30,
+    },
+  ];
 
-  const currentAchievements = isFirstDay
-    ? MOCK_ACHIEVEMENTS.map((a) => ({ ...a, unlocked: false }))
-    : MOCK_ACHIEVEMENTS;
-
-  const currentActivity = isFirstDay ? [] : MOCK_ACTIVITY;
+  const challengeData = getChallengeData(activeUser.currentDay);
+  const currentTodayMock = {
+    day: activeUser.currentDay,
+    title: challengeData.title,
+    difficulty: challengeData.diff,
+    time: challengeData.time,
+    description: challengeData.desc,
+  };
 
   return (
     <main className="min-h-screen bg-slate-50 dark:bg-[#0B1020] font-sans pb-20 overflow-x-hidden selection:bg-indigo-100 dark:selection:bg-indigo-900/50 selection:text-indigo-900 dark:selection:text-indigo-100 transition-colors duration-300">
@@ -728,7 +720,7 @@ const Dashboard = () => {
               streak={pData.currentStreak} 
               completedDays={pData.completedDays} 
             />
-            <TodayChallenge today={MOCK_TODAY} track={activeUser.track} />
+            <TodayChallenge today={currentTodayMock} track={activeUser.track} />
             <NextUpCard 
               currentDay={pData.currentDay} 
               completedDays={pData.completedDays}
