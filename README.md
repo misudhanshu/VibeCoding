@@ -8,9 +8,11 @@ https://vibe-coding-theta-drab.vercel.app/
 
 ## Route Map
 
-/
- /dashboard
- /day/12
+/ URL: https://vibe-coding-theta-drab.vercel.app/
+
+/dashboard URL: https://vibe-coding-theta-drab.vercel.app/dashboard
+
+/day/12 URL: https://vibe-coding-theta-drab.vercel.app/day/12
 
 ## Project Overview
 
