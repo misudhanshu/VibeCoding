@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router"; // Fixed routing using standard v6/v7 'react-router'
-import { Flame, Clock, Signal, CheckCircle2, Sun, Moon, Sprout, Zap, ArrowRight, CalendarDays, Trophy } from "lucide-react";
+import { Flame, Clock, Signal, CheckCircle2, Sun, Moon, Sprout, Zap, ArrowRight, CalendarDays, Trophy, GitCommit, Check } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { useTheme } from "../context/ThemeContext";
 import { useProgress } from "../context/ProgressContext";
@@ -491,42 +491,158 @@ const Achievements = ({ achievements }) => (
   </div>
 );
 
-const ActivityTimeline = ({ activity }) => (
-  <div className="bg-white dark:bg-[#111827] rounded-2xl shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] ring-1 ring-gray-100 dark:ring-gray-800 p-5 sm:p-6 transition-transform hover:-translate-y-1 duration-300">
-    <h3 className="text-base font-bold text-gray-900 dark:text-white mb-6">
-      Recent Activity
-    </h3>
-    <div className="relative border-l-2 border-indigo-100 dark:border-gray-800 ml-3 space-y-8 pb-2">
-      {activity.length === 0 ? (
-        <p className="text-sm text-gray-500 dark:text-slate-500 pl-4 py-2 font-medium">
-          No previous activity.
+const ProofOfWorkTimeline = ({ completedDays, currentDay, githubSubmitted, linkedinSubmitted }) => {
+  const [isExpanded, setIsExpanded] = React.useState(false);
+  
+  const sortedDays = [...completedDays].sort((a, b) => b - a);
+  const isCurrentDayCompleted = completedDays.includes(currentDay);
+  
+  const getMockTitle = (d) => {
+    if (d === 13) return "Responsive Weather Dashboard";
+    if (d === 12) return "Habit Tracker";
+    if (d === 11) return "Build a Search & Filter App";
+    if (d === 10) return "Weather Dashboard";
+    if (d === 9) return "Currency Converter";
+    return `Challenge for Day ${d}`;
+  };
+
+  const generateMockDate = (d) => {
+    const baseDate = new Date(2026, 7, 8);
+    const diff = 12 - d;
+    baseDate.setDate(baseDate.getDate() - diff);
+    return baseDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  };
+
+  const entries = [];
+  
+  if (!isCurrentDayCompleted && currentDay > 0) {
+    entries.push({
+      id: `in-progress-${currentDay}`,
+      day: currentDay,
+      title: getMockTitle(currentDay),
+      isCompleted: false,
+      github: githubSubmitted,
+      linkedin: linkedinSubmitted,
+      date: "In Progress",
+    });
+  }
+  
+  sortedDays.forEach(day => {
+    entries.push({
+      id: `completed-${day}`,
+      day: day,
+      title: getMockTitle(day),
+      isCompleted: true,
+      github: true,
+      linkedin: true,
+      date: generateMockDate(day),
+    });
+  });
+
+  if (entries.length === 0) {
+    return (
+      <div className="bg-white dark:bg-[#111827] rounded-2xl shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] ring-1 ring-gray-100 dark:ring-gray-800 p-6 sm:p-8 transition-transform hover:-translate-y-1 duration-300 text-center border-t-4 border-t-green-500">
+        <h3 className="text-sm font-extrabold text-green-600 dark:text-green-500 tracking-widest uppercase mb-4 flex items-center justify-center gap-2">
+          Your Journey Starts Here <Sprout className="h-5 w-5" />
+        </h3>
+        <p className="text-gray-900 dark:text-white font-bold text-lg mb-2">No proof of work yet.</p>
+        <p className="text-gray-600 dark:text-slate-400 text-sm mb-6 max-w-sm mx-auto">
+          Complete your first challenge and your progress will appear here.
         </p>
-      ) : (
-        activity.map((act) => (
-          <div key={act.day} className="relative pl-6 group">
-            <span className="absolute -left-[9px] top-1 h-4 w-4 rounded-full bg-green-500 ring-4 ring-white dark:ring-[#111827] shadow-sm transition-transform group-hover:scale-110"></span>
-            <p className="text-xs font-extrabold text-indigo-600 dark:text-yellow-400 tracking-wide uppercase mb-1">
-              Day {act.day}
-            </p>
-            <p className="text-sm font-bold text-gray-900 dark:text-white mb-2">
-              {act.title}
-            </p>
-            <div className="flex flex-col gap-2">
-              <div className="flex items-center gap-2 text-xs font-medium text-gray-600 dark:text-slate-400">
-                <CheckCircle2 className="h-4 w-4 text-green-500 dark:text-green-400" />{" "}
-                GitHub submitted
+        <Link
+          to="/day/1"
+          className="inline-flex items-center justify-center rounded-xl bg-gray-900 dark:bg-white px-8 py-3.5 text-sm font-bold text-white dark:text-gray-900 transition-transform hover:-translate-y-0.5 active:scale-95 shadow-md"
+        >
+          Start Day 1
+        </Link>
+      </div>
+    );
+  }
+
+  const visibleEntries = isExpanded ? entries : entries.slice(0, 5);
+  const hasMore = entries.length > 5;
+
+  return (
+    <div className="bg-white dark:bg-[#111827] rounded-2xl shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] ring-1 ring-gray-100 dark:ring-gray-800 p-5 sm:p-6 transition-transform hover:-translate-y-1 duration-300">
+      <div className="mb-6 border-b border-gray-100 dark:border-gray-800 pb-4">
+        <h3 className="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
+          PROOF OF WORK
+        </h3>
+        <p className="text-sm text-gray-500 dark:text-slate-400 font-medium mt-1">
+          Your journey, one day at a time.
+        </p>
+      </div>
+
+      <div className="relative border-l-2 border-indigo-100 dark:border-gray-800 ml-3 space-y-8 pb-2">
+        {visibleEntries.map((entry) => (
+          <div key={entry.id} className="relative pl-6 group">
+            {entry.isCompleted ? (
+              <span className="absolute -left-[9px] top-1 h-4 w-4 rounded-full bg-green-500 ring-4 ring-white dark:ring-[#111827] shadow-sm transition-transform group-hover:scale-110 flex items-center justify-center">
+                <Check className="h-3 w-3 text-white" strokeWidth={3} />
+              </span>
+            ) : (
+              <span className="absolute -left-[9px] top-1 h-4 w-4 rounded-full bg-white dark:bg-[#111827] border-2 border-indigo-400 ring-4 ring-white dark:ring-[#111827] shadow-sm"></span>
+            )}
+            
+            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2 mb-2">
+              <div>
+                <p className={`text-xs font-extrabold tracking-wide uppercase mb-1 ${entry.isCompleted ? "text-green-600 dark:text-green-500" : "text-indigo-600 dark:text-indigo-400"}`}>
+                  {entry.isCompleted ? `✓ Day ${entry.day}` : `○ In Progress (Day ${entry.day})`}
+                </p>
+                <p className={`text-base font-bold ${entry.isCompleted ? "text-gray-900 dark:text-white" : "text-gray-700 dark:text-gray-300"}`}>
+                  {entry.title}
+                </p>
               </div>
-              <div className="flex items-center gap-2 text-xs font-medium text-gray-600 dark:text-slate-400">
-                <CheckCircle2 className="h-4 w-4 text-green-500 dark:text-green-400" />{" "}
-                LinkedIn shared
+              <div className="flex items-center gap-1.5 text-xs font-semibold text-gray-500 dark:text-slate-400 bg-gray-50 dark:bg-gray-800/50 px-2.5 py-1 rounded-md ring-1 ring-gray-100 dark:ring-gray-700/50 w-fit">
+                <CalendarDays className="h-3.5 w-3.5" />
+                {entry.date}
               </div>
             </div>
+
+            <div className="flex flex-col gap-2 mt-3">
+              <div className={`flex items-center gap-2 text-sm font-medium ${entry.github ? "text-gray-700 dark:text-gray-300" : "text-gray-400 dark:text-gray-600"}`}>
+                <GitCommit className={`h-4 w-4 ${entry.github ? "text-gray-900 dark:text-white" : ""}`} />
+                {entry.github ? "GitHub Commit Added" : "GitHub Pending"}
+                {entry.github && (
+                  <span className="ml-2 text-xs text-indigo-600 dark:text-indigo-400 cursor-pointer hover:underline">View Commit</span>
+                )}
+              </div>
+              <div className={`flex items-center gap-2 text-sm font-medium ${entry.linkedin ? "text-gray-700 dark:text-gray-300" : "text-gray-400 dark:text-gray-600"}`}>
+                <FaLinkedin className={`h-4 w-4 ${entry.linkedin ? "text-blue-600 dark:text-blue-400" : ""}`} />
+                {entry.linkedin ? "LinkedIn Post Shared" : "LinkedIn Pending"}
+                {entry.linkedin && (
+                  <span className="ml-2 text-xs text-indigo-600 dark:text-indigo-400 cursor-pointer hover:underline">View Post</span>
+                )}
+              </div>
+            </div>
+
+            {!entry.isCompleted && (
+              <div className="mt-4">
+                <Link
+                  to={`/day/${entry.day}`}
+                  className="inline-flex items-center justify-center rounded-lg bg-indigo-50 dark:bg-indigo-900/30 px-4 py-2 text-xs font-bold text-indigo-700 dark:text-indigo-300 ring-1 ring-inset ring-indigo-600/20 hover:bg-indigo-100 dark:hover:bg-indigo-900/50 transition-colors"
+                >
+                  Continue Challenge
+                </Link>
+              </div>
+            )}
           </div>
-        ))
+        ))}
+      </div>
+
+      {hasMore && !isExpanded && (
+        <div className="mt-6 pt-4 border-t border-gray-100 dark:border-gray-800 text-center">
+          <button
+            onClick={() => setIsExpanded(true)}
+            className="text-sm font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors"
+          >
+            View Full Journey →
+          </button>
+        </div>
       )}
     </div>
-  </div>
-);
+  );
+};
 
 // ━━━━━━━━━━━━━━━━━━━━━━
 // MAIN PAGE COMPONENT
@@ -622,7 +738,12 @@ const Dashboard = () => {
               githubSubmitted={pData.githubSubmitted} 
               linkedinSubmitted={pData.linkedinSubmitted} 
             />
-            <ActivityTimeline activity={currentActivity} />
+            <ProofOfWorkTimeline 
+              completedDays={pData.completedDays}
+              currentDay={pData.currentDay}
+              githubSubmitted={pData.githubSubmitted}
+              linkedinSubmitted={pData.linkedinSubmitted}
+            />
           </div>
 
           {/* Right / Sidebar Column */}
