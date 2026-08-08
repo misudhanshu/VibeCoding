@@ -4,7 +4,7 @@ A mobile-first redesign of ABTalks for the VibeCoding Hackathon.
 
 ## Live Demo
 
-[Your deployed Vercel URL]
+https://vibe-coding-theta-drab.vercel.app/
 
 ## Route Map
 
