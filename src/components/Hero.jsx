@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Users, Flame } from "lucide-react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 const Hero = () => {
   const [activeCell, setActiveCell] = useState(0);
@@ -12,6 +12,9 @@ const Hero = () => {
 
     return () => clearInterval(interval);
   }, []);
+
+  const navigate = useNavigate();
+
   return (
     <section
       id="home"
@@ -60,7 +63,9 @@ const Hero = () => {
               </Link>
               <Link
                 to="#how-it-works"
+                onClick={(e) => handleNavClick(e, "#how-it-works")}
                 className="w-full sm:w-auto inline-flex items-center justify-center rounded-full bg-white dark:bg-[#172033] px-8 py-3.5 text-base font-semibold text-gray-900 dark:text-yellow-400 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-[#273449] transition-all hover:bg-gray-50 dark:hover:bg-[#1f2b45] focus:outline-none focus:ring-2 focus:ring-indigo-600 dark:focus:ring-yellow-400 focus:ring-offset-2 active:scale-95 group"
+
               >
                 See How It Works
                 <svg
