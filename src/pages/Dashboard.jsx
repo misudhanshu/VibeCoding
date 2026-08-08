@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router"; // Fixed routing using standard v6/v7 'react-router'
-import { Flame, Clock, Signal, CheckCircle2, Sun, Moon } from "lucide-react";
+import { Flame, Clock, Signal, CheckCircle2, Sun, Moon, Sprout, Zap, ArrowRight, CalendarDays, Trophy } from "lucide-react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { useTheme } from "../context/ThemeContext";
 import { useProgress } from "../context/ProgressContext";
@@ -65,6 +65,180 @@ const MOCK_ACHIEVEMENTS = [
 // ━━━━━━━━━━━━━━━━━━━━━━
 // REUSABLE COMPONENTS
 // ━━━━━━━━━━━━━━━━━━━━━━
+
+const SmartMotivationCard = ({ currentDay, streak, completedDays }) => {
+  const isFirstDay = currentDay === 1 && streak === 0 && completedDays.length === 0;
+  const isRecovery = completedDays.length > 0 && streak === 0;
+  const isActiveStreak = streak > 0;
+
+  if (isFirstDay) {
+    return (
+      <div className="bg-white dark:bg-[#111827] rounded-2xl p-5 sm:p-6 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] ring-1 ring-gray-100 dark:ring-gray-800 transition-transform hover:-translate-y-1 duration-300 border-l-4 border-l-green-500">
+        <div className="flex flex-col sm:flex-row gap-5 items-start sm:items-center justify-between">
+          <div>
+            <h3 className="text-xs font-extrabold text-green-600 dark:text-green-400 tracking-widest uppercase mb-1.5 flex items-center gap-2">
+              <Sprout className="h-4 w-4" /> Your Journey Starts Here
+            </h3>
+            <p className="text-gray-900 dark:text-white font-bold text-lg mb-1">Everyone starts somewhere.</p>
+            <p className="text-gray-600 dark:text-slate-400 text-sm">Complete your first challenge and start building your public proof of work.</p>
+          </div>
+          <Link
+            to="/day/1"
+            className="w-full sm:w-auto shrink-0 inline-flex items-center justify-center rounded-xl bg-gray-900 dark:bg-white px-5 py-2.5 text-sm font-bold text-white dark:text-gray-900 transition-transform hover:-translate-y-0.5 active:scale-95 shadow-sm"
+          >
+            Start Day 1
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  if (isRecovery) {
+    return (
+      <div className="bg-white dark:bg-[#111827] rounded-2xl p-5 sm:p-6 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] ring-1 ring-gray-100 dark:ring-gray-800 transition-transform hover:-translate-y-1 duration-300 border-l-4 border-l-amber-500">
+        <div className="flex flex-col sm:flex-row gap-5 items-start sm:items-center justify-between">
+          <div>
+            <h3 className="text-xs font-extrabold text-amber-600 dark:text-amber-500 tracking-widest uppercase mb-1.5 flex items-center gap-2">
+              <Zap className="h-4 w-4" /> Get Back on Track
+            </h3>
+            <p className="text-gray-900 dark:text-white font-bold text-lg mb-1">You missed yesterday. That's okay.</p>
+            <p className="text-gray-600 dark:text-slate-400 text-sm mb-3">One missed day doesn't erase your progress. Complete today's challenge and keep moving forward.</p>
+            <div className="inline-flex items-center gap-1.5 rounded-md bg-amber-50 dark:bg-amber-900/20 px-2.5 py-1.5 text-xs font-semibold text-amber-700 dark:text-amber-400 ring-1 ring-inset ring-amber-600/20">
+               Recovery available: Complete today's challenge to continue your journey.
+            </div>
+          </div>
+          <Link
+            to={`/day/${currentDay}`}
+            className="w-full sm:w-auto shrink-0 inline-flex items-center justify-center rounded-xl bg-gray-900 dark:bg-white px-5 py-2.5 text-sm font-bold text-white dark:text-gray-900 transition-transform hover:-translate-y-0.5 active:scale-95 shadow-sm"
+          >
+            Get Back on Track
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  if (isActiveStreak) {
+    return (
+      <div className="bg-white dark:bg-[#111827] rounded-2xl p-5 sm:p-6 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] ring-1 ring-gray-100 dark:ring-gray-800 transition-transform hover:-translate-y-1 duration-300 border-l-4 border-l-orange-500">
+        <div className="flex flex-col sm:flex-row gap-5 items-start sm:items-center justify-between">
+          <div>
+            <h3 className="text-xs font-extrabold text-orange-600 dark:text-orange-500 tracking-widest uppercase mb-1.5 flex items-center gap-2">
+              <Flame className="h-4 w-4" /> {streak} Day Streak
+            </h3>
+            <p className="text-gray-900 dark:text-white font-bold text-lg mb-1">You're building momentum.</p>
+            <p className="text-gray-600 dark:text-slate-400 text-sm">{streak} days of showing up. Keep the streak alive.</p>
+          </div>
+          <Link
+            to={`/day/${currentDay}`}
+            className="w-full sm:w-auto shrink-0 inline-flex items-center justify-center rounded-xl bg-gray-900 dark:bg-white px-5 py-2.5 text-sm font-bold text-white dark:text-gray-900 transition-transform hover:-translate-y-0.5 active:scale-95 shadow-sm"
+          >
+            Continue Challenge
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  return null;
+};
+
+const NextUpCard = ({ currentDay, completedDays, totalDays }) => {
+  const isCurrentCompleted = completedDays.includes(currentDay);
+  
+  if (currentDay === totalDays && isCurrentCompleted) {
+    return (
+      <div className="bg-white dark:bg-[#111827] rounded-2xl shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] ring-1 ring-gray-100 dark:ring-gray-800 p-6 sm:p-8 transition-transform hover:-translate-y-1 duration-300 border-t-4 border-t-yellow-500 text-center">
+        <div className="mx-auto h-16 w-16 bg-yellow-100 dark:bg-yellow-900/30 rounded-full flex items-center justify-center mb-4">
+          <Trophy className="h-8 w-8 text-yellow-600 dark:text-yellow-400" />
+        </div>
+        <h3 className="text-sm font-extrabold text-yellow-600 dark:text-yellow-500 tracking-widest uppercase mb-2">
+          🏆 Challenge Complete
+        </h3>
+        <p className="text-xl font-bold text-gray-900 dark:text-white mb-2">You completed the 60-day challenge.</p>
+        <p className="text-gray-600 dark:text-slate-400 text-sm mb-6 max-w-md mx-auto">
+          You've built consistency, shipped projects, and grown immensely over these 60 days.
+        </p>
+        <button className="inline-flex items-center justify-center rounded-xl bg-gray-900 dark:bg-white px-8 py-3.5 text-sm font-bold text-white dark:text-gray-900 transition-transform hover:-translate-y-0.5 active:scale-95 shadow-md">
+          View Your Journey
+        </button>
+      </div>
+    );
+  }
+
+  if (!isCurrentCompleted) {
+    return (
+      <div className="bg-white dark:bg-[#111827] rounded-2xl shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] ring-1 ring-gray-100 dark:ring-gray-800 p-6 sm:p-8 transition-transform hover:-translate-y-1 duration-300 border-t-4 border-t-indigo-500">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+          <div>
+            <h3 className="text-sm font-extrabold text-indigo-600 dark:text-indigo-400 tracking-widest uppercase mb-2 flex items-center gap-2">
+              <Clock className="h-4 w-4" /> Action Required
+            </h3>
+            <p className="text-xl font-bold text-gray-900 dark:text-white mb-2">Finish today's challenge first</p>
+            <p className="text-gray-600 dark:text-slate-400 text-sm">
+              You must complete Day {currentDay} before unlocking what's next.
+            </p>
+          </div>
+          <Link
+            to={`/day/${currentDay}`}
+            className="w-full sm:w-auto shrink-0 inline-flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-6 py-3.5 text-sm font-bold text-white shadow-md shadow-indigo-600/20 transition-all hover:bg-indigo-700 hover:shadow-lg hover:-translate-y-0.5 active:scale-95"
+          >
+            Continue Day {currentDay} <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  const nextDay = currentDay + 1;
+
+  // Mock next challenge data for preview
+  const getNextChallengeTitle = (day) => {
+    if (day === 13) return "Build a responsive weather dashboard";
+    if (day === 2) return "Build a Todo App";
+    return `Challenge for Day ${day}`;
+  };
+
+  const getNextChallengeDesc = (day) => {
+    if (day === 13) return "Fetch data from a real weather API and display it beautifully.";
+    if (day === 2) return "Learn state management by building a functional todo list.";
+    return `Get ready for your next exciting build for day ${day}.`;
+  };
+
+  return (
+    <div className="bg-white dark:bg-[#111827] rounded-2xl shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] ring-1 ring-gray-100 dark:ring-gray-800 p-6 sm:p-8 transition-transform hover:-translate-y-1 duration-300 border-t-4 border-t-green-500 relative overflow-hidden">
+      {/* Accent Graphic */}
+      <div className="absolute -top-12 -right-12 h-32 w-32 rounded-full bg-green-500/10 blur-2xl pointer-events-none"></div>
+      
+      <div className="relative z-10 flex flex-col sm:flex-row items-start justify-between gap-6">
+        <div className="flex-1">
+          <h3 className="text-sm font-extrabold text-green-600 dark:text-green-400 tracking-widest uppercase mb-2 flex items-center gap-2">
+            <CalendarDays className="h-4 w-4" /> Next Up
+          </h3>
+          <p className="text-2xl font-bold text-gray-900 dark:text-white mb-1">Day {nextDay}</p>
+          <p className="text-gray-600 dark:text-slate-400 text-sm font-medium mb-5">Keep the momentum going. You finished today's work. Here's what's waiting for you next.</p>
+          
+          <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-4 ring-1 ring-gray-100 dark:ring-gray-700/50">
+            <p className="text-sm font-bold text-gray-900 dark:text-white mb-2">{getNextChallengeTitle(nextDay)}</p>
+            <p className="text-xs text-gray-500 dark:text-slate-400 mb-3">{getNextChallengeDesc(nextDay)}</p>
+            <div className="flex flex-wrap items-center gap-3 text-xs font-semibold text-gray-500 dark:text-slate-400">
+              <span className="flex items-center gap-1"><Signal className="h-3 w-3 text-amber-500 dark:text-amber-400" /> Intermediate</span>
+              <span className="flex items-center gap-1"><Clock className="h-3 w-3 text-blue-500 dark:text-blue-400" /> 1-2 hours</span>
+            </div>
+          </div>
+        </div>
+        <div className="w-full sm:w-auto shrink-0 flex items-center sm:h-full sm:pt-14">
+          <Link
+            to={`/day/${nextDay}`}
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-gray-900 dark:bg-white px-6 py-3.5 text-sm font-bold text-white dark:text-gray-900 transition-transform hover:-translate-y-0.5 active:scale-95 shadow-md"
+          >
+            Preview Day {nextDay} <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const StreakCard = ({ user }) => (
   <div className="bg-white dark:bg-[#111827] rounded-2xl p-5 sm:p-6 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.1)] ring-1 ring-gray-100 dark:ring-gray-800 flex flex-col sm:flex-row sm:items-center justify-between gap-5 transition-transform hover:-translate-y-1 duration-300">
@@ -433,7 +607,17 @@ const Dashboard = () => {
           {/* Left / Main Column */}
           <div className="space-y-6 lg:col-span-7 xl:col-span-8">
             <StreakCard user={activeUser} />
+            <SmartMotivationCard 
+              currentDay={pData.currentDay} 
+              streak={pData.currentStreak} 
+              completedDays={pData.completedDays} 
+            />
             <TodayChallenge today={MOCK_TODAY} track={activeUser.track} />
+            <NextUpCard 
+              currentDay={pData.currentDay} 
+              completedDays={pData.completedDays}
+              totalDays={activeUser.totalDays}
+            />
             <ProofOfWork 
               githubSubmitted={pData.githubSubmitted} 
               linkedinSubmitted={pData.linkedinSubmitted} 

@@ -100,6 +100,7 @@ const ChallengeDay = () => {
   const [tasks, setTasks] = useState(challenge.tasks);
   const [githubUrl, setGithubUrl] = useState("");
   const [reflection, setReflection] = useState("");
+  const [justCompleted, setJustCompleted] = useState(false);
 
   React.useEffect(() => {
     setTasks(challenge.tasks);
@@ -123,6 +124,7 @@ const ChallengeDay = () => {
 
   const handleCompleteDay = () => {
     if (githubSubmitted && linkedinSubmitted) {
+      setJustCompleted(true);
       setProgress(prev => {
         if (isTestDay) {
           if (prev.testCompletedDays && prev.testCompletedDays.includes(dayNumber)) return prev;
@@ -186,41 +188,55 @@ const ChallengeDay = () => {
       {/* COMPLETED SUCCESS STATE OVERLAY */}
       {isCompletedDay && (
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-6 sm:mt-8">
-          <div className="bg-gradient-to-br from-indigo-600 to-purple-700 rounded-3xl p-8 sm:p-12 text-center shadow-2xl text-white relative overflow-hidden animate-in fade-in zoom-in duration-500">
+          <div className="bg-gradient-to-br from-indigo-600 to-purple-700 dark:from-indigo-900 dark:to-[#0B1020] rounded-3xl p-8 sm:p-12 text-center shadow-2xl text-white relative overflow-hidden">
+            {/* Subtle background glow */}
             <div className="absolute -top-24 -left-24 h-64 w-64 rounded-full bg-white/10 blur-3xl mix-blend-overlay"></div>
-            <div className="absolute bottom-0 right-0 h-48 w-48 translate-x-1/3 translate-y-1/3 rounded-full bg-purple-400/30 blur-3xl mix-blend-overlay"></div>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-full w-full max-w-lg bg-indigo-500/20 blur-[100px] rounded-full mix-blend-screen pointer-events-none"></div>
 
             <div className="relative z-10 flex flex-col items-center">
-              <div className="h-20 w-20 rounded-full bg-white/20 flex items-center justify-center mb-6 ring-4 ring-white/10 shadow-inner">
-                <Trophy className="h-10 w-10 text-yellow-300" />
-              </div>
-              <h1 className="text-3xl sm:text-5xl font-black mb-4 tracking-tight">
-                🔥 Day {displayDay} Complete!
-              </h1>
-              <p className="text-lg sm:text-xl text-indigo-100 font-medium mb-8 max-w-lg">
-                Awesome work completing {challenge.title} today! {dayNumber > 0 && `You're ${calculatedProgress}% through the challenge.`}
-              </p>
-              <div className="flex flex-wrap justify-center gap-4 text-sm font-semibold">
-                <div className="flex items-center gap-2 bg-black/20 px-4 py-2 rounded-xl backdrop-blur-sm ring-1 ring-white/10">
-                  <CheckCircle2 className="h-4 w-4 text-green-400" /> GitHub
-                  Commit Added
+              {/* Animated Icon */}
+              <div className="relative mb-6">
+                <div className={`absolute inset-0 bg-yellow-400 rounded-full blur-xl opacity-40 ${justCompleted ? "animate-pulse" : ""}`}></div>
+                <div className="h-20 w-20 bg-gradient-to-br from-yellow-300 to-yellow-500 rounded-full flex items-center justify-center text-4xl shadow-xl shadow-yellow-500/30 transform transition-transform hover:scale-110">
+                  🔥
                 </div>
-                <div className="flex items-center gap-2 bg-black/20 px-4 py-2 rounded-xl backdrop-blur-sm ring-1 ring-white/10">
-                  <CheckCircle2 className="h-4 w-4 text-green-400" /> LinkedIn
-                  Post Shared
+              </div>
+
+              <h1 className="text-3xl sm:text-5xl font-black mb-4 tracking-tight">
+                Day {displayDay} Complete!
+              </h1>
+              
+              <div className="text-lg sm:text-xl text-indigo-100 dark:text-indigo-200 font-medium mb-10 max-w-lg">
+                {dayNumber > 0 ? (
+                  <>
+                    <p className="mb-2">{dayNumber} days. {dayNumber} commits.</p>
+                    <p>You're building something bigger than a project — you're building consistency.</p>
+                  </>
+                ) : (
+                  <p>You've taken the first step. The journey begins now.</p>
+                )}
+              </div>
+
+              {/* Compact Proof Summary */}
+              <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-4 text-sm font-semibold w-full max-w-2xl mb-10">
+                <div className="flex items-center gap-3 bg-black/20 dark:bg-black/40 px-5 py-3 rounded-xl backdrop-blur-md ring-1 ring-white/10 dark:ring-white/5 flex-1 justify-center whitespace-nowrap">
+                  <CheckCircle2 className="h-5 w-5 text-green-400 shrink-0" /> GitHub Commit Added
+                </div>
+                <div className="flex items-center gap-3 bg-black/20 dark:bg-black/40 px-5 py-3 rounded-xl backdrop-blur-md ring-1 ring-white/10 dark:ring-white/5 flex-1 justify-center whitespace-nowrap">
+                  <CheckCircle2 className="h-5 w-5 text-green-400 shrink-0" /> LinkedIn Post Shared
                 </div>
                 {dayNumber > 0 && (
-                  <div className="flex items-center gap-2 bg-black/20 px-4 py-2 rounded-xl backdrop-blur-sm ring-1 ring-white/10">
-                    <Flame className="h-4 w-4 text-orange-400 fill-orange-400" />{" "}
-                    {currentStreak} Day Streak Maintained
+                  <div className="flex items-center gap-3 bg-black/20 dark:bg-black/40 px-5 py-3 rounded-xl backdrop-blur-md ring-1 ring-white/10 dark:ring-white/5 flex-1 sm:col-span-2 justify-center whitespace-nowrap">
+                    <Flame className="h-5 w-5 text-orange-400 fill-orange-400 shrink-0" /> {currentStreak} Day Streak Maintained
                   </div>
                 )}
               </div>
+
               <Link
                 to="/dashboard"
-                className="mt-10 inline-flex items-center justify-center rounded-full bg-white px-8 py-3.5 text-sm font-bold text-indigo-600 shadow-md transition-all hover:bg-gray-50 hover:scale-105 active:scale-95"
+                className="w-full sm:w-auto inline-flex items-center justify-center rounded-xl bg-white dark:bg-yellow-400 px-10 py-4 text-lg font-bold text-gray-900 shadow-xl transition-all hover:-translate-y-1 hover:shadow-2xl active:scale-95"
               >
-                Return to Dashboard
+                Continue to Dashboard
               </Link>
             </div>
           </div>
