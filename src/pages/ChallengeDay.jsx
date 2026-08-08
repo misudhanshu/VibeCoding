@@ -1,13 +1,551 @@
-import { useParams } from "react-router";
+import React, { useState } from "react";
+import { Link, useParams } from "react-router";
+import {
+  ArrowLeft,
+  Flame,
+  Clock,
+  Signal,
+  CheckCircle2,
+  Trophy,
+  ArrowDown,
+  CheckSquare,
+  Square,
+  Sparkles,
+  Sun,
+  Moon,
+} from "lucide-react";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { useTheme } from "../context/ThemeContext";
+import { useProgress } from "../context/ProgressContext";
+
+const INITIAL_TASKS = [
+  { id: 1, text: "User can create a habit", done: false },
+  { id: 2, text: "User can mark a habit complete", done: false },
+  { id: 3, text: "User can delete a habit", done: false },
+  { id: 4, text: "Habits persist after refresh", done: false },
+  { id: 5, text: "UI works on mobile", done: false },
+  { id: 6, text: "Code is pushed to GitHub", done: false },
+];
+
+const SKILLS = [
+  "React",
+  "JavaScript",
+  "Tailwind CSS",
+  "State Management",
+  "Local Storage",
+  "UI Design",
+];
+
+const MISSION_POINTS = [
+  "Create a new habit",
+  "Mark a habit as completed",
+  "View their current habits",
+  "Track weekly progress",
+  "Remove or edit a habit",
+];
 
 const ChallengeDay = () => {
   const { dayId } = useParams();
+  const dayNumber = parseInt(dayId || "12", 10);
+  const displayDay = dayNumber.toString();
+  const { isDark, toggleTheme } = useTheme();
+  const { progress, updateSubmission, setProgress } = useProgress();
+  
+  const isTestDay = dayNumber !== 12;
+  const githubSubmitted = isTestDay ? !!progress.testGithubSubmitted : !!progress.githubSubmitted;
+  const linkedinSubmitted = isTestDay ? !!progress.testLinkedinSubmitted : !!progress.linkedinSubmitted;
+
+  const getChallengeData = (day) => {
+    if (day === 0) {
+      return {
+        title: "Start Your Journey",
+        difficulty: "Beginner",
+        time: "0-1 hours",
+        description: "Your journey hasn't started yet. Prepare your workspace and get ready for Day 1.",
+        tasks: [{ id: 1, text: "Set up workspace", done: false }],
+        skills: ["Preparation"],
+        missionPoints: ["Prepare to start"]
+      };
+    }
+    if (day === 12) {
+      return {
+        title: "Build a Habit Tracker",
+        difficulty: "Intermediate",
+        time: "2–3 hours",
+        description: "Build a habit tracker where users can create habits, mark them complete, and view their weekly progress.",
+        tasks: INITIAL_TASKS,
+        skills: SKILLS,
+        missionPoints: MISSION_POINTS
+      };
+    }
+    return {
+      title: `Challenge for Day ${day}`,
+      difficulty: "Beginner",
+      time: "1-2 hours",
+      description: `Complete the daily challenge for day ${day}.`,
+      tasks: [{ id: 1, text: "Complete the task", done: false }],
+      skills: ["React", "JavaScript"],
+      missionPoints: ["Learn basic concepts"]
+    };
+  };
+
+  const challenge = getChallengeData(dayNumber);
+  const calculatedProgress = isTestDay ? 0 : Math.round((progress.completedDays.length / 60) * 100);
+  const currentStreak = isTestDay ? 0 : progress.currentStreak;
+  const isCompletedDay = isTestDay 
+    ? !!(progress.testCompletedDays && progress.testCompletedDays.includes(dayNumber))
+    : progress.completedDays.includes(dayNumber);
+
+  // States
+  const [tasks, setTasks] = useState(challenge.tasks);
+  const [githubUrl, setGithubUrl] = useState("");
+  const [reflection, setReflection] = useState("");
+
+  React.useEffect(() => {
+    setTasks(challenge.tasks);
+  }, [dayNumber]);
+
+  const toggleTask = (id) => {
+    setTasks(tasks.map((t) => (t.id === id ? { ...t, done: !t.done } : t)));
+  };
+
+  const handleGithubSubmit = (e) => {
+    e.preventDefault();
+    if (githubUrl.includes("github.com")) {
+      setProgress(prev => ({
+        ...prev,
+        [isTestDay ? "testGithubSubmitted" : "githubSubmitted"]: true
+      }));
+    } else {
+      alert("Please enter a valid GitHub URL");
+    }
+  };
+
+  const handleCompleteDay = () => {
+    if (githubSubmitted && linkedinSubmitted) {
+      setProgress(prev => {
+        if (isTestDay) {
+          if (prev.testCompletedDays && prev.testCompletedDays.includes(dayNumber)) return prev;
+          return {
+            ...prev,
+            testCompletedDays: [...(prev.testCompletedDays || []), dayNumber]
+          };
+        } else {
+          if (prev.completedDays.includes(dayNumber)) return prev;
+          return {
+            ...prev,
+            day12Completed: dayNumber === 12 ? true : prev.day12Completed,
+            completedDays: [...prev.completedDays, dayNumber],
+            currentStreak: prev.currentStreak + 1
+          };
+        }
+      });
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
 
   return (
-    <main className="min-h-screen bg-slate-50 p-5">
-      <h1 className="text-3xl font-bold text-slate-900">
-        Challenge Day {dayId}
-      </h1>
+    <main className="min-h-screen bg-slate-50 dark:bg-[#0B1020] font-sans pb-24 overflow-x-hidden selection:bg-indigo-100 dark:selection:bg-indigo-900/50 selection:text-indigo-900 dark:selection:text-indigo-100 transition-colors duration-300">
+      {/* 1. TOP HEADER */}
+      <header className="bg-white dark:bg-[#111827] border-b border-gray-200/80 dark:border-gray-800 sticky top-0 z-30 shadow-sm shadow-gray-100/50 dark:shadow-none transition-colors duration-300">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between">
+          <Link
+            to="/dashboard"
+            className="group flex items-center gap-1.5 text-sm font-semibold text-gray-600 dark:text-slate-300 hover:text-indigo-600 dark:hover:text-yellow-400 transition-colors"
+          >
+            <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" />
+            Back to Dashboard
+          </Link>
+          <div className="flex items-center gap-4 text-sm font-bold text-gray-900 dark:text-white">
+            <span className="hidden sm:block text-gray-400 dark:text-gray-500 font-medium">
+              Day {displayDay} of 60
+            </span>
+            <div className="flex items-center gap-1.5 bg-orange-50 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 px-2.5 py-1 rounded-md ring-1 ring-orange-500/20 dark:ring-orange-500/30">
+              <Flame className="h-4 w-4 fill-orange-500 dark:fill-orange-400" />
+              {currentStreak} Day Streak
+            </div>
+            {/* Theme Toggle Button */}
+            <button
+              type="button"
+              onClick={toggleTheme}
+              aria-label={
+                isDark ? "Switch to light mode" : "Switch to dark mode"
+              }
+              className="inline-flex items-center justify-center rounded-full p-2 text-gray-600 hover:bg-gray-100 hover:text-indigo-600 dark:text-yellow-400 dark:hover:bg-gray-800 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600 dark:focus-visible:ring-yellow-400 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
+            >
+              {!isDark ? (
+                <Moon className="h-4 w-4" />
+              ) : (
+                <Sun className="h-4 w-4" />
+              )}
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* COMPLETED SUCCESS STATE OVERLAY */}
+      {isCompletedDay && (
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-6 sm:mt-8">
+          <div className="bg-gradient-to-br from-indigo-600 to-purple-700 rounded-3xl p-8 sm:p-12 text-center shadow-2xl text-white relative overflow-hidden animate-in fade-in zoom-in duration-500">
+            <div className="absolute -top-24 -left-24 h-64 w-64 rounded-full bg-white/10 blur-3xl mix-blend-overlay"></div>
+            <div className="absolute bottom-0 right-0 h-48 w-48 translate-x-1/3 translate-y-1/3 rounded-full bg-purple-400/30 blur-3xl mix-blend-overlay"></div>
+
+            <div className="relative z-10 flex flex-col items-center">
+              <div className="h-20 w-20 rounded-full bg-white/20 flex items-center justify-center mb-6 ring-4 ring-white/10 shadow-inner">
+                <Trophy className="h-10 w-10 text-yellow-300" />
+              </div>
+              <h1 className="text-3xl sm:text-5xl font-black mb-4 tracking-tight">
+                🔥 Day {displayDay} Complete!
+              </h1>
+              <p className="text-lg sm:text-xl text-indigo-100 font-medium mb-8 max-w-lg">
+                Awesome work completing {challenge.title} today! {dayNumber > 0 && `You're ${calculatedProgress}% through the challenge.`}
+              </p>
+              <div className="flex flex-wrap justify-center gap-4 text-sm font-semibold">
+                <div className="flex items-center gap-2 bg-black/20 px-4 py-2 rounded-xl backdrop-blur-sm ring-1 ring-white/10">
+                  <CheckCircle2 className="h-4 w-4 text-green-400" /> GitHub
+                  Commit Added
+                </div>
+                <div className="flex items-center gap-2 bg-black/20 px-4 py-2 rounded-xl backdrop-blur-sm ring-1 ring-white/10">
+                  <CheckCircle2 className="h-4 w-4 text-green-400" /> LinkedIn
+                  Post Shared
+                </div>
+                {dayNumber > 0 && (
+                  <div className="flex items-center gap-2 bg-black/20 px-4 py-2 rounded-xl backdrop-blur-sm ring-1 ring-white/10">
+                    <Flame className="h-4 w-4 text-orange-400 fill-orange-400" />{" "}
+                    {currentStreak} Day Streak Maintained
+                  </div>
+                )}
+              </div>
+              <Link
+                to="/dashboard"
+                className="mt-10 inline-flex items-center justify-center rounded-full bg-white px-8 py-3.5 text-sm font-bold text-indigo-600 shadow-md transition-all hover:bg-gray-50 hover:scale-105 active:scale-95"
+              >
+                Return to Dashboard
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {!isCompletedDay && (
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-6 sm:mt-8">
+          <div className="lg:grid lg:grid-cols-12 lg:gap-8 items-start">
+            {/* LEFT / MAIN COLUMN */}
+            <div className="lg:col-span-7 xl:col-span-8 space-y-6">
+              {/* 2. CHALLENGE HERO */}
+              <div className="bg-white dark:bg-[#111827] rounded-3xl shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] ring-1 ring-gray-100 dark:ring-gray-800 overflow-hidden relative">
+                <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500 dark:from-indigo-600 dark:via-purple-600 dark:to-yellow-500"></div>
+                <div className="p-6 sm:p-8 lg:p-10 relative">
+                  <span className="inline-block text-xs font-black tracking-widest text-indigo-600 dark:text-yellow-400 uppercase mb-4 bg-indigo-50 dark:bg-indigo-900/30 px-3 py-1 rounded-full">
+                    Day {displayDay}
+                  </span>
+                  <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 dark:text-white mb-6 tracking-tight leading-tight">
+                    {challenge.title}
+                  </h1>
+
+                  <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-sm font-semibold text-gray-600 dark:text-slate-400 mb-8">
+                    <div className="flex items-center gap-2 bg-gray-50 dark:bg-gray-800/50 px-3 py-1.5 rounded-lg border border-gray-100 dark:border-gray-800">
+                      <span className="text-gray-400 dark:text-gray-500 uppercase text-xs tracking-wider">
+                        Track
+                      </span>{" "}
+                      <span className="dark:text-slate-300">MERN Stack</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 dark:text-slate-300">
+                      <Signal className="h-4 w-4 text-amber-500 dark:text-amber-400" />{" "}
+                      {challenge.difficulty}
+                    </div>
+                    <div className="flex items-center gap-1.5 dark:text-slate-300">
+                      <Clock className="h-4 w-4 text-blue-500 dark:text-blue-400" />{" "}
+                      {challenge.time}
+                    </div>
+                  </div>
+
+                  <p className="text-gray-600 dark:text-slate-400 text-lg leading-relaxed max-w-2xl">
+                    {challenge.description}
+                  </p>
+                </div>
+              </div>
+
+              {/* 3. TODAY'S MISSION & 4. SKILLS */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="bg-white dark:bg-[#111827] rounded-2xl shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] ring-1 ring-gray-100 dark:ring-gray-800 p-6 sm:p-8 transition-colors duration-300">
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-5 flex items-center gap-2">
+                    <Sparkles className="h-5 w-5 text-indigo-500 dark:text-yellow-400" />{" "}
+                    Today's Mission
+                  </h3>
+                  <p className="text-sm text-gray-600 dark:text-slate-400 mb-4 font-medium">
+                    Build a habit tracking application that allows users to:
+                  </p>
+                  <ul className="space-y-3">
+                    {challenge.missionPoints.map((point, idx) => (
+                      <li
+                        key={idx}
+                        className="flex items-start gap-2.5 text-sm font-medium text-gray-800 dark:text-slate-300"
+                      >
+                        <CheckCircle2 className="h-5 w-5 text-indigo-500 dark:text-indigo-400 shrink-0" />
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="bg-white dark:bg-[#111827] rounded-2xl shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] ring-1 ring-gray-100 dark:ring-gray-800 p-6 sm:p-8 transition-colors duration-300">
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-5 flex items-center gap-2">
+                    <CheckSquare className="h-5 w-5 text-indigo-500 dark:text-yellow-400" />{" "}
+                    What You'll Practice
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {challenge.skills.map((skill) => (
+                      <span
+                        key={skill}
+                        className="px-3 py-1.5 bg-gray-50 dark:bg-gray-800/50 text-gray-700 dark:text-slate-300 text-xs font-bold rounded-lg border border-gray-200 dark:border-gray-700"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* 5. SUCCESS CRITERIA */}
+              <div className="bg-white dark:bg-[#111827] rounded-2xl shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] ring-1 ring-gray-100 dark:ring-gray-800 p-6 sm:p-8 transition-colors duration-300">
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
+                  Definition of Done
+                </h3>
+                <p className="text-sm text-gray-500 dark:text-slate-400 mb-6 font-medium">
+                  Use this checklist to verify your work before submitting.
+                </p>
+
+                <div className="space-y-3">
+                  {tasks.map((task) => (
+                    <button
+                      key={task.id}
+                      onClick={() => toggleTask(task.id)}
+                      className={`w-full flex items-center gap-3 p-3 rounded-xl transition-colors border text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-1 dark:focus-visible:ring-yellow-400 dark:focus-visible:ring-offset-gray-900 ${
+                        task.done
+                          ? "bg-indigo-50/50 dark:bg-indigo-900/20 border-indigo-100 dark:border-indigo-800/50 text-indigo-900 dark:text-indigo-200"
+                          : "bg-white dark:bg-gray-800/30 border-gray-100 dark:border-gray-800 text-gray-700 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-gray-800/70"
+                      }`}
+                    >
+                      {task.done ? (
+                        <CheckSquare className="h-5 w-5 text-indigo-600 dark:text-indigo-400 shrink-0" />
+                      ) : (
+                        <Square className="h-5 w-5 text-gray-400 dark:text-gray-500 shrink-0" />
+                      )}
+                      <span
+                        className={`text-sm font-semibold transition-all ${task.done ? "line-through opacity-80" : ""}`}
+                      >
+                        {task.text}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* 6. BUILD -> COMMIT -> POST (Mobile flow visualizer) */}
+              <div className="bg-white dark:bg-[#111827] rounded-2xl shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] ring-1 ring-gray-100 dark:ring-gray-800 p-6 sm:p-8 flex flex-col sm:flex-row justify-between items-center sm:items-start gap-4 text-center sm:text-left transition-colors duration-300">
+                <div className="flex-1">
+                  <span className="text-xs font-black text-gray-400 dark:text-gray-500">
+                    01
+                  </span>
+                  <h4 className="text-sm font-bold text-gray-900 dark:text-white mt-1">
+                    BUILD
+                  </h4>
+                  <p className="text-xs text-gray-500 dark:text-slate-400 mt-1">
+                    Complete today's project
+                  </p>
+                </div>
+                <ArrowDown className="text-gray-300 dark:text-gray-600 sm:-rotate-90 hidden sm:block mt-4" />
+                <ArrowDown className="text-gray-300 dark:text-gray-600 sm:hidden h-4 w-4" />
+                <div className="flex-1">
+                  <span className="text-xs font-black text-gray-400 dark:text-gray-500">
+                    02
+                  </span>
+                  <h4 className="text-sm font-bold text-gray-900 dark:text-white mt-1">
+                    COMMIT
+                  </h4>
+                  <p className="text-xs text-gray-500 dark:text-slate-400 mt-1">
+                    Push your work to GitHub
+                  </p>
+                </div>
+                <ArrowDown className="text-gray-300 dark:text-gray-600 sm:-rotate-90 hidden sm:block mt-4" />
+                <ArrowDown className="text-gray-300 dark:text-gray-600 sm:hidden h-4 w-4" />
+                <div className="flex-1">
+                  <span className="text-xs font-black text-gray-400 dark:text-gray-500">
+                    03
+                  </span>
+                  <h4 className="text-sm font-bold text-gray-900 dark:text-white mt-1">
+                    POST
+                  </h4>
+                  <p className="text-xs text-gray-500 dark:text-slate-400 mt-1">
+                    Share your progress on LinkedIn
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* RIGHT / STICKY COLUMN */}
+            <div className="lg:col-span-5 xl:col-span-4 mt-6 lg:mt-0 space-y-6 lg:sticky lg:top-24">
+              {/* 7. GITHUB SUBMISSION */}
+              <div className="bg-white dark:bg-[#111827] rounded-2xl shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] ring-1 ring-gray-100 dark:ring-gray-800 p-6 sm:p-8 transition-colors duration-300">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="h-10 w-10 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+                    <FaGithub className="h-5 w-5 text-gray-700 dark:text-gray-300" />
+                  </div>
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+                    Submit GitHub Proof
+                  </h3>
+                </div>
+                <p className="text-sm text-gray-500 dark:text-slate-400 mb-5 font-medium ml-13">
+                  Paste the repository or commit URL for today's project.
+                </p>
+
+                {githubSubmitted ? (
+                  <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800/50 rounded-xl p-4 flex items-center gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-green-500 dark:text-green-400" />
+                    <div>
+                      <p className="text-sm font-bold text-green-900 dark:text-green-300">
+                        Submitted
+                      </p>
+                      <a
+                        href={githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs text-green-700 dark:text-green-400 hover:underline truncate block max-w-[200px]"
+                      >
+                        {githubUrl}
+                      </a>
+                    </div>
+                    <button
+                      onClick={() => setProgress(prev => ({ ...prev, [isTestDay ? "testGithubSubmitted" : "githubSubmitted"]: false }))}
+                      className="ml-auto text-xs font-semibold text-green-700 dark:text-green-400 hover:text-green-900 dark:hover:text-green-300 focus:outline-none"
+                    >
+                      Undo
+                    </button>
+                  </div>
+                ) : (
+                  <form onSubmit={handleGithubSubmit} className="space-y-3">
+                    <div>
+                      <label htmlFor="github-url" className="sr-only">
+                        GitHub URL
+                      </label>
+                      <input
+                        id="github-url"
+                        type="url"
+                        value={githubUrl}
+                        onChange={(e) => setGithubUrl(e.target.value)}
+                        placeholder="https://github.com/..."
+                        required
+                        className="w-full rounded-xl border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50 px-4 py-3 text-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 border dark:text-white dark:placeholder-gray-500 transition-colors"
+                      />
+                    </div>
+                    <button
+                      type="submit"
+                      className="w-full flex items-center justify-center rounded-xl bg-gray-900 dark:bg-white px-4 py-3 text-sm font-bold text-white dark:text-gray-900 transition-transform hover:-translate-y-0.5 active:scale-95 focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-white focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+                    >
+                      Submit GitHub
+                    </button>
+                  </form>
+                )}
+              </div>
+
+              {/* 8. LINKEDIN SUBMISSION */}
+              <div className="bg-white dark:bg-[#111827] rounded-2xl shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] ring-1 ring-gray-100 dark:ring-gray-800 p-6 sm:p-8 transition-colors duration-300">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="h-10 w-10 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center">
+                    <FaLinkedin className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                  </div>
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+                    Share on LinkedIn
+                  </h3>
+                </div>
+                <p className="text-sm text-gray-500 dark:text-slate-400 mb-5 font-medium ml-13">
+                  Share what you built today and let your progress become
+                  visible.
+                </p>
+
+                {linkedinSubmitted ? (
+                  <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800/50 rounded-xl p-4 flex items-center gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-green-500 dark:text-green-400" />
+                    <div>
+                      <p className="text-sm font-bold text-green-900 dark:text-green-300">
+                        Post Shared ✓
+                      </p>
+                      <p className="text-xs text-green-700 dark:text-green-400">
+                        Your network can see your progress.
+                      </p>
+                    </div>
+                    <button
+                      onClick={() => setProgress(prev => ({ ...prev, [isTestDay ? "testLinkedinSubmitted" : "linkedinSubmitted"]: false }))}
+                      className="ml-auto text-xs font-semibold text-green-700 dark:text-green-400 hover:text-green-900 dark:hover:text-green-300 focus:outline-none"
+                    >
+                      Undo
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => setProgress(prev => ({ ...prev, [isTestDay ? "testLinkedinSubmitted" : "linkedinSubmitted"]: true }))}
+                    className="w-full flex items-center justify-center rounded-xl bg-blue-600 px-4 py-3 text-sm font-bold text-white transition-transform hover:-translate-y-0.5 active:scale-95 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 dark:focus:ring-offset-gray-900 shadow-sm shadow-blue-500/20"
+                  >
+                    Share Progress
+                  </button>
+                )}
+              </div>
+
+              {/* 10. REFLECTION IDEA (One Dark Pro Style requested for Code Editor) */}
+              <div className="bg-white dark:bg-[#111827] rounded-2xl shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] ring-1 ring-gray-100 dark:ring-gray-800 p-6 sm:p-8 transition-colors duration-300">
+                <h3 className="text-base font-bold text-gray-900 dark:text-white mb-2">
+                  Reflection Code Editor
+                </h3>
+                <label className="text-sm text-gray-500 dark:text-slate-400 mb-3 block font-medium">
+                  What did you learn today? Write it as a comment:
+                </label>
+                <div className="relative">
+                  <textarea
+                    value={reflection}
+                    onChange={(e) =>
+                      setReflection(e.target.value.slice(0, 280))
+                    }
+                    placeholder="// Today I learned how to use local storage to persist React state cross-sessions..."
+                    className="w-full rounded-xl border border-gray-200 dark:border-[#181a1f] bg-gray-50 dark:bg-[#282c34] text-gray-900 dark:text-[#abb2bf] font-sans dark:font-mono p-4 text-sm h-32 resize-none focus:border-indigo-500 dark:focus:border-[#61afef] focus:ring-1 focus:ring-indigo-500 dark:focus:ring-[#61afef] transition-colors"
+                  />
+                  <div className="absolute bottom-3 right-3 text-xs font-medium text-gray-400 dark:text-[#5c6370] bg-gray-50 dark:bg-[#282c34] px-1 rounded">
+                    {reflection.length} / 280
+                  </div>
+                </div>
+              </div>
+
+              {/* 9. COMPLETE DAY */}
+              <div className="bg-white dark:bg-[#111827] rounded-2xl shadow-md ring-1 ring-gray-100 dark:ring-gray-800 p-6 sm:p-8 border-t-4 border-t-indigo-500 transition-colors duration-300">
+                <h3 className="text-xl font-black text-gray-900 dark:text-white mb-2">
+                  Ready to complete Day {displayDay}?
+                </h3>
+                <p className="text-sm text-gray-500 dark:text-slate-400 mb-6 font-medium">
+                  Submit both proofs of work to mark today's challenge complete.
+                </p>
+
+                <button
+                  onClick={handleCompleteDay}
+                  disabled={!githubSubmitted || !linkedinSubmitted}
+                  className={`w-full py-4 rounded-xl text-base font-bold shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 dark:focus:ring-offset-gray-900 ${
+                    githubSubmitted && linkedinSubmitted
+                      ? "bg-indigo-600 text-white hover:bg-indigo-700 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0"
+                      : "bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-500 cursor-not-allowed"
+                  }`}
+                >
+                  Complete Day {displayDay}
+                </button>
+
+                {!(githubSubmitted && linkedinSubmitted) && (
+                  <p className="text-xs text-center text-gray-400 dark:text-gray-500 mt-4 font-medium">
+                    Submit GitHub and LinkedIn links to unlock
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 };

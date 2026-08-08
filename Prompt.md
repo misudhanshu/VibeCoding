@@ -384,6 +384,7 @@ Context:
 ABTalks is a 60-day coding challenge for Indian college students. Students build something every day, make a GitHub commit, publish a LinkedIn post, and build a public learning streak.
 
 The landing page already contains:
+
 - Navbar
 - Hero
 - How It Works
@@ -394,6 +395,7 @@ This section should build trust and make a first-time visitor feel that they are
 Create a reusable React component named StudentSuccess.jsx.
 
 Requirements:
+
 - Mobile-first design for a 390px viewport
 - Responsive on tablet and desktop
 - Use React and Tailwind CSS only
@@ -416,6 +418,7 @@ Section structure:
 4. Add 2–3 realistic student testimonial cards.
 
 Each testimonial should contain:
+
 - Student name
 - College / role
 - Short testimonial
@@ -424,6 +427,7 @@ Each testimonial should contain:
 - Their challenge progress or streak
 
 Example testimonial themes:
+
 - Someone who struggled with consistency and finally built a daily habit.
 - Someone who used their public projects to improve their portfolio.
 - Someone who became more confident sharing their work publicly.
@@ -431,6 +435,7 @@ Example testimonial themes:
 Do NOT claim that students got jobs or offers unless explicitly presented as mock/demo content.
 
 Visual design:
+
 - Premium cards with rounded corners
 - Subtle borders
 - Soft shadows
@@ -444,16 +449,19 @@ Visual design:
 - Avoid excessive animations
 
 Mobile:
+
 - Stack testimonial cards vertically
 - Make statistics easy to scan
 - Ensure nothing overflows at 390px
 - Keep the section compact enough that it doesn't feel unnecessarily long
 
 Desktop:
+
 - Statistics can appear in one horizontal row
 - Testimonials can appear in a 3-column layout
 
 Important:
+
 - Do not use lorem ipsum.
 - Do not create fake logos of real companies.
 - Do not make the section look like a generic SaaS template.
@@ -470,6 +478,7 @@ Context:
 ABTalks is a 60-day coding challenge for Indian college students. Students build something every day, make a GitHub commit, publish a LinkedIn post, and maintain a public learning streak.
 
 The landing page already contains:
+
 - Navbar
 - Hero
 - How It Works
@@ -482,6 +491,7 @@ Goal:
 Answer the most important questions a student might have before joining the 60-day challenge and remove hesitation before the final CTA.
 
 Requirements:
+
 - Mobile-first design for a 390px viewport
 - Fully responsive on tablet and desktop
 - Use React and Tailwind CSS only
@@ -502,32 +512,34 @@ Create an accordion-style FAQ.
 Use these questions and realistic answers:
 
 1. What is the ABTalks 60-day challenge?
-Explain that students build or practice something every day for 60 days and submit proof of their work through GitHub and LinkedIn.
+   Explain that students build or practice something every day for 60 days and submit proof of their work through GitHub and LinkedIn.
 
 2. Do I need to be an expert coder?
-Explain that the challenge is designed for students at different skill levels and the goal is consistency, learning, and building—not being perfect.
+   Explain that the challenge is designed for students at different skill levels and the goal is consistency, learning, and building—not being perfect.
 
 3. What do I need to submit every day?
-Explain the two main proofs of work:
+   Explain the two main proofs of work:
+
 - GitHub repository/commit
 - LinkedIn post
 
 4. What happens if I miss a day?
-Explain that missing a day doesn't mean they should quit. Encourage them to get back on track and continue the challenge.
+   Explain that missing a day doesn't mean they should quit. Encourage them to get back on track and continue the challenge.
 
 5. Do I need a GitHub or LinkedIn account?
-Explain that these are used to submit proof of work and build a public learning presence.
+   Explain that these are used to submit proof of work and build a public learning presence.
 
 6. Can I choose my own coding track?
-Explain that students can choose a suitable track and build according to their learning goals.
+   Explain that students can choose a suitable track and build according to their learning goals.
 
 7. Is there a fee to participate?
-Use neutral wording and make the answer easy to change later because this is currently a mocked hackathon experience.
+   Use neutral wording and make the answer easy to change later because this is currently a mocked hackathon experience.
 
 8. What do I get after completing 60 days?
-Focus on tangible outcomes such as projects, consistency, public proof of work, and a stronger portfolio.
+   Focus on tangible outcomes such as projects, consistency, public proof of work, and a stronger portfolio.
 
 Interaction:
+
 - Only one FAQ item should be open at a time.
 - Clicking a question should smoothly expand/collapse the answer.
 - Use a plus icon when closed.
@@ -538,6 +550,7 @@ Interaction:
 - Do not use a huge animation.
 
 Design:
+
 - Use clean white cards or a very subtle background.
 - Rounded corners.
 - Thin borders.
@@ -550,6 +563,7 @@ Design:
 - Keep the section visually consistent with the Hero, Benefits, and Student Success sections.
 
 Mobile requirements:
+
 - Must look excellent at exactly 390px width.
 - No horizontal overflow.
 - Questions should wrap naturally.
@@ -557,6 +571,7 @@ Mobile requirements:
 - Answers should have comfortable line height.
 
 Accessibility:
+
 - Use buttons for clickable FAQ questions.
 - Add aria-expanded.
 - Add appropriate aria-controls relationships.
@@ -565,7 +580,7 @@ Accessibility:
 Do not use lorem ipsum.
 Do not create unnecessary dependencies.
 Keep the component clean and easy to understand.
-Don't do over fancy it must provide a visual break and it should be extremely easy to scan 
+Don't do over fancy it must provide a visual break and it should be extremely easy to scan
 
 Prompt 8:
 You are an expert UI/UX designer and senior React developer.
@@ -576,6 +591,7 @@ Context:
 ABTalks is a 60-day coding challenge for Indian college students. Students build something every day, make a GitHub commit, publish a LinkedIn post, and build a public learning streak.
 
 The landing page already contains:
+
 - Navbar
 - Hero
 - How It Works
@@ -586,6 +602,7 @@ The landing page already contains:
 Do not modify any existing sections.
 
 Create two reusable components:
+
 1. FinalCTA.jsx
 2. Footer.jsx
 
@@ -609,6 +626,7 @@ Secondary small text:
 "60 days. One commit at a time."
 
 Design:
+
 - Mobile-first at 390px
 - Premium and visually striking
 - Use the existing ABTalks purple/indigo visual language
@@ -638,25 +656,30 @@ Short description:
 "Build consistently. Ship publicly. Grow together."
 
 Navigation:
+
 - Home
 - Dashboard
 - Challenge Day
 
 Resources:
+
 - How It Works
 - FAQ
 
 Social:
+
 - GitHub
 - LinkedIn
 
 Use Lucide React icons where appropriate.
 
 Bottom footer:
+
 - "© 2026 ABTalks. Built for students who keep showing up."
 - Add a small "Made with ❤️ for builders" message.
 
 Requirements:
+
 - Mobile-first design
 - Excellent at 390px
 - Responsive desktop layout
@@ -692,6 +715,7 @@ Context:
 ABTalks is a 60-day coding challenge for Indian college students.
 
 Students:
+
 - Choose a coding track
 - Build something every day
 - Submit a GitHub repository/commit
@@ -747,8 +771,9 @@ Suggested structure:
 8. Desktop-only secondary navigation/sidebar if appropriate
 
 ━━━━━━━━━━━━━━━━━━━━━━
+
 1. DASHBOARD HEADER
-━━━━━━━━━━━━━━━━━━━━━━
+   ━━━━━━━━━━━━━━━━━━━━━━
 
 Create a compact header.
 
@@ -763,12 +788,12 @@ Include:
 Do not make the header unnecessarily tall.
 
 On mobile:
+
 - Keep it compact
 - Avatar should be easy to tap
 - Avoid a large desktop-style navigation bar
 
-━━━━━━━━━━━━━━━━━━━━━━
-2. STREAK + PROGRESS SUMMARY
+━━━━━━━━━━━━━━━━━━━━━━ 2. STREAK + PROGRESS SUMMARY
 ━━━━━━━━━━━━━━━━━━━━━━
 
 Create a visually strong summary card.
@@ -788,6 +813,7 @@ Challenge completion:
 20%
 
 Use:
+
 - Flame icon for streak
 - Circular or linear progress indicator for challenge completion
 - Strong visual hierarchy
@@ -800,8 +826,7 @@ Add a small motivational message:
 
 The card should feel encouraging, not childish.
 
-━━━━━━━━━━━━━━━━━━━━━━
-3. TODAY'S CHALLENGE
+━━━━━━━━━━━━━━━━━━━━━━ 3. TODAY'S CHALLENGE
 ━━━━━━━━━━━━━━━━━━━━━━
 
 This should be the main card on the dashboard.
@@ -838,8 +863,7 @@ Also show:
 
 Use a subtle status indicator.
 
-━━━━━━━━━━━━━━━━━━━━━━
-4. PROOF OF WORK
+━━━━━━━━━━━━━━━━━━━━━━ 4. PROOF OF WORK
 ━━━━━━━━━━━━━━━━━━━━━━
 
 Create a compact section titled:
@@ -849,11 +873,13 @@ Create a compact section titled:
 Show two submission items:
 
 GitHub
+
 - Status: "Pending"
 - Icon
 - "Add repository / commit"
 
 LinkedIn
+
 - Status: "Pending"
 - Icon
 - "Share your progress"
@@ -866,8 +892,7 @@ The desired flow is:
 
 Build → Commit → Post → Complete
 
-━━━━━━━━━━━━━━━━━━━━━━
-5. OVERALL CHALLENGE PROGRESS
+━━━━━━━━━━━━━━━━━━━━━━ 5. OVERALL CHALLENGE PROGRESS
 ━━━━━━━━━━━━━━━━━━━━━━
 
 Create a section:
@@ -891,14 +916,14 @@ Days 1–12 completed
 Days 13–60 upcoming
 
 Use different visual states for:
+
 - Completed
 - Current day
 - Upcoming
 
 Keep it compact on mobile.
 
-━━━━━━━━━━━━━━━━━━━━━━
-6. ACHIEVEMENTS
+━━━━━━━━━━━━━━━━━━━━━━ 6. ACHIEVEMENTS
 ━━━━━━━━━━━━━━━━━━━━━━
 
 Create a section:
@@ -927,8 +952,7 @@ Locked achievements should look muted but still understandable.
 
 Do NOT make the cards huge.
 
-━━━━━━━━━━━━━━━━━━━━━━
-7. RECENT ACTIVITY
+━━━━━━━━━━━━━━━━━━━━━━ 7. RECENT ACTIVITY
 ━━━━━━━━━━━━━━━━━━━━━━
 
 Add a small activity section.
@@ -952,8 +976,7 @@ Day 9
 
 Use a vertical timeline or compact activity list.
 
-━━━━━━━━━━━━━━━━━━━━━━
-8. EDGE CASE DESIGN
+━━━━━━━━━━━━━━━━━━━━━━ 8. EDGE CASE DESIGN
 ━━━━━━━━━━━━━━━━━━━━━━
 
 The challenge specifically requires realistic edge cases.
@@ -961,6 +984,7 @@ The challenge specifically requires realistic edge cases.
 Design the dashboard architecture so the mocked data can easily represent:
 
 FIRST DAY:
+
 - 0 day streak
 - Day 1
 - No previous activity
@@ -968,12 +992,14 @@ FIRST DAY:
   "Your journey starts today."
 
 MISSED DAY:
+
 - Show a missed-day indicator
 - Do not make the interface feel punishing
 - Message:
   "You missed yesterday. That's okay — get back on track today."
 
 EMPTY PROFILE:
+
 - Avatar fallback
 - No achievements
 - No activity
@@ -1000,12 +1026,14 @@ Use the same visual language established by the landing page:
 Do NOT make every card colorful.
 
 Use color primarily for:
+
 - Progress
 - Streak
 - Status
 - Important actions
 
 Avoid:
+
 - Excessive gradients
 - Excessive glassmorphism
 - Huge cards
@@ -1086,7 +1114,1216 @@ Do not modify package configuration unnecessarily.
 Do not introduce new dependencies unless absolutely necessary.
 
 Before finishing:
+
 - Test /dashboard at 390px
 - Test navigation to /day/12
 - Check for console errors
 - Check that no content overflows horizontally
+
+Prompt 10:
+You are an expert product designer and senior React developer.
+
+Build the ABTalks Challenge Day page at:
+
+/day/12
+
+This is the third and final required screen for the hackathon.
+
+Context:
+ABTalks is a 60-day coding challenge for Indian college students.
+
+Every day, students:
+
+1. Read the day's coding task
+2. Build the project
+3. Submit a GitHub repository/commit
+4. Share their progress on LinkedIn
+5. Complete the challenge day
+
+The landing page and student dashboard are already built.
+
+Do NOT modify those existing pages.
+
+Create a reusable React page/component named:
+
+ChallengeDay.jsx
+
+Use React + Tailwind CSS only.
+
+No backend.
+No authentication.
+No database.
+Use realistic mocked data.
+
+━━━━━━━━━━━━━━━━━━━━━━
+CORE UX GOAL
+━━━━━━━━━━━━━━━━━━━━━━
+
+This page should feel like the student's actual workspace for Day 12.
+
+The student should immediately understand:
+
+- What today's challenge is
+- What they need to build
+- What skills they will practice
+- What the requirements are
+- How to submit GitHub proof
+- How to submit LinkedIn proof
+- Whether they have completed today's challenge
+
+The experience should feel focused and actionable rather than like a documentation page.
+
+━━━━━━━━━━━━━━━━━━━━━━
+MOBILE FIRST
+━━━━━━━━━━━━━━━━━━━━━━
+
+The evaluator will open this route at:
+
+390px width
+
+Design for 390px first.
+
+There must be:
+
+- No horizontal overflow
+- Comfortable touch targets
+- Clear hierarchy
+- Readable text
+- Sticky/fixed elements only if they genuinely improve usability
+- No desktop UI squeezed into mobile
+
+Desktop should be a secondary responsive layout.
+
+━━━━━━━━━━━━━━━━━━━━━━
+
+1. TOP HEADER
+   ━━━━━━━━━━━━━━━━━━━━━━
+
+Create a compact challenge header.
+
+Include:
+
+← Back to Dashboard
+
+Day 12 of 60
+
+12 Day Streak 🔥
+
+The back button should navigate to:
+
+/dashboard
+
+Keep this header compact.
+
+━━━━━━━━━━━━━━━━━━━━━━ 2. CHALLENGE HERO
+━━━━━━━━━━━━━━━━━━━━━━
+
+Create a visually strong challenge introduction.
+
+Show:
+
+DAY 12
+
+"Build a Habit Tracker"
+
+Track:
+MERN Stack
+
+Difficulty:
+Intermediate
+
+Estimated time:
+2–3 hours
+
+Add a short description:
+
+"Build a habit tracker where users can create habits, mark them complete, and view their weekly progress."
+
+Make the Day 12 indicator visually prominent.
+
+Use a subtle purple/indigo accent consistent with ABTalks.
+
+━━━━━━━━━━━━━━━━━━━━━━ 3. TODAY'S MISSION
+━━━━━━━━━━━━━━━━━━━━━━
+
+Create the main content card titled:
+
+"Today's Mission"
+
+Explain what the student needs to build.
+
+Use realistic content:
+
+Build a habit tracking application that allows users to:
+
+• Create a new habit
+• Mark a habit as completed
+• View their current habits
+• Track weekly progress
+• Remove or edit a habit
+
+Keep the content easy to scan.
+
+Use checkboxes or bullet points with Lucide icons.
+
+━━━━━━━━━━━━━━━━━━━━━━ 4. WHAT YOU'LL PRACTICE
+━━━━━━━━━━━━━━━━━━━━━━
+
+Create a compact skills section.
+
+Show tags such as:
+
+React
+JavaScript
+Tailwind CSS
+State Management
+Local Storage
+UI Design
+
+Use small pill badges.
+
+Don't make this section too large.
+
+━━━━━━━━━━━━━━━━━━━━━━ 5. SUCCESS CRITERIA
+━━━━━━━━━━━━━━━━━━━━━━
+
+Create a section titled:
+
+"Definition of Done"
+
+This is an important part of the experience.
+
+Show a checklist:
+
+☐ User can create a habit
+☐ User can mark a habit complete
+☐ User can delete a habit
+☐ Habits persist after refresh
+☐ UI works on mobile
+☐ Code is pushed to GitHub
+
+Make each item visually clear.
+
+Use unchecked state for the default mockup.
+
+Allow the checkboxes to be clicked and toggled.
+
+Use React state only.
+
+━━━━━━━━━━━━━━━━━━━━━━ 6. BUILD → COMMIT → POST
+━━━━━━━━━━━━━━━━━━━━━━
+
+Create a visually distinct progress/workflow section.
+
+Show three steps:
+
+01
+BUILD
+Complete today's project
+
+↓
+
+02
+COMMIT
+Push your work to GitHub
+
+↓
+
+03
+POST
+Share your progress on LinkedIn
+
+The third step should visually communicate that these three actions complete the daily workflow.
+
+Use subtle connectors or a vertical timeline on mobile.
+
+━━━━━━━━━━━━━━━━━━━━━━ 7. GITHUB SUBMISSION
+━━━━━━━━━━━━━━━━━━━━━━
+
+Create a dedicated card:
+
+"Submit GitHub Proof"
+
+Explain:
+
+"Paste the repository or commit URL for today's project."
+
+Include:
+
+Input:
+https://github.com/...
+
+Button:
+"Submit GitHub"
+
+Show the default status:
+
+Pending submission
+
+When the user submits a valid-looking URL:
+
+- Update the UI to show "Submitted"
+- Show a success state
+- Do not actually send anything to a backend
+
+Use React state.
+
+Do not implement real GitHub API validation.
+
+━━━━━━━━━━━━━━━━━━━━━━ 8. LINKEDIN SUBMISSION
+━━━━━━━━━━━━━━━━━━━━━━
+
+Create another card:
+
+"Share on LinkedIn"
+
+Explain:
+
+"Share what you built today and let your progress become visible."
+
+Add a button:
+
+"Share Progress"
+
+For the hackathon demo, clicking the button can change the state to:
+
+"Post Shared ✓"
+
+Do not open an external LinkedIn authentication flow.
+
+Keep this frontend-only.
+
+━━━━━━━━━━━━━━━━━━━━━━ 9. COMPLETE DAY
+━━━━━━━━━━━━━━━━━━━━━━
+
+At the bottom, create the final completion area.
+
+Heading:
+
+"Ready to complete Day 12?"
+
+Supporting text:
+
+"Submit both proofs of work to mark today's challenge complete."
+
+Primary button:
+
+"Complete Day 12"
+
+The button should initially be disabled until:
+
+- GitHub proof is submitted
+- LinkedIn proof is submitted
+
+Once both are submitted:
+
+- Enable the button
+- Give it a strong visual state
+
+When clicked:
+
+- Change the UI to a completed state
+
+Show:
+
+"🔥 Day 12 Complete!"
+
+"GitHub Commit Added"
+
+"LinkedIn Post Shared"
+
+"12 Day Streak Maintained"
+
+This should feel rewarding but not childish.
+
+━━━━━━━━━━━━━━━━━━━━━━ 10. THOUGHTFUL IDEA
+━━━━━━━━━━━━━━━━━━━━━━
+
+Add one small feature called:
+
+"Reflection"
+
+After completing the challenge, allow the student to write a short reflection:
+
+"What did you learn today?"
+
+Use a small textarea.
+
+Show a character count such as:
+
+0 / 280
+
+This is intentionally lightweight.
+
+The reflection should become part of the student's public learning history conceptually, but do not implement backend persistence.
+
+This is the thoughtful UX improvement:
+ABTalks shouldn't only track whether a student completed a task — it should help them capture what they learned.
+
+━━━━━━━━━━━━━━━━━━━━━━
+VISUAL DESIGN
+━━━━━━━━━━━━━━━━━━━━━━
+
+Use the existing ABTalks design language:
+
+- Indigo / purple primary accent
+- White cards
+- Soft gray page background
+- Rounded corners
+- Subtle borders
+- Soft shadows
+- Strong typography
+- Clean spacing
+- Small, meaningful icons
+- Premium SaaS/product aesthetic
+
+Do NOT make every section look like a separate colorful card.
+
+Use visual hierarchy to guide the student through the workflow.
+
+━━━━━━━━━━━━━━━━━━━━━━
+MOBILE LAYOUT
+━━━━━━━━━━━━━━━━━━━━━━
+
+At 390px, the order should be:
+
+Back to Dashboard
+
+Day 12 / Streak
+
+Challenge title
+
+Today's Mission
+
+What You'll Practice
+
+Definition of Done
+
+Build → Commit → Post
+
+GitHub Submission
+
+LinkedIn Submission
+
+Reflection
+
+Complete Day
+
+Everything should fit naturally into a vertical flow.
+
+Buttons should be full-width where appropriate.
+
+━━━━━━━━━━━━━━━━━━━━━━
+DESKTOP LAYOUT
+━━━━━━━━━━━━━━━━━━━━━━
+
+On larger screens, you may use a two-column layout.
+
+Suggested structure:
+
+LEFT / MAIN:
+
+- Challenge overview
+- Mission
+- Skills
+- Definition of Done
+- Workflow
+
+RIGHT / STICKY:
+
+- Day progress
+- GitHub submission
+- LinkedIn submission
+- Completion status
+
+The desktop layout should feel like a focused productivity workspace.
+
+━━━━━━━━━━━━━━━━━━━━━━
+INTERACTIONS
+━━━━━━━━━━━━━━━━━━━━━━
+
+Add subtle interactions:
+
+- Checkbox transitions
+- Button hover states
+- Input focus states
+- Submission success animation
+- Completion state transition
+- Smooth progress updates
+
+Avoid excessive animation.
+
+━━━━━━━━━━━━━━━━━━━━━━
+EDGE CASES
+━━━━━━━━━━━━━━━━━━━━━━
+
+The page should support these mocked states:
+
+DEFAULT:
+
+- Nothing submitted
+- Day incomplete
+
+GITHUB SUBMITTED:
+
+- GitHub shows success
+- LinkedIn still pending
+- Complete button disabled
+
+BOTH SUBMITTED:
+
+- Both show success
+- Complete Day button enabled
+
+COMPLETED:
+
+- Show "Day 12 Complete"
+- Show success summary
+- Disable duplicate completion
+
+MISSED DAY:
+
+- Show a gentle warning:
+  "You missed yesterday. You can still continue today's challenge."
+- Do not punish the user visually
+
+━━━━━━━━━━━━━━━━━━━━━━
+ACCESSIBILITY
+━━━━━━━━━━━━━━━━━━━━━━
+
+- Use semantic buttons
+- Use labels for inputs
+- Make checkboxes keyboard accessible
+- Use visible focus states
+- Ensure sufficient contrast
+- Do not rely only on color to communicate status
+
+━━━━━━━━━━━━━━━━━━━━━━
+CODE QUALITY
+━━━━━━━━━━━━━━━━━━━━━━
+
+Keep the implementation clean.
+
+You may create small reusable components such as:
+
+- ChallengeHeader
+- MissionCard
+- SkillTags
+- DefinitionOfDone
+- DailyWorkflow
+- GithubSubmission
+- LinkedInSubmission
+- ReflectionBox
+- CompletionCard
+
+Do not over-engineer.
+
+Use local React state.
+
+Do not add unnecessary dependencies.
+
+Before finishing:
+
+1. Test /day/12 at 390px.
+2. Test /dashboard → /day/12 navigation.
+3. Test /day/12 → /dashboard navigation.
+4. Test GitHub submission state.
+5. Test LinkedIn submission state.
+6. Test Complete Day button enabling/disabling.
+7. Test completion state.
+8. Check for horizontal overflow.
+9. Check for console errors.
+
+Prompt 11:
+Update the existing ABTalks landing page navbar. Do not redesign the navbar or change its current layout, spacing, typography, logo, or Join Challenge button.
+
+Add the following two features only:
+
+━━━━━━━━━━━━━━━━━━━━━━
+1. SMOOTH SCROLL NAVIGATION
+━━━━━━━━━━━━━━━━━━━━━━
+
+The navbar currently contains links such as:
+
+- Home
+- How It Works
+- Features
+- Testimonials
+- FAQ
+
+Convert the landing-page section links into smooth-scrolling navigation.
+
+Requirements:
+
+Home:
+- Scroll to the top / hero section.
+
+How It Works:
+- Scroll smoothly to the How It Works section.
+
+Features:
+- Scroll smoothly to the Benefits / Features section.
+
+Testimonials:
+- Scroll smoothly to the Student Success / Testimonials section.
+
+FAQ:
+- Scroll smoothly to the FAQ section.
+
+Use proper section IDs, for example:
+
+Hero:
+id="home"
+
+How It Works:
+id="how-it-works"
+
+Features:
+id="features"
+
+Testimonials:
+id="testimonials"
+
+FAQ:
+id="faq"
+
+Use smooth scrolling rather than an instant jump.
+
+The scroll should feel natural and polished.
+
+For example, use:
+
+scroll-behavior: smooth;
+
+or an appropriate React scrolling implementation.
+
+Important:
+- Do not use full-page navigation for these landing-page sections.
+- Do not reload the page.
+- Preserve the existing React Router routes.
+- Make sure the navbar works correctly on mobile as well.
+- If the navbar is sticky, account for the navbar height so the section heading isn't hidden underneath it.
+
+━━━━━━━━━━━━━━━━━━━━━━
+2. DAY / NIGHT TOGGLE
+━━━━━━━━━━━━━━━━━━━━━━
+
+Add a compact light/dark mode toggle to the existing navbar.
+
+Use Lucide React icons:
+
+Sun
+Moon
+
+The default state should be LIGHT mode.
+
+When the user clicks the toggle:
+
+LIGHT MODE:
+- White/light background
+- Existing dark navy/gray text
+- Existing ABTalks purple/indigo accents
+
+DARK MODE:
+- Change the page background to a deep dark navy/black
+- Change cards and surfaces to appropriate dark shades
+- Change primary text to warm golden/yellow
+- Use softer muted golden-gray for secondary text
+- Keep the ABTalks purple/indigo accent where appropriate
+- Maintain strong readability and contrast
+
+Do NOT make everything bright yellow.
+
+Use golden/yellow primarily for:
+- Main headings
+- Important text
+- Selected/active states
+- Small accents
+
+Suggested dark-mode palette:
+
+Page background:
+#0B1020
+
+Card background:
+#111827
+
+Secondary surface:
+#172033
+
+Primary text:
+#FACC15
+
+Secondary text:
+#CBD5E1
+
+Borders:
+#273449
+
+Keep the design premium and restrained.
+
+━━━━━━━━━━━━━━━━━━━━━━
+TOGGLE BEHAVIOR
+━━━━━━━━━━━━━━━━━━━━━━
+
+The toggle should:
+
+- Have a smooth transition
+- Change Sun → Moon appropriately
+- Have a subtle hover state
+- Have a clear focus state
+- Be accessible with an aria-label
+- Work properly at 390px
+- Not increase the navbar height unnecessarily
+
+Use React state for the theme.
+
+Persist the user's choice using localStorage so refreshing the page doesn't reset the theme.
+
+Example behavior:
+
+Light mode
+☀️
+
+Dark mode
+🌙
+
+━━━━━━━━━━━━━━━━━━━━━━
+IMPORTANT
+━━━━━━━━━━━━━━━━━━━━━━
+
+The theme must affect the ENTIRE landing page, not just the navbar.
+
+Update the existing:
+
+- Hero
+- How It Works
+- Benefits
+- Student Success
+- FAQ
+- Final CTA
+- Footer
+
+so they properly respond to dark mode.
+
+Do not simply put a dark background on the body while leaving white cards and dark text unchanged.
+
+Every section should remain readable and visually coherent.
+
+Use Tailwind's dark mode utilities where appropriate.
+
+Do not introduce a new UI library.
+
+Do not change the existing visual design in light mode.
+
+Light mode should look exactly as it currently does.
+
+Only enhance it with:
+1. Smooth section scrolling
+2. Light/dark theme toggle
+
+Test at:
+390px mobile
+768px tablet
+1440px desktop
+
+Check that:
+- No horizontal overflow occurs
+- Navbar remains responsive
+- Smooth scrolling works
+- Theme persists after refresh
+- All sections remain readable in dark mode
+- React Router routes still work
+- /dashboard and /day/12 are not accidentally broken
+
+Prompt 12:
+Fix the existing ABTalks navbar/theme implementation. Do NOT redesign the navbar or change its current layout.
+
+There are two issues to fix.
+
+━━━━━━━━━━━━━━━━━━━━━━
+1. FIX LIGHT/DARK TOGGLE
+━━━━━━━━━━━━━━━━━━━━━━
+
+The dark mode works correctly, but clicking the theme toggle does not properly switch back to light mode.
+
+Fix the theme logic so it works both directions:
+
+Light → Dark
+Dark → Light
+Light → Dark
+Dark → Light
+
+Use a single React state such as:
+
+const [isDark, setIsDark] = useState(false);
+
+When toggled:
+
+- isDark === true → apply dark theme
+- isDark === false → restore light theme
+
+Make sure the light-mode classes are explicitly restored rather than only adding dark-mode classes.
+
+The entire landing page must switch correctly.
+
+Light mode:
+- White/light background
+- Existing dark navy text
+- Existing purple/indigo accents
+- Existing white cards
+
+Dark mode:
+- Deep navy background
+- Dark cards/surfaces
+- Golden/yellow primary text
+- Muted light secondary text
+- Existing purple/indigo accents
+
+Do not break the current dark-mode design because it already looks good.
+
+━━━━━━━━━━━━━━━━━━━━━━
+2. THEME PERSISTENCE
+━━━━━━━━━━━━━━━━━━━━━━
+
+Keep localStorage support.
+
+Use a key such as:
+
+"abtalks-theme"
+
+On page load:
+- Read the saved theme
+- If it is "dark", initialize dark mode
+- Otherwise initialize light mode
+
+When toggling:
+- Update React state
+- Update localStorage
+
+Make sure refreshing the page preserves the selected theme.
+
+━━━━━━━━━━━━━━━━━━━━━━
+3. NAVBAR TEXT SIZE
+━━━━━━━━━━━━━━━━━━━━━━
+
+Increase the navbar navigation text slightly.
+
+Current links:
+
+Home
+How It Works
+Features
+Testimonials
+FAQ
+
+Make them approximately 17px.
+
+Use:
+
+text-[17px]
+
+or an equivalent Tailwind class.
+
+Keep:
+- Same font weight
+- Same spacing
+- Same positioning
+- Same hover behavior
+
+Do NOT make the text excessively large.
+
+The navbar should still look balanced against the ABTalks logo and Join Challenge button.
+
+━━━━━━━━━━━━━━━━━━━━━━
+4. THEME TOGGLE
+━━━━━━━━━━━━━━━━━━━━━━
+
+Keep the existing Sun/Moon toggle.
+
+Make sure:
+
+Light mode → show Moon icon
+Dark mode → show Sun icon
+
+This makes the action obvious:
+- Moon = switch to dark
+- Sun = switch to light
+
+Add:
+- aria-label
+- focus-visible styling
+- subtle hover transition
+
+━━━━━━━━━━━━━━━━━━━━━━
+5. IMPORTANT
+━━━━━━━━━━━━━━━━━━━━━━
+
+Do NOT redesign anything else.
+
+Do NOT change:
+- Logo
+- Join Challenge button
+- Navbar height
+- Navbar spacing
+- Hero
+- Existing sections
+- Typography outside the navbar
+- Dark-mode visual design
+
+Only fix:
+1. Two-way theme switching
+2. Theme persistence
+3. Navbar link font size
+4. Sun/Moon toggle behavior
+
+After making the changes, test:
+
+Light → Dark
+Dark → Light
+Refresh in Light mode
+Refresh in Dark mode
+
+Also test at 390px width.
+
+Prompt 13:
+
+Create one global theme system. Preserve the existing light design. Preserve the current dark landing-page design. Extend that same theme to Dashboard and Challenge Day. Only the code editor gets One Dark Pro-inspired syntax styling.
+
+Prompt 14: 
+
+Fix the application state so the Landing page, Dashboard, and Challenge Day share the same mock student progress.
+
+IMPORTANT:
+Do not redesign any existing UI.
+Do not change the current visual design.
+Only fix the application behavior/state.
+
+━━━━━━━━━━━━━━━━━━━━━━
+1. SHARED MOCK PROGRESS
+━━━━━━━━━━━━━━━━━━━━━━
+
+Currently /day/12 updates after completing the challenge, but /dashboard still shows GitHub and LinkedIn as pending.
+
+Fix this by creating a shared frontend progress state using localStorage.
+
+Use a single localStorage key such as:
+
+"abtalks-progress"
+
+Store at minimum:
+
+{
+  currentDay: 12,
+  currentStreak: 12,
+  completedDays: [1,2,3,...,12],
+  githubSubmitted: true,
+  linkedinSubmitted: true,
+  day12Completed: true
+}
+
+Do NOT add a backend or database.
+
+Both Dashboard.jsx and ChallengeDay.jsx must read from the same state.
+
+━━━━━━━━━━━━━━━━━━━━━━
+2. DAY 12 COMPLETION
+━━━━━━━━━━━━━━━━━━━━━━
+
+When the user completes Day 12 on /day/12:
+
+- Save GitHub submission state
+- Save LinkedIn submission state
+- Save Day 12 as completed
+- Update current progress
+- Persist everything to localStorage
+
+After refreshing /day/12, the completed state must remain.
+
+━━━━━━━━━━━━━━━━━━━━━━
+3. DASHBOARD SYNCHRONIZATION
+━━━━━━━━━━━━━━━━━━━━━━
+
+When returning to /dashboard after completing Day 12:
+
+The dashboard must automatically reflect:
+
+GitHub:
+Submitted ✓
+
+LinkedIn:
+Shared ✓
+
+Day 12:
+Completed ✓
+
+Streak:
+12 days
+
+Progress:
+20%
+
+Do not keep showing "Pending" after the user has submitted the proof.
+
+The dashboard should read the same localStorage state rather than maintaining a separate independent mock state.
+
+━━━━━━━━━━━━━━━━━━━━━━
+4. PROGRESS DOT / CONTRIBUTION GRID
+━━━━━━━━━━━━━━━━━━━━━━
+
+The dashboard currently has a progress/contribution visualization.
+
+When Day 12 is incomplete:
+- Day 12 should use the current/in-progress visual state.
+
+When Day 12 is completed:
+- Day 12 should change to the completed GREEN state.
+
+Example concept:
+
+Incomplete:
+Day 12 = current/purple
+
+Completed:
+Day 12 = green
+
+Do not change the existing design unnecessarily.
+
+The completed state should be visually obvious but subtle.
+
+━━━━━━━━━━━━━━━━━━━━━━
+5. JOIN CHALLENGE BUTTON
+━━━━━━━━━━━━━━━━━━━━━━
+
+The landing page "Join Challenge" button currently links to:
+
+#join
+
+Change it so it navigates to:
+
+/dashboard
+
+Use the existing React Router Link.
+
+Do not create authentication.
+
+The desired flow is:
+
+Landing → Join Challenge → Dashboard
+
+━━━━━━━━━━━━━━━━━━━━━━
+6. FIRST-DAY / DAY-0 EDGE CASE
+━━━━━━━━━━━━━━━━━━━━━━
+
+The application should support a first-day state.
+
+Create a clean way to test this without permanently changing the default demo state.
+
+Support:
+
+currentDay: 1
+currentStreak: 0
+completedDays: []
+
+Dashboard should then show:
+
+"Your journey starts today."
+
+Day:
+1 / 60
+
+Streak:
+0 days
+
+Completion:
+0%
+
+No previous activity.
+
+No unlocked achievements.
+
+Do not make this the default state.
+
+The default demo should remain Day 12 with the polished active-student experience.
+
+━━━━━━━━━━━━━━━━━━━━━━
+7. TESTING
+━━━━━━━━━━━━━━━━━━━━━━
+
+Test this exact flow:
+
+1. Open /
+2. Click Join Challenge
+3. Confirm it navigates to /dashboard
+4. Open /day/12
+5. Submit GitHub proof
+6. Submit LinkedIn proof
+7. Complete Day 12
+8. Navigate back to /dashboard
+9. Confirm dashboard reflects completion
+10. Confirm Day 12 changes to green
+11. Refresh the browser
+12. Confirm state remains correct
+
+Also test:
+
+- Empty localStorage / first-day state
+- Page refresh
+- Direct navigation to /dashboard
+- Direct navigation to /day/12
+
+Do not introduce authentication or backend functionality.
+
+Prompt 15:
+
+Fix the ChallengeDay page so /day/:dayNumber correctly displays data based on the URL parameter.
+
+IMPORTANT:
+Do not redesign the existing UI.
+Do not change the styling.
+Only fix the data/state logic.
+
+Currently, when I open:
+
+/day/0
+
+the header correctly says "Day 0 of 60", but the rest of the page still shows Day 12 data such as:
+
+- 12 Day Streak
+- 20% through the challenge
+- Habit Tracker
+- 12 Day Streak Maintained
+
+This means some values are hardcoded.
+
+Requirements:
+
+1. Read the day number dynamically from the React Router URL using useParams().
+
+Example:
+
+const { dayNumber } = useParams();
+
+Convert it to a number where necessary.
+
+2. Create/use mock challenge data based on the day number.
+
+For example:
+
+Day 0:
+- title: "Start Your Journey"
+- streak: 0
+- progress: 0%
+- completion message should NOT claim that Day 0 was completed
+- no "12 Day Streak Maintained"
+
+Day 12:
+- title: "Build a Habit Tracker"
+- streak: 12
+- progress: 20%
+- show the existing Day 12 completion information when Day 12 is actually completed
+
+3. IMPORTANT:
+Do not simply replace "12" with dayNumber everywhere.
+
+Values such as streak, progress, title, description, difficulty, estimated time, and completion status should come from the appropriate mock data/state.
+
+4. Handle Day 0 as a FIRST-DAY / EMPTY state.
+
+When visiting:
+
+/day/0
+
+show an appropriate first-day experience such as:
+
+"Day 0"
+"Your journey hasn't started yet."
+
+or an equivalent message matching the existing design.
+
+Do NOT show:
+
+"Day 0 Complete!"
+
+unless Day 0 has actually been marked complete.
+
+Do NOT show:
+"20% through the challenge."
+
+Do NOT show:
+"12 Day Streak Maintained."
+
+5. The default hackathon demo must remain Day 12.
+
+Visiting:
+
+/day/12
+
+should continue to show the polished Day 12 Habit Tracker experience.
+
+6. Keep the existing dark/light theme functionality.
+
+7. Keep the existing responsive design.
+
+8. Test these URLs:
+
+/day/0
+/day/1
+/day/12
+
+Expected behavior:
+
+/day/0 → first-day/empty state
+/day/1 → Day 1 challenge
+/day/12 → existing Habit Tracker challenge
+
+Do not add a backend or authentication.
+Use mock data/localStorage only.
+
+Prompt 16:
+The route parameter is working correctly, but the ChallengeDay completion screen is still using hardcoded Day 12 state.
+
+I tested /day/1 and it currently shows:
+- Day 1 of 60
+- 12 Day Streak
+- 20% through the challenge
+- 12 Day Streak Maintained
+- Day 1 Complete even though Day 1 has not been completed
+
+Fix the DATA LOGIC only. Do not redesign anything.
+
+Requirements:
+
+1. /day/1 must represent a fresh Day 1 state:
+- streak: 0
+- progress: 0% before completion
+- GitHub: Pending
+- LinkedIn: Pending
+- Day 1 must NOT show "Day 1 Complete" before the user completes it.
+
+2. /day/12 must continue using the existing Day 12 mock state:
+- 12 day streak
+- 20% progress
+- Habit Tracker task
+- existing completed state only if Day 12 has actually been completed.
+
+3. Do not hardcode these values anywhere in the rendered JSX:
+- 12 Day Streak
+- 20%
+- 12 Day Streak Maintained
+- Habit Tracker
+
+These should come from the current challenge/progress data.
+
+4. The completion screen should only appear when the current day is actually marked completed in the shared localStorage state.
+
+5. If the user visits /day/1 without completing it, show the normal challenge/task screen, NOT the completion screen.
+
+6. If the user visits /day/12 and Day 12 is already completed in localStorage, show the existing completion screen.
+
+7. Keep all existing styling, dark mode, responsiveness, and animations unchanged.
+
+After making the changes, test:
+- /day/0
+- /day/1
+- /day/12

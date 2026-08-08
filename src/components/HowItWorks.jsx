@@ -63,7 +63,7 @@ const HowItWorks = () => {
   return (
     <section
       id="how-it-works"
-      className="bg-white py-20 sm:py-32 relative overflow-hidden"
+      className="bg-white dark:bg-[#111827] py-20 sm:py-32 relative overflow-hidden transition-colors duration-300"
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         {/* Section Header */}
@@ -75,13 +75,13 @@ const HowItWorks = () => {
               : "opacity-0 translate-y-8"
           }`}
         >
-          <h2 className="text-base font-semibold leading-7 text-indigo-600 tracking-wide uppercase">
+          <h2 className="text-base font-semibold leading-7 text-indigo-600 dark:text-yellow-400 tracking-wide uppercase">
             Process
           </h2>
-          <p className="mt-2 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+          <p className="mt-2 text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
             How The Challenge Works
           </p>
-          <p className="mt-4 text-lg leading-8 text-gray-600">
+          <p className="mt-4 text-lg leading-8 text-gray-600 dark:text-slate-300">
             Follow a simple process and build consistency one day at a time.
           </p>
         </div>
@@ -96,8 +96,8 @@ const HowItWorks = () => {
             On Mobile: vertical line on the left.
             On Desktop: horizontal line across the top.
           */}
-          <div className="absolute top-0 bottom-0 left-[2.25rem] w-0.5 bg-indigo-100 sm:left-[3.25rem] lg:hidden"></div>
-          <div className="hidden lg:block absolute top-[3.25rem] left-[10%] right-[10%] h-0.5 bg-indigo-100 max-w-[80%] mx-auto"></div>
+          <div className="absolute top-0 bottom-0 left-[2.25rem] w-0.5 bg-indigo-100 dark:bg-gray-800 sm:left-[3.25rem] lg:hidden transition-colors"></div>
+          <div className="hidden lg:block absolute top-[3.25rem] left-[10%] right-[10%] h-0.5 bg-indigo-100 dark:bg-gray-800 max-w-[80%] mx-auto transition-colors"></div>
 
           <div className="flex flex-col gap-12 lg:flex-row lg:gap-8 lg:justify-between relative">
             {steps.map((step, index) => {
@@ -113,20 +113,20 @@ const HowItWorks = () => {
                   style={{ transitionDelay: `${index * 200}ms` }}
                 >
                   {/* Step Marker / Circle */}
-                  <div className="z-10 flex-shrink-0 flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-white border-4 border-indigo-50 shadow-sm ring-1 ring-indigo-200 mt-2 lg:mt-0 transition-transform duration-300 hover:scale-110">
-                    <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-indigo-600" />
+                  <div className="z-10 flex-shrink-0 flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-white dark:bg-[#172033] border-4 border-indigo-50 dark:border-gray-900 shadow-sm ring-1 ring-indigo-200 dark:ring-gray-700 mt-2 lg:mt-0 transition-transform duration-300 hover:scale-110">
+                    <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-indigo-600 dark:text-yellow-400" />
                   </div>
 
                   {/* Card Content */}
                   <div className="ml-6 flex-1 lg:ml-0 lg:mt-10 lg:text-center group">
-                    <div className="bg-white rounded-2xl p-6 shadow-sm ring-1 ring-gray-100 transition-all duration-500 hover:shadow-lg hover:-translate-y-1 hover:ring-indigo-100">
-                      <span className="text-sm font-bold text-indigo-500 mb-2 block">
+                    <div className="bg-white dark:bg-[#172033] rounded-2xl p-6 shadow-sm ring-1 ring-gray-100 dark:ring-[#273449] transition-all duration-500 hover:shadow-lg dark:shadow-none hover:-translate-y-1 hover:ring-indigo-100 dark:hover:border-yellow-400">
+                      <span className="text-sm font-bold text-indigo-500 dark:text-yellow-400 mb-2 block">
                         STEP {step.number}
                       </span>
-                      <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-indigo-600 transition-colors">
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3 group-hover:text-indigo-600 dark:group-hover:text-yellow-400 transition-colors">
                         {step.title}
                       </h3>
-                      <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
+                      <p className="text-gray-600 dark:text-slate-300 leading-relaxed text-sm sm:text-base">
                         {step.description}
                       </p>
                     </div>

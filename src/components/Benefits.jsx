@@ -68,14 +68,17 @@ const Benefits = () => {
   const [gridRef, isGridVisible] = useIntersectionObserver({ threshold: 0.1 });
 
   return (
-    <section className="relative overflow-hidden bg-slate-50 py-24 sm:py-32">
+    <section
+      id="features"
+      className="relative overflow-hidden bg-slate-50 dark:bg-[#0B1020] py-24 sm:py-32 transition-colors duration-300"
+    >
       {/* Soft background gradients */}
-      <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-50 via-slate-50 to-slate-50"></div>
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-50 dark:from-indigo-900/20 via-slate-50 dark:via-[#0B1020] to-slate-50 dark:to-[#0B1020]"></div>
 
       {/* Small floating decorative elements */}
-      <div className="absolute top-20 left-10 h-6 w-6 rounded-full bg-purple-200/50 blur-sm animate-bounce-slow"></div>
-      <div className="absolute bottom-20 right-10 h-10 w-10 rounded-full bg-indigo-200/50 blur-md animate-pulse"></div>
-      <div className="absolute top-1/2 left-3/4 h-8 w-8 rounded-md bg-blue-100/50 blur-sm rotate-12"></div>
+      <div className="absolute top-20 left-10 h-6 w-6 rounded-full bg-purple-200/50 dark:bg-purple-900/40 blur-sm animate-bounce-slow"></div>
+      <div className="absolute bottom-20 right-10 h-10 w-10 rounded-full bg-indigo-200/50 dark:bg-indigo-900/40 blur-md animate-pulse"></div>
+      <div className="absolute top-1/2 left-3/4 h-8 w-8 rounded-md bg-blue-100/50 dark:bg-blue-900/40 blur-sm rotate-12"></div>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
@@ -87,13 +90,13 @@ const Benefits = () => {
               : "opacity-0 translate-y-10"
           }`}
         >
-          <h2 className="text-sm font-bold uppercase tracking-widest text-indigo-600">
+          <h2 className="text-sm font-bold uppercase tracking-widest text-indigo-600 dark:text-yellow-400">
             Why Choose ABTalks?
           </h2>
-          <p className="mt-2 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl md:text-5xl">
+          <p className="mt-2 text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-4xl md:text-5xl">
             Level up your career in 60 days.
           </p>
-          <p className="mt-4 text-lg leading-8 text-gray-600">
+          <p className="mt-4 text-lg leading-8 text-gray-600 dark:text-slate-300">
             Why should you spend 60 days on ABTalks? We turn isolated learning
             into a public proof of work that gets you hired.
           </p>
@@ -108,8 +111,8 @@ const Benefits = () => {
               return (
                 <div
                   key={benefit.title}
-                  className={`group relative rounded-2xl bg-white p-5 sm:p-6 shadow-sm ring-1 ring-gray-100 transition-all duration-500 hover:-translate-y-2 hover:shadow-xl hover:ring-indigo-100 ${
-                    isGridVisible
+                  className={`group relative rounded-2xl bg-white dark:bg-[#111827] p-5 sm:p-6 shadow-sm ring-1 ring-gray-100 dark:ring-[#273449] transition-all duration-500 hover:-translate-y-2 hover:shadow-xl hover:ring-indigo-100 dark:hover:ring-indigo-500/50 dark:shadow-none ${
+                    isHeaderVisible
                       ? "opacity-100 translate-y-0"
                       : "opacity-0 translate-y-10"
                   }`}
@@ -124,15 +127,15 @@ const Benefits = () => {
                       aria-hidden="true"
                     />
                   </div>
-                  <h3 className="mb-2 text-base sm:text-lg font-bold text-gray-900 leading-tight">
+                  <h3 className="mb-2 text-base sm:text-lg font-bold text-gray-900 dark:text-white leading-tight">
                     {benefit.title}
                   </h3>
-                  <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
+                  <p className="text-gray-600 dark:text-slate-400 text-xs sm:text-sm leading-relaxed">
                     {benefit.description}
                   </p>
 
                   {/* Subtle hover background highlight */}
-                  <div className="absolute inset-0 -z-10 rounded-2xl bg-gradient-to-b from-transparent to-indigo-50/0 opacity-0 transition-opacity group-hover:to-indigo-50/50"></div>
+                  <div className="absolute inset-0 -z-10 rounded-2xl bg-gradient-to-b from-transparent to-indigo-50/0 dark:to-indigo-900/0 opacity-0 transition-opacity group-hover:to-indigo-50/50 dark:group-hover:to-indigo-900/10"></div>
                 </div>
               );
             })}

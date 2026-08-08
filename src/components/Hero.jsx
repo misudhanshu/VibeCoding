@@ -13,7 +13,10 @@ const Hero = () => {
     return () => clearInterval(interval);
   }, []);
   return (
-    <div className="relative overflow-hidden bg-slate-50 pt-16">
+    <section
+      id="home"
+      className="relative overflow-hidden bg-slate-50 dark:bg-[#0B1020] pt-16 transition-colors duration-300"
+    >
       {/* Background Decorative Blobs */}
       <div className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">
         <div
@@ -29,19 +32,19 @@ const Hero = () => {
         <div className="lg:grid lg:grid-cols-12 lg:gap-16 items-center">
           {/* Left Content Column */}
           <div className="lg:col-span-7 xl:col-span-6 animate-fade-in-up">
-            <div className="mb-6 inline-flex items-center rounded-full bg-indigo-50 border border-indigo-100 px-3 py-1 text-sm font-semibold text-indigo-600 shadow-sm transition-all hover:bg-indigo-100">
-              <span className="flex h-2 w-2 rounded-full bg-indigo-600 mr-2 animate-pulse"></span>
+            <div className="mb-6 inline-flex items-center rounded-full bg-indigo-50 dark:bg-indigo-900/30 border border-indigo-100 dark:border-indigo-800/50 px-3 py-1 text-sm font-semibold text-indigo-600 dark:text-indigo-400 shadow-sm transition-all">
+              <span className="flex h-2 w-2 rounded-full bg-indigo-600 dark:bg-indigo-400 mr-2 animate-pulse"></span>
               Trusted by 5,000+ aspiring developers across India
             </div>
 
-            <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl max-w-2xl balance-text leading-tight">
+            <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 dark:text-yellow-400 sm:text-5xl lg:text-6xl max-w-2xl balance-text leading-tight">
               Code. Commit. Post.{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">
                 Build Consistency.
               </span>
             </h1>
 
-            <p className="mt-6 ml-8 text-lg leading-8 text-gray-600 max-w-xl">
+            <p className="mt-6 ml-8 text-lg leading-8 text-gray-600 dark:text-slate-300 max-w-xl">
               Join <strong>ABTalks</strong> — a 60-day challenge designed for
               Indian college students. Complete daily coding tasks, crush your
               GitHub commit graph, and showcase your skills on LinkedIn. Build
@@ -50,18 +53,18 @@ const Hero = () => {
 
             <div className="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4">
               <Link
-                to="#join"
-                className="w-full sm:w-auto inline-flex items-center justify-center rounded-full bg-indigo-600 px-8 py-3.5 text-base font-semibold text-white shadow-lg shadow-indigo-200 transition-all hover:bg-indigo-700 hover:shadow-xl hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 active:scale-95"
+                to="/dashboard"
+                className="w-full sm:w-auto inline-flex items-center justify-center rounded-full bg-indigo-600 dark:bg-indigo-500 px-8 py-3.5 text-base font-semibold text-white shadow-lg shadow-indigo-200 dark:shadow-none transition-all hover:bg-indigo-700 dark:hover:bg-indigo-600 hover:shadow-xl hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 active:scale-95"
               >
                 Start Your 60-Day Journey
               </Link>
               <Link
                 to="#how-it-works"
-                className="w-full sm:w-auto inline-flex items-center justify-center rounded-full bg-white px-8 py-3.5 text-base font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 transition-all hover:bg-gray-50 hover:ring-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 active:scale-95 group"
+                className="w-full sm:w-auto inline-flex items-center justify-center rounded-full bg-white dark:bg-[#172033] px-8 py-3.5 text-base font-semibold text-gray-900 dark:text-yellow-400 shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-[#273449] transition-all hover:bg-gray-50 dark:hover:bg-[#1f2b45] focus:outline-none focus:ring-2 focus:ring-indigo-600 dark:focus:ring-yellow-400 focus:ring-offset-2 active:scale-95 group"
               >
                 See How It Works
                 <svg
-                  className="ml-2 h-5 w-5 text-gray-400 group-hover:text-gray-600 transition-colors"
+                  className="ml-2 h-5 w-5 text-gray-400 dark:text-gray-500 group-hover:text-gray-600 dark:group-hover:text-yellow-400 transition-colors"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth="2"
@@ -77,7 +80,7 @@ const Hero = () => {
             </div>
 
             {/* Trust Indicators */}
-            <div className="mt-10 sm:mt-12 flex flex-wrap items-center gap-6 sm:gap-10 border-t border-gray-200 pt-8">
+            <div className="mt-10 sm:mt-12 flex flex-wrap items-center gap-6 sm:gap-10 border-t border-gray-200 dark:border-gray-800 pt-8">
               <div className="flex flex-col">
                 <div className="flex items-center gap-2">
                   <div className="flex -space-x-2">
@@ -89,7 +92,7 @@ const Hero = () => {
                     ].map((item) => (
                       <div
                         key={item.i}
-                        className={`h-8 w-8 rounded-full border-2 border-slate-50 ${item.c} flex items-center justify-center overflow-hidden`}
+                        className={`h-8 w-8 rounded-full border-2 border-slate-50 dark:border-slate-800 ${item.c} flex items-center justify-center overflow-hidden`}
                       >
                         <img
                           src={`https://ui-avatars.com/api/?name=Student+${item.i}&background=random&color=fff&size=32`}
@@ -99,29 +102,33 @@ const Hero = () => {
                       </div>
                     ))}
                   </div>
-                  <span className="text-xl font-bold text-gray-900 pl-2">
+                  <span className="text-xl font-bold text-gray-900 dark:text-yellow-400 pl-2">
                     5000+
                   </span>
                 </div>
-                <span className="mt-1 text-sm font-medium text-gray-500">
+                <span className="mt-1 text-sm font-medium text-gray-500 dark:text-slate-400">
                   Active Students
                 </span>
               </div>
 
-              <div className="hidden sm:block h-10 w-px bg-gray-200" />
+              <div className="hidden sm:block h-10 w-px bg-gray-200 dark:bg-gray-800" />
 
               <div className="flex flex-col">
-                <span className="text-xl font-bold text-gray-900">60-Day</span>
-                <span className="mt-1 text-sm font-medium text-gray-500">
+                <span className="text-xl font-bold text-gray-900 dark:text-yellow-400">
+                  60-Day
+                </span>
+                <span className="mt-1 text-sm font-medium text-gray-500 dark:text-slate-400">
                   Challenge
                 </span>
               </div>
 
-              <div className="hidden sm:block h-10 w-px bg-gray-200" />
+              <div className="hidden sm:block h-10 w-px bg-gray-200 dark:bg-gray-800" />
 
               <div className="flex flex-col">
-                <span className="text-xl font-bold text-gray-900">200+</span>
-                <span className="mt-1 text-sm font-medium text-gray-500">
+                <span className="text-xl font-bold text-gray-900 dark:text-yellow-400">
+                  200+
+                </span>
+                <span className="mt-1 text-sm font-medium text-gray-500 dark:text-slate-400">
                   GitHub Commits
                 </span>
               </div>
@@ -135,7 +142,7 @@ const Hero = () => {
           >
             <div className="relative mx-auto w-full max-w-lg lg:max-w-none">
               {/* Decorative background circle */}
-              <div className="absolute -inset-4 rounded-3xl bg-gradient-to-r from-indigo-200 to-purple-200 opacity-40 blur-xl"></div>
+              <div className="absolute -inset-4 rounded-3xl bg-gradient-to-r from-indigo-200 to-purple-200 dark:from-indigo-500 dark:to-purple-500 opacity-40 blur-xl"></div>
 
               {/* Mockup Container */}
               <div className="relative rounded-2xl bg-gray-900 shadow-2xl ring-1 ring-white/10 p-2 overflow-hidden transform transition-transform hover:scale-[1.02] duration-500">
@@ -287,8 +294,8 @@ const Hero = () => {
       </div>
 
       {/* Bottom fade out to next section */}
-      <div className="h-24 w-full bg-gradient-to-t from-white to-transparent absolute bottom-0 left-0"></div>
-    </div>
+      <div className="h-24 w-full bg-gradient-to-t from-white dark:from-[#0B1020] to-transparent absolute bottom-0 left-0 transition-colors duration-300"></div>
+    </section>
   );
 };
 

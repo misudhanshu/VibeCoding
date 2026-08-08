@@ -84,7 +84,10 @@ const FAQ = () => {
   };
 
   return (
-    <section className="bg-slate-50 py-24 sm:py-32">
+    <section
+      id="faq"
+      className="bg-slate-50 dark:bg-[#111827] py-24 sm:py-32 transition-colors duration-300"
+    >
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
         {/* Header section */}
         <div
@@ -95,10 +98,10 @@ const FAQ = () => {
               : "opacity-0 translate-y-8"
           }`}
         >
-          <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+          <h2 className="text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white sm:text-4xl">
             Questions? We've Got You.
           </h2>
-          <p className="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="mt-4 text-lg text-gray-600 dark:text-slate-300 max-w-2xl mx-auto">
             Everything you need to know before starting your 60-day journey.
           </p>
         </div>
@@ -118,21 +121,21 @@ const FAQ = () => {
             return (
               <div
                 key={index}
-                className={`rounded-2xl border bg-white transition-all duration-300 ease-in-out ${
+                className={`rounded-2xl border bg-white dark:bg-[#172033] transition-all duration-300 ease-in-out ${
                   isOpen
-                    ? "border-indigo-100 shadow-md ring-1 ring-indigo-50"
-                    : "border-gray-100 shadow-sm hover:border-gray-200 hover:shadow"
+                    ? "border-indigo-100 dark:border-gray-600 shadow-md ring-1 ring-indigo-50 dark:ring-gray-700"
+                    : "border-gray-100 dark:border-[#273449] shadow-sm hover:border-gray-200 dark:hover:border-gray-500 hover:shadow"
                 }`}
               >
                 <button
                   type="button"
-                  className="flex w-full items-center justify-between px-6 py-5 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600 focus-visible:ring-offset-2 rounded-2xl"
+                  className="flex w-full items-center justify-between px-6 py-5 text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600 dark:focus-visible:ring-yellow-400 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-[#172033] rounded-2xl"
                   onClick={() => toggleFAQ(index)}
                   aria-expanded={isOpen}
                   aria-controls={`faq-answer-${index}`}
                 >
                   <span
-                    className={`text-base sm:text-lg font-bold pr-4 transition-colors duration-300 ${isOpen ? "text-indigo-600" : "text-gray-900"}`}
+                    className={`text-base sm:text-lg font-bold pr-4 transition-colors duration-300 ${isOpen ? "text-indigo-600 dark:text-yellow-400" : "text-gray-900 dark:text-white"}`}
                   >
                     {faq.question}
                   </span>
@@ -141,8 +144,8 @@ const FAQ = () => {
                   <div
                     className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-all duration-300 ${
                       isOpen
-                        ? "bg-indigo-100 text-indigo-600"
-                        : "bg-gray-50 text-gray-400 group-hover:bg-gray-100"
+                        ? "bg-indigo-100 text-indigo-600 dark:bg-gray-800 dark:text-yellow-400"
+                        : "bg-gray-50 text-gray-400 dark:bg-gray-900 dark:text-gray-500 group-hover:bg-gray-100 dark:group-hover:bg-gray-800"
                     }`}
                   >
                     <Plus
@@ -172,7 +175,7 @@ const FAQ = () => {
                   }`}
                 >
                   <div className="overflow-hidden">
-                    <div className="px-6 pb-6 pt-0 text-sm sm:text-base text-gray-600 leading-relaxed">
+                    <div className="px-6 pb-6 pt-0 text-sm sm:text-base text-gray-600 dark:text-slate-300 leading-relaxed">
                       {faq.answer}
                     </div>
                   </div>

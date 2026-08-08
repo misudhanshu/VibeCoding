@@ -3,7 +3,10 @@ import { Link } from "react-router";
 
 const FinalCTA = () => {
   return (
-    <section className="bg-slate-50 py-16 sm:py-24">
+    <section
+      className="bg-slate-50 dark:bg-[#0B1020] py-16 sm:py-24 transition-colors duration-300"
+      id="join"
+    >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Large Rounded Container */}
         <div className="relative overflow-hidden rounded-[2.5rem] bg-gray-900 px-6 py-20 shadow-2xl sm:px-16 sm:py-24 lg:px-24">
@@ -31,7 +34,7 @@ const FinalCTA = () => {
             <div className="flex flex-col items-center justify-center gap-4">
               {/* Uplifting Button Interaction */}
               <Link
-                to="#join"
+                to="/dashboard"
                 className="inline-flex w-full sm:w-auto items-center justify-center rounded-full bg-white px-10 py-4 text-base font-bold text-gray-900 shadow-xl shadow-indigo-600/20 transition-all duration-300 ease-out hover:-translate-y-1.5 hover:shadow-indigo-500/40 hover:scale-[1.02] active:scale-95 active:translate-y-0"
               >
                 Start the Challenge
