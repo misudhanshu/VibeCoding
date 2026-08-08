@@ -1,16 +1,46 @@
-# React + Vite
+# ABTalks — 60-Day Coding Challenge
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A mobile-first redesign of ABTalks for the VibeCoding Hackathon.
 
-Currently, two official plugins are available:
+## Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+[Your deployed Vercel URL]
 
-## React Compiler
+## Route Map
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+/
+ /dashboard
+ /day/12
 
-## Expanding the ESLint configuration
+## Project Overview
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+ABTalks is a 60-day coding challenge designed for Indian college students.
+Students complete a coding task every day and submit GitHub and LinkedIn proof
+of work to build consistency and visibility.
+
+## Built With
+
+- React
+- React Router
+- Tailwind CSS
+- Lucide React
+- LocalStorage
+- Mock data
+
+## Features
+
+- Mobile-first responsive design
+- Light / dark mode
+- 60-day progress tracking
+- Streak tracking
+- GitHub proof-of-work submission
+- LinkedIn proof-of-work submission
+- Achievement tracking
+- Challenge day experience
+- Persistent mock progress using localStorage
+
+## AI Usage
+
+AI-assisted development was used throughout the hackathon.
+
+See `PROMPTS.md` for the prompts and development history.
