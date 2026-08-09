@@ -28,7 +28,9 @@ export const DEFAULT_STATE = {
     12: { githubSubmitted: true, linkedinSubmitted: true }
   },
   selectedRoadmapId: null,
-  roadmapProgress: {}
+  roadmapProgress: {},
+  missedDays: [],
+  recoveredDays: []
 };
 
 export const FIRST_DAY_STATE = {
@@ -40,7 +42,9 @@ export const FIRST_DAY_STATE = {
   day12Completed: false,
   proofOfWork: {},
   selectedRoadmapId: null,
-  roadmapProgress: {}
+  roadmapProgress: {},
+  missedDays: [],
+  recoveredDays: []
 };
 
 export const ProgressProvider = ({ children }) => {
@@ -57,6 +61,12 @@ export const ProgressProvider = ({ children }) => {
         }
         if (parsed.selectedRoadmapId === undefined) {
           parsed.selectedRoadmapId = null;
+        }
+        if (!parsed.missedDays) {
+          parsed.missedDays = [];
+        }
+        if (!parsed.recoveredDays) {
+          parsed.recoveredDays = [];
         }
         return parsed;
       } catch {
@@ -86,6 +96,86 @@ export const ProgressProvider = ({ children }) => {
           }
         }
       };
+    });
+  };
+
+  const markDayAsMissed = (dayNumber) => {
+    setProgress((prev) => {
+      const missed = prev.missedDays || [];
+      if (missed.includes(dayNumber)) return prev;
+      return {
+        ...prev,
+        missedDays: [...missed, dayNumber],
+        completedDays: (prev.completedDays || []).filter((d) => d !== dayNumber),
+        recoveredDays: (prev.recoveredDays || []).filter((d) => d !== dayNumber)
+      };
+    });
+  };
+
+  const recoverDay = (dayNumber, extraProof = {}) => {
+    setProgress((prev) => {
+      const missed = (prev.missedDays || []).filter((d) => d !== dayNumber);
+      const completed = prev.completedDays.includes(dayNumber)
+        ? prev.completedDays
+        : [...prev.completedDays, dayNumber];
+      const recovered = prev.recoveredDays?.includes(dayNumber)
+        ? prev.recoveredDays
+        : [...(prev.recoveredDays || []), dayNumber];
+
+      const currentProof = prev.proofOfWork || {};
+      const dayProof = currentProof[dayNumber] || {};
+      const updatedProof = {
+        ...currentProof,
+        [dayNumber]: {
+          ...dayProof,
+          githubSubmitted: true,
+          linkedinSubmitted: true,
+          ...extraProof
+        }
+      };
+
+      return {
+        ...prev,
+        missedDays: missed,
+        completedDays: completed,
+        recoveredDays: recovered,
+        proofOfWork: updatedProof
+      };
+    });
+  };
+
+  const getDayStatus = (dayNumber) => {
+    const missed = progress.missedDays || [];
+    const recovered = progress.recoveredDays || [];
+    const completed = progress.completedDays || [];
+
+    if (recovered.includes(dayNumber)) return "recovered";
+    if (missed.includes(dayNumber)) return "missed";
+    if (completed.includes(dayNumber)) return "completed";
+    if (dayNumber === progress.currentDay) return "current";
+    if (dayNumber < progress.currentDay) return "pending";
+    return "locked";
+  };
+
+  const toggleSimulateMissedDay = (dayNumber = 8) => {
+    setProgress((prev) => {
+      const missed = prev.missedDays || [];
+      if (missed.includes(dayNumber)) {
+        // Unmark missed, restore
+        return {
+          ...prev,
+          missedDays: missed.filter((d) => d !== dayNumber),
+          completedDays: prev.completedDays.includes(dayNumber) ? prev.completedDays : [...prev.completedDays, dayNumber].sort((a,b) => a-b)
+        };
+      } else {
+        // Mark missed
+        return {
+          ...prev,
+          missedDays: [...missed, dayNumber],
+          completedDays: (prev.completedDays || []).filter((d) => d !== dayNumber),
+          recoveredDays: (prev.recoveredDays || []).filter((d) => d !== dayNumber)
+        };
+      }
     });
   };
 
@@ -142,6 +232,10 @@ export const ProgressProvider = ({ children }) => {
       value={{
         progress,
         updateSubmission,
+        markDayAsMissed,
+        recoverDay,
+        getDayStatus,
+        toggleSimulateMissedDay,
         completeDay12,
         setSelectedRoadmap,
         toggleRoadmapMilestone,
@@ -156,4 +250,5 @@ export const ProgressProvider = ({ children }) => {
 };
 
 export const useProgress = () => useContext(ProgressContext);
+
 

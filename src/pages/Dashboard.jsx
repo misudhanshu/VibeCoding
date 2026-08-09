@@ -36,10 +36,92 @@ const getChallengeData = (day) => {
 // REUSABLE COMPONENTS
 // ━━━━━━━━━━━━━━━━━━━━━━
 
-const SmartMotivationCard = ({ currentDay, streak, completedDays }) => {
+const HackathonDemoBar = () => {
+  const { progress, toggleSimulateMissedDay, resetToDefault } = useProgress();
+  const isDay8Missed = progress.missedDays?.includes(8);
+  const isDay8Recovered = progress.recoveredDays?.includes(8);
+
+  return (
+    <div className="bg-gray-900 text-white dark:bg-indigo-950 dark:text-indigo-100 border-b border-indigo-500/20 px-4 py-2 text-xs font-medium transition-colors">
+      <div className="mx-auto max-w-7xl flex flex-wrap items-center justify-between gap-2">
+        <div className="flex items-center gap-2">
+          <span className="font-extrabold text-yellow-400 uppercase tracking-widest bg-yellow-400/10 px-2 py-0.5 rounded border border-yellow-400/30">
+            ⚡ Hackathon Demo Controls
+          </span>
+          <span className="hidden sm:inline text-gray-300 dark:text-slate-300">
+            Test the Missed Day + Recovery system with 1-click
+          </span>
+        </div>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => toggleSimulateMissedDay(8)}
+            className={`px-3 py-1 rounded-md font-bold transition-all shadow-sm ${
+              isDay8Missed
+                ? "bg-amber-500 text-gray-900 hover:bg-amber-400"
+                : isDay8Recovered
+                ? "bg-emerald-600 text-white hover:bg-emerald-500"
+                : "bg-indigo-600 text-white hover:bg-indigo-500"
+            }`}
+          >
+            {isDay8Missed
+              ? "✓ Day 8 Missed (Click to Undo)"
+              : isDay8Recovered
+              ? "✓ Day 8 Recovered (Click to Toggle Missed)"
+              : "⚡ Simulate Day 8 Missed"}
+          </button>
+          <button
+            onClick={resetToDefault}
+            className="px-2.5 py-1 rounded-md bg-gray-800 hover:bg-gray-700 text-gray-300 text-[11px] font-semibold transition-colors"
+          >
+            Reset Demo State
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const MissedDayRecoveryCard = ({ missedDay }) => {
+  if (!missedDay) return null;
+  return (
+    <div className="bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-950/40 dark:to-orange-950/30 rounded-2xl p-5 sm:p-6 shadow-md ring-1 ring-amber-200 dark:ring-amber-800/60 transition-transform hover:-translate-y-0.5 duration-300 border-l-4 border-l-amber-500">
+      <div className="flex flex-col sm:flex-row gap-5 items-start sm:items-center justify-between">
+        <div className="flex items-start gap-3.5">
+          <div className="h-10 w-10 rounded-full bg-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0 mt-0.5">
+            <Zap className="h-5 w-5 fill-amber-500" />
+          </div>
+          <div>
+            <div className="flex flex-wrap items-center gap-2 mb-1">
+              <span className="text-[11px] font-black uppercase tracking-wider text-amber-800 dark:text-amber-300 bg-amber-200/70 dark:bg-amber-900/60 px-2.5 py-0.5 rounded-md">
+                Recovery Card
+              </span>
+              <span className="text-xs font-bold text-amber-700 dark:text-amber-400">
+                Day {missedDay} Missed
+              </span>
+            </div>
+            <p className="text-gray-900 dark:text-white font-extrabold text-lg mb-1">
+              You're one step away from getting back on track.
+            </p>
+            <p className="text-gray-600 dark:text-slate-300 text-sm font-medium">
+              "Consistency isn't about never missing. It's about getting back on track."
+            </p>
+          </div>
+        </div>
+        <Link
+          to={`/day/${missedDay}`}
+          className="w-full sm:w-auto shrink-0 inline-flex items-center justify-center gap-2 rounded-xl bg-amber-600 hover:bg-amber-700 dark:bg-amber-500 dark:hover:bg-amber-400 px-6 py-3 text-sm font-bold text-white dark:text-gray-900 transition-all active:scale-95 shadow-md shadow-amber-600/20"
+        >
+          Recover Day {missedDay} <ArrowRight className="h-4 w-4" />
+        </Link>
+      </div>
+    </div>
+  );
+};
+
+const SmartMotivationCard = ({ currentDay, streak, completedDays, missedDay }) => {
   const isFirstDay = currentDay === 1 && streak === 0 && completedDays.length === 0;
-  const isRecovery = completedDays.length > 0 && streak === 0;
-  const isActiveStreak = streak > 0;
+  const isRecovery = missedDay || (completedDays.length > 0 && streak === 0);
+  const isActiveStreak = streak > 0 && !missedDay;
 
   if (isFirstDay) {
     return (
@@ -64,6 +146,7 @@ const SmartMotivationCard = ({ currentDay, streak, completedDays }) => {
   }
 
   if (isRecovery) {
+    const targetDay = missedDay || currentDay;
     return (
       <div className="bg-white dark:bg-[#111827] rounded-2xl p-5 sm:p-6 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] ring-1 ring-gray-100 dark:ring-gray-800 transition-transform hover:-translate-y-1 duration-300 border-l-4 border-l-amber-500">
         <div className="flex flex-col sm:flex-row gap-5 items-start sm:items-center justify-between">
@@ -71,17 +154,17 @@ const SmartMotivationCard = ({ currentDay, streak, completedDays }) => {
             <h3 className="text-xs font-extrabold text-amber-600 dark:text-amber-500 tracking-widest uppercase mb-1.5 flex items-center gap-2">
               <Zap className="h-4 w-4" /> Get Back on Track
             </h3>
-            <p className="text-gray-900 dark:text-white font-bold text-lg mb-1">You missed yesterday. That's okay.</p>
-            <p className="text-gray-600 dark:text-slate-400 text-sm mb-3">One missed day doesn't erase your progress. Complete today's challenge and keep moving forward.</p>
+            <p className="text-gray-900 dark:text-white font-bold text-lg mb-1">You missed Day {targetDay}. That's okay.</p>
+            <p className="text-gray-600 dark:text-slate-400 text-sm mb-3">One missed day doesn't erase your progress. Complete the challenge and keep moving forward.</p>
             <div className="inline-flex items-center gap-1.5 rounded-md bg-amber-50 dark:bg-amber-900/20 px-2.5 py-1.5 text-xs font-semibold text-amber-700 dark:text-amber-400 ring-1 ring-inset ring-amber-600/20">
-               Recovery available: Complete today's challenge to continue your journey.
+               Recovery available: Complete Day {targetDay} challenge to restore your streak momentum.
             </div>
           </div>
           <Link
-            to={`/day/${currentDay}`}
-            className="w-full sm:w-auto shrink-0 inline-flex items-center justify-center rounded-xl bg-gray-900 dark:bg-white px-5 py-2.5 text-sm font-bold text-white dark:text-gray-900 transition-transform hover:-translate-y-0.5 active:scale-95 shadow-sm"
+            to={`/day/${targetDay}`}
+            className="w-full sm:w-auto shrink-0 inline-flex items-center justify-center rounded-xl bg-amber-600 hover:bg-amber-700 dark:bg-amber-500 dark:hover:bg-amber-400 px-5 py-2.5 text-sm font-bold text-white dark:text-gray-900 transition-transform hover:-translate-y-0.5 active:scale-95 shadow-sm"
           >
-            Get Back on Track
+            Recover Day {targetDay}
           </Link>
         </div>
       </div>
@@ -198,7 +281,7 @@ const NextUpCard = ({ currentDay, completedDays, totalDays }) => {
   );
 };
 
-const StreakCard = ({ user }) => (
+const StreakCard = ({ user, recoveryStatus }) => (
   <div className="bg-white dark:bg-[#111827] rounded-2xl p-5 sm:p-6 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.1)] ring-1 ring-gray-100 dark:ring-gray-800 flex flex-col sm:flex-row sm:items-center justify-between gap-5 transition-transform hover:-translate-y-1 duration-300">
     <div className="flex items-center gap-4">
       <div className="h-14 w-14 rounded-full bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center shrink-0 shadow-inner">
@@ -213,26 +296,21 @@ const StreakCard = ({ user }) => (
         </p>
       </div>
     </div>
-    <div className="bg-indigo-50/80 dark:bg-indigo-900/30 rounded-xl px-4 py-3 sm:text-right border border-indigo-100/50 dark:border-indigo-800/50 hidden sm:block md:hidden lg:block w-full sm:w-auto">
-      {user.currentDay === 1 && user.streak === 0 ? (
-        <>
-          <p className="text-sm font-bold text-indigo-900 dark:text-indigo-100">
-            Your journey starts today.
-          </p>
-          <p className="text-xs text-indigo-700 dark:text-indigo-300 mt-0.5">
-            Complete today's challenge to begin.
-          </p>
-        </>
-      ) : (
-        <>
-          <p className="text-sm font-bold text-indigo-900 dark:text-indigo-100">
-            You're building momentum.
-          </p>
-          <p className="text-xs text-indigo-700 dark:text-indigo-300 mt-0.5">
-            Keep showing up. You've got this!
-          </p>
-        </>
-      )}
+    <div className="flex flex-col items-start sm:items-end gap-1">
+      <span className="text-xs font-bold text-gray-400 dark:text-slate-500 uppercase tracking-widest">
+        Recovery Status
+      </span>
+      <span
+        className={`inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-extrabold ${
+          recoveryStatus?.type === "missed"
+            ? "bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 ring-1 ring-amber-500/30"
+            : recoveryStatus?.type === "recovered"
+            ? "bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 ring-1 ring-emerald-500/30"
+            : "bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300 ring-1 ring-green-500/30"
+        }`}
+      >
+        {recoveryStatus?.label || "✓ On Track"}
+      </span>
     </div>
   </div>
 );
@@ -344,7 +422,7 @@ const ProofOfWork = ({ githubSubmitted, linkedinSubmitted }) => (
   </div>
 );
 
-const OverallProgress = ({ user, completedDays }) => (
+const OverallProgress = ({ user, completedDays, missedDays = [], recoveredDays = [] }) => (
   <div className="bg-white dark:bg-[#111827] rounded-2xl shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] ring-1 ring-gray-100 dark:ring-gray-800 p-5 sm:p-6 transition-transform hover:-translate-y-1 duration-300">
     <h3 className="text-base font-bold text-gray-900 dark:text-white mb-4">
       Your 60-Day Journey
@@ -382,26 +460,32 @@ const OverallProgress = ({ user, completedDays }) => (
         let stateClass =
           "bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700"; // Upcoming
         let ringClass = "";
+        let titleText = `Day ${dayNum}`;
 
-        if (completedDays.includes(dayNum)) {
-          // Completed
+        if (recoveredDays.includes(dayNum)) {
+          stateClass =
+            "bg-emerald-500 hover:bg-emerald-400 ring-2 ring-emerald-300 dark:ring-emerald-500/50 shadow-sm";
+          titleText = `Day ${dayNum} (Recovered)`;
+        } else if (missedDays.includes(dayNum)) {
+          stateClass =
+            "bg-amber-500 hover:bg-amber-400 animate-pulse ring-2 ring-amber-300 dark:ring-amber-500/50 shadow-sm";
+          titleText = `Day ${dayNum} (Missed - Recovery Available)`;
+        } else if (completedDays.includes(dayNum)) {
           stateClass =
             "bg-green-500 hover:bg-green-400 shadow-sm shadow-green-200/50 dark:shadow-none";
+          titleText = `Day ${dayNum} (Completed)`;
         } else if (dayNum === user.currentDay) {
-          // Current (Today)
           stateClass =
             "bg-indigo-500 dark:bg-yellow-500 animate-pulse outline-none ring-2 ring-indigo-200 dark:ring-yellow-400/50 ring-offset-1 dark:ring-offset-gray-900 shadow-sm shadow-indigo-300/50 dark:shadow-none";
+          titleText = `Today (Day ${dayNum})`;
         }
 
         return (
-          <div
+          <Link
             key={dayNum}
+            to={`/day/${dayNum}`}
             className={`aspect-square rounded-[3px] sm:rounded-sm transition-all duration-300 cursor-pointer ${stateClass} ${ringClass}`}
-            title={
-              dayNum === user.currentDay
-                ? `Today (Day ${dayNum})`
-                : `Day ${dayNum}`
-            }
+            title={titleText}
           />
         );
       })}
@@ -555,19 +639,41 @@ const ProofOfWorkTimeline = ({ completedDays, currentDay, githubSubmitted, linke
       date: "In Progress",
     });
   }
-  
-  sortedDays.forEach(day => {
+
+  const missedDaysList = pData?.missedDays || [];
+  const recoveredDaysList = pData?.recoveredDays || [];
+
+  missedDaysList.forEach((day) => {
+    if (!entries.some((e) => e.day === day)) {
+      entries.push({
+        id: `missed-${day}`,
+        day: day,
+        title: getChallengeData(day).title,
+        isCompleted: false,
+        isMissed: true,
+        github: false,
+        linkedin: false,
+        date: "Missed Day",
+      });
+    }
+  });
+
+  sortedDays.forEach((day) => {
     const dayProof = pData?.proofOfWork?.[day] || { githubSubmitted: true, linkedinSubmitted: true };
+    const isRecoveredDay = recoveredDaysList.includes(day);
     entries.push({
       id: `completed-${day}`,
       day: day,
       title: getChallengeData(day).title,
       isCompleted: true,
+      isRecovered: isRecoveredDay,
       github: !!dayProof.githubSubmitted,
       linkedin: !!dayProof.linkedinSubmitted,
       date: generateMockDate(day),
     });
   });
+
+  entries.sort((a, b) => b.day - a.day);
 
   if (entries.length === 0) {
     return (
@@ -606,7 +712,15 @@ const ProofOfWorkTimeline = ({ completedDays, currentDay, githubSubmitted, linke
       <div className="relative border-l-2 border-indigo-100 dark:border-gray-800 ml-3 space-y-8 pb-2">
         {visibleEntries.map((entry) => (
           <div key={entry.id} className="relative pl-6 group">
-            {entry.isCompleted ? (
+            {entry.isMissed ? (
+              <span className="absolute -left-[9px] top-1 h-4 w-4 rounded-full bg-amber-500 ring-4 ring-white dark:ring-[#111827] shadow-sm flex items-center justify-center text-[10px] text-white font-black">
+                !
+              </span>
+            ) : entry.isRecovered ? (
+              <span className="absolute -left-[9px] top-1 h-4 w-4 rounded-full bg-emerald-500 ring-4 ring-white dark:ring-[#111827] shadow-sm transition-transform group-hover:scale-110 flex items-center justify-center">
+                <Check className="h-3 w-3 text-white" strokeWidth={3} />
+              </span>
+            ) : entry.isCompleted ? (
               <span className="absolute -left-[9px] top-1 h-4 w-4 rounded-full bg-green-500 ring-4 ring-white dark:ring-[#111827] shadow-sm transition-transform group-hover:scale-110 flex items-center justify-center">
                 <Check className="h-3 w-3 text-white" strokeWidth={3} />
               </span>
@@ -616,8 +730,22 @@ const ProofOfWorkTimeline = ({ completedDays, currentDay, githubSubmitted, linke
             
             <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2 mb-2">
               <div>
-                <p className={`text-xs font-extrabold tracking-wide uppercase mb-1 ${entry.isCompleted ? "text-green-600 dark:text-green-500" : "text-indigo-600 dark:text-indigo-400"}`}>
-                  {entry.isCompleted ? `✓ Day ${entry.day}` : `○ In Progress (Day ${entry.day})`}
+                <p className={`text-xs font-extrabold tracking-wide uppercase mb-1 ${
+                  entry.isMissed
+                    ? "text-amber-600 dark:text-amber-400"
+                    : entry.isRecovered
+                    ? "text-emerald-600 dark:text-emerald-400"
+                    : entry.isCompleted
+                    ? "text-green-600 dark:text-green-500"
+                    : "text-indigo-600 dark:text-indigo-400"
+                }`}>
+                  {entry.isMissed
+                    ? `⚠ Day ${entry.day} (Missed)`
+                    : entry.isRecovered
+                    ? `✓ Day ${entry.day} (Recovered)`
+                    : entry.isCompleted
+                    ? `✓ Day ${entry.day}`
+                    : `○ In Progress (Day ${entry.day})`}
                 </p>
                 <p className={`text-base font-bold ${entry.isCompleted ? "text-gray-900 dark:text-white" : "text-gray-700 dark:text-gray-300"}`}>
                   {entry.title}
@@ -629,24 +757,43 @@ const ProofOfWorkTimeline = ({ completedDays, currentDay, githubSubmitted, linke
               </div>
             </div>
 
-            <div className="flex flex-col gap-2 mt-3">
-              <div className={`flex items-center gap-2 text-sm font-medium ${entry.github ? "text-gray-700 dark:text-gray-300" : "text-gray-400 dark:text-gray-600"}`}>
-                <GitCommit className={`h-4 w-4 ${entry.github ? "text-gray-900 dark:text-white" : ""}`} />
-                {entry.github ? "GitHub Commit Added" : "GitHub Pending"}
-                {entry.github && (
-                  <span className="ml-2 text-xs text-indigo-600 dark:text-indigo-400 cursor-pointer hover:underline">View Commit</span>
-                )}
+            {entry.isMissed ? (
+              <div className="mt-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800/50 rounded-xl p-3.5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <div>
+                  <p className="text-xs font-bold text-amber-800 dark:text-amber-300 uppercase tracking-wider">
+                    Recovery Available
+                  </p>
+                  <p className="text-xs text-amber-700 dark:text-amber-400 mt-0.5">
+                    Consistency isn't about never missing. Complete this challenge to get back on track.
+                  </p>
+                </div>
+                <Link
+                  to={`/day/${entry.day}`}
+                  className="shrink-0 rounded-lg bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold px-3.5 py-2 shadow-sm transition-all active:scale-95"
+                >
+                  Recover Day {entry.day}
+                </Link>
               </div>
-              <div className={`flex items-center gap-2 text-sm font-medium ${entry.linkedin ? "text-gray-700 dark:text-gray-300" : "text-gray-400 dark:text-gray-600"}`}>
-                <FaLinkedin className={`h-4 w-4 ${entry.linkedin ? "text-blue-600 dark:text-blue-400" : ""}`} />
-                {entry.linkedin ? "LinkedIn Post Shared" : "LinkedIn Pending"}
-                {entry.linkedin && (
-                  <span className="ml-2 text-xs text-indigo-600 dark:text-indigo-400 cursor-pointer hover:underline">View Post</span>
-                )}
+            ) : (
+              <div className="flex flex-col gap-2 mt-3">
+                <div className={`flex items-center gap-2 text-sm font-medium ${entry.github ? "text-gray-700 dark:text-gray-300" : "text-gray-400 dark:text-gray-600"}`}>
+                  <GitCommit className={`h-4 w-4 ${entry.github ? "text-gray-900 dark:text-white" : ""}`} />
+                  {entry.github ? "GitHub Commit Added" : "GitHub Pending"}
+                  {entry.github && (
+                    <span className="ml-2 text-xs text-indigo-600 dark:text-indigo-400 cursor-pointer hover:underline">View Commit</span>
+                  )}
+                </div>
+                <div className={`flex items-center gap-2 text-sm font-medium ${entry.linkedin ? "text-gray-700 dark:text-gray-300" : "text-gray-400 dark:text-gray-600"}`}>
+                  <FaLinkedin className={`h-4 w-4 ${entry.linkedin ? "text-blue-600 dark:text-blue-400" : ""}`} />
+                  {entry.linkedin ? "LinkedIn Post Shared" : "LinkedIn Pending"}
+                  {entry.linkedin && (
+                    <span className="ml-2 text-xs text-indigo-600 dark:text-indigo-400 cursor-pointer hover:underline">View Post</span>
+                  )}
+                </div>
               </div>
-            </div>
+            )}
 
-            {!entry.isCompleted && (
+            {!entry.isCompleted && !entry.isMissed && (
               <div className="mt-4">
                 <Link
                   to={`/day/${entry.day}`}
@@ -681,6 +828,19 @@ const ProofOfWorkTimeline = ({ completedDays, currentDay, githubSubmitted, linke
 const Dashboard = () => {
   const { isDark, toggleTheme } = useTheme();
   const { progress: pData } = useProgress();
+
+  const missedDaysList = pData.missedDays || [];
+  const recoveredDaysList = pData.recoveredDays || [];
+  const hasActiveMissed = missedDaysList.length > 0;
+  const activeMissedDay = hasActiveMissed ? missedDaysList[0] : null;
+
+  let recoveryStatus = { type: "on_track", label: "✓ On Track" };
+  if (hasActiveMissed) {
+    recoveryStatus = { type: "missed", label: `⚠️ Recovery Available (Day ${activeMissedDay})` };
+  } else if (recoveredDaysList.length > 0) {
+    const lastRecovered = recoveredDaysList[recoveredDaysList.length - 1];
+    recoveryStatus = { type: "recovered", label: `✓ Day ${lastRecovered} Recovered` };
+  }
 
   const calculateLongestStreak = (days) => {
     if (!days || days.length === 0) return 0;
@@ -750,6 +910,8 @@ const Dashboard = () => {
 
   return (
     <main className="min-h-screen bg-slate-50 dark:bg-[#0B1020] font-sans pb-20 overflow-x-hidden selection:bg-indigo-100 dark:selection:bg-indigo-900/50 selection:text-indigo-900 dark:selection:text-indigo-100 transition-colors duration-300">
+      <HackathonDemoBar />
+
       {/* 1. Header */}
       <header className="bg-white dark:bg-[#111827] border-b border-gray-200/80 dark:border-gray-800 px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between sticky top-0 z-30 shadow-sm shadow-gray-100/50 dark:shadow-none transition-colors duration-300">
         <div className="flex items-center">
@@ -806,11 +968,13 @@ const Dashboard = () => {
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-8 items-start">
           {/* Left / Main Column */}
           <div className="space-y-6 lg:col-span-7 xl:col-span-8">
-            <StreakCard user={activeUser} />
+            <StreakCard user={activeUser} recoveryStatus={recoveryStatus} />
+            {hasActiveMissed && <MissedDayRecoveryCard missedDay={activeMissedDay} />}
             <SmartMotivationCard 
               currentDay={pData.currentDay} 
               streak={pData.currentStreak} 
               completedDays={pData.completedDays} 
+              missedDay={activeMissedDay}
             />
             <TodayChallenge today={currentTodayMock} track={activeUser.track} />
             <NextUpCard 
@@ -834,7 +998,12 @@ const Dashboard = () => {
           {/* Right / Sidebar Column */}
           <div className="space-y-6 lg:col-span-5 xl:col-span-4 lg:sticky lg:top-24">
             <PersonalizedRoadmapWidget pData={pData} />
-            <OverallProgress user={activeUser} completedDays={pData.completedDays} />
+            <OverallProgress 
+              user={activeUser} 
+              completedDays={pData.completedDays} 
+              missedDays={pData.missedDays}
+              recoveredDays={pData.recoveredDays}
+            />
             <Achievements achievements={currentAchievements} />
           </div>
         </div>

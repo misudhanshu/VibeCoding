@@ -4770,3 +4770,454 @@ Test:
 20. Confirm existing streak system still works
 
 Do not modify unrelated components.
+
+Prompt 26:
+
+Add a polished "Missed Day + Recovery" system to the existing ABTalks application.
+
+IMPORTANT:
+Do not redesign the application.
+Do not change the existing visual identity, navbar, Hero, roadmap, Dashboard layout, Challenge Day layout, dark/light mode, routing, or existing proof-of-work UI unless required for this feature.
+
+This is a NEW FUNCTIONALITY feature.
+
+━━━━━━━━━━━━━━━━━━━━━━
+CORE IDEA
+━━━━━━━━━━━━━━━━━━━━━━
+
+ABTalks is a 60-day consistency challenge.
+
+Students may occasionally miss a challenge day.
+
+Instead of simply breaking the experience, ABTalks should show:
+
+"Missed Day"
+
+and give the student an opportunity to recover.
+
+The product message should be:
+
+"Consistency isn't about never missing. It's about getting back on track."
+
+━━━━━━━━━━━━━━━━━━━━━━
+IMPORTANT RULE
+━━━━━━━━━━━━━━━━━━━━━━
+
+DO NOT determine a missed day simply because the user manually enters a different URL.
+
+For example:
+
+/day/20
+
+must NOT automatically mark Days 8–19 as missed.
+
+The URL only determines which challenge the user is viewing.
+
+Missed-day state must come from the existing challenge/progress state.
+
+Do not create fake missed days from route navigation.
+
+━━━━━━━━━━━━━━━━━━━━━━
+PROGRESS STATE
+━━━━━━━━━━━━━━━━━━━━━━
+
+Inspect the existing progress/localStorage implementation first.
+
+Reuse the existing:
+
+- completedDays
+- currentStreak
+- longestStreak
+- recovery status
+- proof-of-work state
+
+Do NOT create a completely separate progress system.
+
+If the existing application already has a recovery field, integrate with it.
+
+If necessary, add a day-specific status such as:
+
+completed
+missed
+recovered
+pending
+locked
+
+The state must be associated with the specific challenge day.
+
+For example:
+
+Day 7 → completed
+Day 8 → missed
+Day 9 → locked
+
+━━━━━━━━━━━━━━━━━━━━━━
+MISSED DAY UI
+━━━━━━━━━━━━━━━━━━━━━━
+
+When a day is genuinely marked as missed, the Challenge Day page should show a clear but encouraging state.
+
+Example:
+
+⚠️ Day 8 Missed
+
+"You missed yesterday's challenge, but your journey isn't over."
+
+Then show:
+
+🔥 7 Day Streak
+
+Recovery Available
+
+[ Recover Day 8 ]
+
+Do not make the user feel punished.
+
+Use the existing ABTalks design language.
+
+━━━━━━━━━━━━━━━━━━━━━━
+RECOVERY FLOW
+━━━━━━━━━━━━━━━━━━━━━━
+
+When the user clicks:
+
+Recover Day 8
+
+they should be taken through the EXISTING challenge completion flow.
+
+Do NOT create an entirely new challenge system.
+
+The user should:
+
+1. Open the missed challenge.
+2. Complete the required task.
+3. Submit GitHub proof.
+4. Submit LinkedIn proof.
+5. Complete the challenge using the existing completion mechanism.
+6. Day 8 becomes "Recovered".
+7. Progress updates.
+8. Dashboard updates.
+9. Streak/recovery status updates.
+
+━━━━━━━━━━━━━━━━━━━━━━
+DAY STATUS
+━━━━━━━━━━━━━━━━━━━━━━
+
+Each challenge day should have an independent status.
+
+Example:
+
+Day 7
+✓ Completed
+
+Day 8
+⚠ Missed
+
+Day 9
+🔒 Locked
+
+After recovery:
+
+Day 7
+✓ Completed
+
+Day 8
+✓ Recovered
+
+Day 9
+→ Current
+
+Do not use one global "missed" boolean.
+
+━━━━━━━━━━━━━━━━━━━━━━
+DASHBOARD
+━━━━━━━━━━━━━━━━━━━━━━
+
+Integrate the missed-day state into the existing Dashboard.
+
+If there is a missed day, show a recovery card such as:
+
+"You're one step away from getting back on track."
+
+Day 8
+Missed
+
+[Recover Day 8]
+
+Also show the existing:
+
+Current Streak
+Longest Streak
+Recovery Status
+
+Do not create duplicate streak calculations.
+
+Use the same progress state already used by the Dashboard and Challenge Day page.
+
+━━━━━━━━━━━━━━━━━━━━━━
+STREAK BEHAVIOR
+━━━━━━━━━━━━━━━━━━━━━━
+
+Do not arbitrarily increase or decrease the streak based on the URL.
+
+The streak must be derived from the actual challenge progress.
+
+Example:
+
+Days 1–7 completed
+
+Day 8 missed
+
+Current streak may remain:
+
+7
+
+After recovering Day 8:
+
+Current streak becomes:
+
+8
+
+Use the existing streak rules if they already exist.
+
+Do not create a second streak calculation.
+
+━━━━━━━━━━━━━━━━━━━━━━
+PROOF OF WORK
+━━━━━━━━━━━━━━━━━━━━━━
+
+Recovery must use the existing day-specific GitHub and LinkedIn proof state.
+
+If Day 8 is being recovered:
+
+Day 8 GitHub → Pending
+Day 8 LinkedIn → Pending
+
+Completing Day 8 should update ONLY Day 8.
+
+Do not affect Day 9, Day 10, etc.
+
+This must remain consistent with the existing day-specific proof-of-work implementation.
+
+━━━━━━━━━━━━━━━━━━━━━━
+PERSISTENCE
+━━━━━━━━━━━━━━━━━━━━━━
+
+Missed/recovered status must survive:
+
+- page refresh
+- navigation
+- returning to Dashboard
+- returning to the Challenge Day page
+
+Use the existing localStorage/progress system.
+
+Do not store temporary UI state as the permanent challenge status.
+
+━━━━━━━━━━━━━━━━━━━━━━
+RECOVERY STATUS
+━━━━━━━━━━━━━━━━━━━━━━
+
+Use the existing recovery concept if available.
+
+Possible states:
+
+No recovery needed
+Recovery available
+Recovery in progress
+Recovered
+
+Keep the UI simple.
+
+Example:
+
+Recovery Status
+✓ On Track
+
+or:
+
+Recovery Status
+⚠ Recovery Available
+
+or:
+
+Recovery Status
+✓ Day 8 Recovered
+
+━━━━━━━━━━━━━━━━━━━━━━
+RESPONSIVENESS
+━━━━━━━━━━━━━━━━━━━━━━
+
+This feature MUST be fully responsive.
+
+Test at:
+
+390px
+430px
+640px
+768px
+935px
+1024px
+1280px
+1440px
+
+At mobile widths:
+
+- no horizontal scrolling
+- recovery card fits within viewport
+- buttons fit within viewport
+- text wraps naturally
+- icons do not overlap text
+- cards stack vertically where necessary
+- no fixed-width elements causing overflow
+
+At tablet:
+
+- maintain comfortable spacing
+- avoid cramped cards
+- don't force unnecessary two-column layouts
+
+At desktop:
+
+- use the existing Dashboard/Challenge Day layout
+- maintain visual hierarchy
+- do not stretch cards excessively
+
+Use Tailwind responsive utilities.
+
+━━━━━━━━━━━━━━━━━━━━━━
+DARK MODE
+━━━━━━━━━━━━━━━━━━━━━━
+
+The missed/recovery UI must support the existing ABTalks dark mode.
+
+Light mode:
+- existing light backgrounds
+- existing text colors
+- existing accent colors
+
+Dark mode:
+- existing dark backgrounds
+- readable text
+- existing yellow/golden accent system
+
+Do not introduce a separate theme.
+
+━━━━━━━━━━━━━━━━━━━━━━
+ANIMATION
+━━━━━━━━━━━━━━━━━━━━━━
+
+Use subtle animations only.
+
+For example:
+
+- small fade/slide when recovery status appears
+- subtle hover effect on Recover button
+- optional gentle emphasis on the recovery card
+
+Do NOT use aggressive bouncing or distracting animations.
+
+━━━━━━━━━━━━━━━━━━━━━━
+DEMO / TESTING SUPPORT
+━━━━━━━━━━━━━━━━━━━━━━
+
+Because this is a hackathon demo, make it possible to test the missed-day state without waiting an actual day.
+
+If the application already has a development/demo mechanism, reuse it.
+
+If necessary, create a clearly isolated development-only way to simulate:
+
+"Day 8 missed"
+
+Do NOT make the normal production flow randomly mark days as missed.
+
+Do NOT randomly change the user's streak.
+
+━━━━━━━━━━━━━━━━━━━━━━
+TEST CASES
+━━━━━━━━━━━━━━━━━━━━━━
+
+Test the following:
+
+1. Fresh user
+   → no missed day
+
+2. Complete Days 1–7
+   → 7 Day Streak
+
+3. Mark Day 8 as missed
+   → Day 8 shows Missed
+   → Recovery Available
+
+4. Dashboard
+   → Recovery Available
+   → Recover Day 8
+
+5. Open Day 8
+   → GitHub Pending
+   → LinkedIn Pending
+
+6. Recover Day 8
+   → complete challenge
+   → submit GitHub
+   → submit LinkedIn
+
+7. Day 8 becomes:
+   ✓ Recovered
+
+8. Dashboard updates automatically.
+
+9. Refresh browser
+   → Day 8 remains Recovered.
+
+10. Navigate to /day/13
+   → Day 13 must NOT show Day 8's proof status.
+
+11. Navigate back to /day/8
+   → Day 8 still shows its correct recovered state.
+
+12. Test light mode and dark mode.
+
+13. Test mobile at 390px.
+
+14. Test tablet at 768px and 935px.
+
+15. Test desktop at 1024px and 1440px.
+
+━━━━━━━━━━━━━━━━━━━━━━
+DO NOT BREAK EXISTING FEATURES
+━━━━━━━━━━━━━━━━━━━━━━
+
+Do not break:
+
+- Navbar
+- smooth scrolling
+- dark/light mode
+- landing page
+- roadmap
+- Dashboard
+- Challenge Day routing
+- day-specific GitHub status
+- day-specific LinkedIn status
+- proof-of-work timeline
+- current streak
+- longest streak
+- Next Up
+- completion flow
+- existing responsive behavior
+
+Before finishing, inspect the existing state architecture and integrate the missed-day system into it rather than creating duplicate state logic.
+
+The final experience should feel like:
+
+Missed Day
+↓
+Recovery Available
+↓
+Recover Challenge
+↓
+GitHub + LinkedIn Proof
+↓
+Recovered
+↓
+Back on Track

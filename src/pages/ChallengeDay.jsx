@@ -48,7 +48,11 @@ const ChallengeDay = () => {
   const dayNumber = parseInt(dayId || "12", 10);
   const displayDay = dayNumber.toString();
   const { isDark, toggleTheme } = useTheme();
-  const { progress, updateSubmission, setProgress } = useProgress();
+  const { progress, updateSubmission, setProgress, recoverDay, getDayStatus } = useProgress();
+  
+  const dayStatus = getDayStatus(dayNumber);
+  const isMissed = dayStatus === "missed";
+  const isRecovered = dayStatus === "recovered";
   
   const dayProof = progress.proofOfWork?.[dayNumber] || {};
   const githubSubmitted = !!dayProof.githubSubmitted;
@@ -120,15 +124,19 @@ const ChallengeDay = () => {
   const handleCompleteDay = () => {
     if (githubSubmitted && linkedinSubmitted) {
       setJustCompleted(true);
-      setProgress(prev => {
-        if (prev.completedDays.includes(dayNumber)) return prev;
-        return {
-          ...prev,
-          day12Completed: dayNumber === 12 ? true : prev.day12Completed,
-          completedDays: [...prev.completedDays, dayNumber],
-          currentDay: prev.currentDay === dayNumber ? prev.currentDay + 1 : prev.currentDay
-        };
-      });
+      if (isMissed) {
+        recoverDay(dayNumber);
+      } else {
+        setProgress((prev) => {
+          if (prev.completedDays.includes(dayNumber)) return prev;
+          return {
+            ...prev,
+            day12Completed: dayNumber === 12 ? true : prev.day12Completed,
+            completedDays: [...prev.completedDays, dayNumber],
+            currentDay: prev.currentDay === dayNumber ? prev.currentDay + 1 : prev.currentDay
+          };
+        });
+      }
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
@@ -232,6 +240,67 @@ const ChallengeDay = () => {
 
       {!isCompletedDay && (
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-6 sm:mt-8">
+          {/* Missed Day Banner */}
+          {isMissed && (
+            <div className="mb-6 rounded-2xl bg-amber-500/10 border-2 border-amber-500/30 p-5 sm:p-6 text-amber-900 dark:text-amber-200 shadow-sm relative overflow-hidden">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div className="flex items-start gap-3.5">
+                  <div className="h-10 w-10 rounded-full bg-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0 mt-0.5">
+                    <span className="text-xl">⚠️</span>
+                  </div>
+                  <div>
+                    <div className="flex flex-wrap items-center gap-2 mb-1">
+                      <span className="text-xs font-black uppercase tracking-wider text-amber-700 dark:text-amber-400 bg-amber-200/50 dark:bg-amber-900/40 px-2.5 py-0.5 rounded-md">
+                        Day {displayDay} Missed
+                      </span>
+                      <span className="text-xs font-bold text-amber-700 dark:text-amber-300">
+                        Recovery Available
+                      </span>
+                    </div>
+                    <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-1">
+                      You missed yesterday's challenge, but your journey isn't over.
+                    </h2>
+                    <p className="text-sm text-gray-700 dark:text-slate-300 leading-relaxed font-medium">
+                      "Consistency isn't about never missing. It's about getting back on track."
+                    </p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const el = document.getElementById("proof-section");
+                    if (el) el.scrollIntoView({ behavior: "smooth" });
+                  }}
+                  className="w-full sm:w-auto shrink-0 inline-flex items-center justify-center gap-2 rounded-xl bg-amber-600 hover:bg-amber-700 dark:bg-amber-500 dark:hover:bg-amber-400 text-white dark:text-gray-900 px-5 py-2.5 text-sm font-bold shadow-md transition-all active:scale-95"
+                >
+                  Recover Day {displayDay} <ArrowDown className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Recovered Day Banner */}
+          {isRecovered && (
+            <div className="mb-6 rounded-2xl bg-emerald-500/10 border-2 border-emerald-500/30 p-5 sm:p-6 text-emerald-900 dark:text-emerald-200 shadow-sm relative overflow-hidden">
+              <div className="flex items-center gap-3.5">
+                <div className="h-10 w-10 rounded-full bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                  <span className="text-xl">✓</span>
+                </div>
+                <div>
+                  <span className="text-xs font-black uppercase tracking-wider text-emerald-700 dark:text-emerald-400 bg-emerald-200/50 dark:bg-emerald-900/40 px-2.5 py-0.5 rounded-md mb-1 inline-block">
+                    Day {displayDay} Recovered
+                  </span>
+                  <h2 className="text-lg font-bold text-gray-900 dark:text-white">
+                    Back on Track!
+                  </h2>
+                  <p className="text-sm text-gray-700 dark:text-slate-300 font-medium">
+                    You successfully completed and recovered Day {displayDay}. Your streak momentum is alive!
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
           <div className="lg:grid lg:grid-cols-12 lg:gap-8 items-start">
             {/* LEFT / MAIN COLUMN */}
             <div className="lg:col-span-7 xl:col-span-8 space-y-6">
@@ -240,7 +309,7 @@ const ChallengeDay = () => {
                 <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-indigo-500 dark:from-indigo-600 dark:via-purple-600 dark:to-yellow-500"></div>
                 <div className="p-6 sm:p-8 lg:p-10 relative">
                   <span className="inline-block text-xs font-black tracking-widest text-indigo-600 dark:text-yellow-400 uppercase mb-4 bg-indigo-50 dark:bg-indigo-900/30 px-3 py-1 rounded-full">
-                    Day {displayDay}
+                    Day {displayDay} {isMissed ? "(Missed)" : isRecovered ? "(Recovered)" : ""}
                   </span>
                   <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-gray-900 dark:text-white mb-6 tracking-tight leading-tight">
                     {challenge.title}
@@ -388,7 +457,7 @@ const ChallengeDay = () => {
             </div>
 
             {/* RIGHT / STICKY COLUMN */}
-            <div className="lg:col-span-5 xl:col-span-4 mt-6 lg:mt-0 space-y-6 lg:sticky lg:top-24">
+            <div id="proof-section" className="lg:col-span-5 xl:col-span-4 mt-6 lg:mt-0 space-y-6 lg:sticky lg:top-24">
               {/* 7. GITHUB SUBMISSION */}
               <div className="bg-white dark:bg-[#111827] rounded-2xl shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] ring-1 ring-gray-100 dark:ring-gray-800 p-6 sm:p-8 transition-colors duration-300">
                 <div className="flex items-center gap-3 mb-2">
@@ -400,7 +469,7 @@ const ChallengeDay = () => {
                   </h3>
                 </div>
                 <p className="text-sm text-gray-500 dark:text-slate-400 mb-5 font-medium ml-13">
-                  Paste the repository or commit URL for today's project.
+                  Paste the repository or commit URL for Day {displayDay}.
                 </p>
 
                 {githubSubmitted ? (
@@ -495,7 +564,7 @@ const ChallengeDay = () => {
                 )}
               </div>
 
-              {/* 10. REFLECTION IDEA (One Dark Pro Style requested for Code Editor) */}
+              {/* 10. REFLECTION IDEA */}
               <div className="bg-white dark:bg-[#111827] rounded-2xl shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] ring-1 ring-gray-100 dark:ring-gray-800 p-6 sm:p-8 transition-colors duration-300">
                 <h3 className="text-base font-bold text-gray-900 dark:text-white mb-2">
                   Reflection Code Editor
@@ -519,12 +588,12 @@ const ChallengeDay = () => {
               </div>
 
               {/* 9. COMPLETE DAY */}
-              <div className="bg-white dark:bg-[#111827] rounded-2xl shadow-md ring-1 ring-gray-100 dark:ring-gray-800 p-6 sm:p-8 border-t-4 border-t-indigo-500 transition-colors duration-300">
+              <div className={`bg-white dark:bg-[#111827] rounded-2xl shadow-md ring-1 ring-gray-100 dark:ring-gray-800 p-6 sm:p-8 border-t-4 ${isMissed ? "border-t-amber-500" : "border-t-indigo-500"} transition-colors duration-300`}>
                 <h3 className="text-xl font-black text-gray-900 dark:text-white mb-2">
-                  Ready to complete Day {displayDay}?
+                  {isMissed ? `Recover Day ${displayDay}?` : `Ready to complete Day ${displayDay}?`}
                 </h3>
                 <p className="text-sm text-gray-500 dark:text-slate-400 mb-6 font-medium">
-                  Submit both proofs of work to mark today's challenge complete.
+                  Submit both proofs of work to {isMissed ? "recover this challenge and get back on track." : "mark today's challenge complete."}
                 </p>
 
                 <button
@@ -532,11 +601,13 @@ const ChallengeDay = () => {
                   disabled={!githubSubmitted || !linkedinSubmitted}
                   className={`w-full py-4 rounded-xl text-base font-bold shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 dark:focus:ring-offset-gray-900 ${
                     githubSubmitted && linkedinSubmitted
-                      ? "bg-indigo-600 text-white hover:bg-indigo-700 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0"
+                      ? isMissed
+                        ? "bg-amber-600 hover:bg-amber-700 text-white shadow-md shadow-amber-500/20 active:scale-95"
+                        : "bg-indigo-600 text-white hover:bg-indigo-700 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0"
                       : "bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-500 cursor-not-allowed"
                   }`}
                 >
-                  Complete Day {displayDay}
+                  {isMissed ? `Complete & Recover Day ${displayDay}` : `Complete Day ${displayDay}`}
                 </button>
 
                 {!(githubSubmitted && linkedinSubmitted) && (
