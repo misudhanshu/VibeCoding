@@ -7,7 +7,7 @@ export const ThemeProvider = ({ children }) => {
   const [isDark, setIsDark] = useState(() => {
     if (typeof window !== "undefined") {
       const savedTheme = localStorage.getItem("abtalks-theme");
-      return savedTheme === "dark";
+      return savedTheme !== "light";
     }
     return false;
   });
