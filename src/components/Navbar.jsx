@@ -76,8 +76,8 @@ const Navbar = () => {
     <>
       <header
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ease-in-out ${isScrolled
-            ? "bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg shadow-[0_4px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_30px_rgba(0,0,0,0.5)] py-3 border-b border-transparent dark:border-gray-800"
-            : "bg-transparent py-5"
+          ? "bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg shadow-[0_4px_30px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_30px_rgba(0,0,0,0.5)] py-3 border-b border-transparent dark:border-gray-800"
+          : "bg-transparent py-5"
           }`}
       >
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -96,7 +96,7 @@ const Navbar = () => {
             </div>
 
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center gap-8">
+            <nav className="hidden lg:flex items-center gap-8">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
@@ -127,7 +127,7 @@ const Navbar = () => {
                 )}
               </button>
 
-              <div className="hidden md:block">
+              <div className="hidden lg:block">
                 <Link
                   to="/dashboard"
                   className="inline-flex items-center justify-center rounded-full bg-indigo-600 px-6 py-2.5 text-sm font-medium text-white shadow-sm shadow-indigo-200 transition-all hover:bg-indigo-700 hover:shadow-md dark:shadow-none focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2 dark:focus:ring-offset-gray-900 active:scale-95 hover:scale-1.03"
@@ -139,7 +139,7 @@ const Navbar = () => {
               {/* Mobile Menu Button */}
               <button
                 type="button"
-                className="md:hidden inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-gray-100 dark:text-slate-300 dark:hover:bg-gray-800 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-600 dark:focus:ring-yellow-400 transition-colors"
+                className="lg:hidden inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-gray-100 dark:text-slate-300 dark:hover:bg-gray-800 dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-indigo-600 dark:focus:ring-yellow-400 transition-colors"
                 onClick={() => setMobileMenuOpen(true)}
                 aria-expanded={mobileMenuOpen}
                 aria-label="Open main menu"
@@ -167,7 +167,7 @@ const Navbar = () => {
 
       {/* Mobile Menu Overlay */}
       <div
-        className={`fixed inset-0 z-[60] bg-gray-900/40 backdrop-blur-sm transition-opacity duration-300 md:hidden ${mobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
+        className={`fixed inset-0 z-[60] bg-gray-900/40 backdrop-blur-sm transition-opacity duration-300 lg:hidden ${mobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
           }`}
         aria-hidden="true"
         onClick={() => setMobileMenuOpen(false)}
@@ -175,7 +175,7 @@ const Navbar = () => {
 
       {/* Mobile Menu Slide-over */}
       <div
-        className={`fixed inset-y-0 right-0 z-[70] w-full max-w-sm bg-white dark:bg-gray-900 shadow-2xl transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] md:hidden ${mobileMenuOpen ? "translate-x-0" : "translate-x-full"
+        className={`fixed inset-y-0 right-0 z-[70] w-full max-w-sm bg-white dark:bg-gray-900 shadow-2xl transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] lg:hidden ${mobileMenuOpen ? "translate-x-0" : "translate-x-full"
           }`}
         role="dialog"
         aria-modal="true"
